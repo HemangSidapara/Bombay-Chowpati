@@ -14,8 +14,6 @@ class HomeView extends GetView<HomeController> {
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) async {
-        print(didPop);
-        print(Get.keys[1]?.currentState?.canPop());
         if (Get.keys[1]?.currentState?.canPop() == true) {
           Get.back(id: 1);
         } else if (!didPop) {
@@ -73,7 +71,7 @@ class HomeView extends GetView<HomeController> {
             Obx(() {
               return Image.asset(
                 iconName,
-                width: 8.w,
+                width: index == 3 ? 9.3.w : 8.w,
                 color: controller.bottomIndex.value == index ? AppColors.PRIMARY_COLOR : AppColors.BLACK_COLOR,
               );
             }),
@@ -106,13 +104,13 @@ class HomeView extends GetView<HomeController> {
           contentPadding: EdgeInsets.symmetric(horizontal: 2.w),
           content: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(10),
               color: AppColors.WHITE_COLOR,
             ),
-            height: context.isPortrait ? 30.h : 60.h,
-            width: context.isPortrait ? 80.w : 40.w,
+            height: 25.h,
+            width: 80.w,
             clipBehavior: Clip.hardEdge,
-            padding: EdgeInsets.symmetric(horizontal: context.isPortrait ? 5.w : 5.h, vertical: context.isPortrait ? 2.h : 2.w),
+            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -120,16 +118,16 @@ class HomeView extends GetView<HomeController> {
                 Icon(
                   Icons.exit_to_app_rounded,
                   color: AppColors.WARNING_COLOR,
-                  size: context.isPortrait ? 8.w : 8.h,
+                  size: 8.w,
                 ),
-                SizedBox(height: context.isPortrait ? 2.h : 2.w),
+                SizedBox(height: 2.h),
                 Text(
                   AppStrings.areYouSureYouWantToExitTheApp.tr,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: AppColors.ERROR_COLOR,
                     fontWeight: FontWeight.w600,
-                    fontSize: context.isPortrait ? 16.sp : 14.sp,
+                    fontSize: 16.sp,
                   ),
                 ),
                 const Spacer(),
@@ -143,18 +141,18 @@ class HomeView extends GetView<HomeController> {
                         Get.back();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.SECONDARY_COLOR,
+                        backgroundColor: AppColors.DARK_GREEN_COLOR,
                         fixedSize: Size(27.w, 5.h),
                         elevation: 4,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                       child: Text(
                         AppStrings.no.tr,
                         style: TextStyle(
-                          color: AppColors.PRIMARY_COLOR,
-                          fontSize: 14.sp,
+                          color: AppColors.SECONDARY_COLOR,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -176,15 +174,15 @@ class HomeView extends GetView<HomeController> {
                       child: Text(
                         AppStrings.yesExit.tr,
                         style: TextStyle(
-                          color: AppColors.PRIMARY_COLOR,
+                          color: AppColors.SECONDARY_COLOR,
                           fontWeight: FontWeight.w600,
-                          fontSize: 14.sp,
+                          fontSize: 16.sp,
                         ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: context.isPortrait ? 2.h : 2.w),
+                SizedBox(height: 1.h),
               ],
             ),
           ),
