@@ -1,7 +1,7 @@
 import 'package:bombay_chowpati/Constants/app_assets.dart';
 import 'package:bombay_chowpati/Constants/app_colors.dart';
+import 'package:bombay_chowpati/Routes/nested_navigator/settings_navigator.dart';
 import 'package:bombay_chowpati/Screens/home_screen/dashboard_screen/dashboard_view.dart';
-import 'package:bombay_chowpati/Screens/home_screen/settings_screen/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -15,12 +15,16 @@ class HomeController extends GetxController {
 
   RxList<String> listOfImages = [
     AppAssets.homeIcon,
+    AppAssets.favouriteIcon,
+    AppAssets.cartIcon,
     AppAssets.settingsIcon,
   ].obs;
 
   RxList<Widget> bottomItemWidgetList = [
     const DashboardView(),
-    const SettingsView(),
+    Container(),
+    Container(),
+    const SettingsNavigator(),
   ].obs;
 
   @override
@@ -31,10 +35,33 @@ class HomeController extends GetxController {
         systemNavigationBarColor: AppColors.SECONDARY_COLOR,
         systemNavigationBarIconBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
-        statusBarColor: AppColors.SECONDARY_COLOR,
+        statusBarColor: AppColors.WHITE_COLOR,
         statusBarBrightness: Brightness.light,
       ),
     );
+    pageController.addListener(() {
+      if (bottomIndex.value == 3) {
+        SystemChrome.setSystemUIOverlayStyle(
+          SystemUiOverlayStyle(
+            systemNavigationBarColor: AppColors.SECONDARY_COLOR,
+            systemNavigationBarIconBrightness: Brightness.dark,
+            statusBarIconBrightness: Brightness.dark,
+            statusBarColor: AppColors.SETTING_BG_COLOR,
+            statusBarBrightness: Brightness.light,
+          ),
+        );
+      } else {
+        SystemChrome.setSystemUIOverlayStyle(
+          SystemUiOverlayStyle(
+            systemNavigationBarColor: AppColors.SECONDARY_COLOR,
+            systemNavigationBarIconBrightness: Brightness.dark,
+            statusBarIconBrightness: Brightness.dark,
+            statusBarColor: AppColors.WHITE_COLOR,
+            statusBarBrightness: Brightness.light,
+          ),
+        );
+      }
+    });
   }
 
   Future<void> onBottomItemChange({required int index}) async {

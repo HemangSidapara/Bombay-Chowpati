@@ -1,6 +1,8 @@
 import 'package:bombay_chowpati/Routes/app_pages.dart';
 import 'package:bombay_chowpati/Screens/auth_screen/forgot_password_screen/forgot_password_bindings.dart';
 import 'package:bombay_chowpati/Screens/auth_screen/forgot_password_screen/forgot_password_view.dart';
+import 'package:bombay_chowpati/Screens/auth_screen/reset_password_screen/reset_password_bindings.dart';
+import 'package:bombay_chowpati/Screens/auth_screen/reset_password_screen/reset_password_view.dart';
 import 'package:bombay_chowpati/Screens/auth_screen/sign_in_screen/sign_in_bindings.dart';
 import 'package:bombay_chowpati/Screens/auth_screen/sign_in_screen/sign_in_view.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,14 @@ class SignInNavigator extends StatelessWidget {
               routeName: Routes.forgotPasswordScreen,
               page: () => const ForgotPasswordView(),
               binding: ForgotPasswordBindings(),
+              transition: Transition.rightToLeftWithFade,
+              transitionDuration: transitionDuration,
+            );
+          case Routes.resetPasswordScreen:
+            return GetPageRoute(
+              routeName: Routes.resetPasswordScreen,
+              page: () => const ResetPasswordView(),
+              binding: ResetPasswordBindings(),
               transition: Transition.rightToLeftWithFade,
               transitionDuration: transitionDuration,
             );

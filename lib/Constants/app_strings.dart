@@ -21,6 +21,7 @@ class AppStrings {
   static const String password = "Password";
   static const String enterPassword = "Enter password";
   static const String pleaseEnterPassword = "Please enter password";
+  static const String passwordMustContain = "Password must contain at least one lowercase letter, uppercase letter, number, and special character minimum length 8.";
   static const String createOrder = "Create Order";
   static const String quantity = "Quantity";
   static const String enterQuantity = "Enter quantity";
@@ -62,4 +63,19 @@ class AppStrings {
   static const String resend = 'Resend';
   static const String reset = 'Reset';
   static const String confirm = 'Confirm';
+  static const String verify = 'Verify';
+  static const String resetPassword = 'Reset\npassword';
+  static const String enterConfirmPassword = "Enter confirm password";
+  static const String pleaseEnterConfirmPassword = "Please enter confirm password";
+  static const String passwordDidNotMatch = "Password did not match";
+  static const String enterEmailAddress = "Enter email address";
+  static const String pleaseEnterEmailAddress = "Please enter email address";
+  static const String enterPhoneNumber = "Enter phone number";
+  static const String pleaseEnterPhoneNumber = "Please enter phone number";
+  static const String enterYourName = "Enter your name";
+  static const String pleaseEnterYourName = "Please enter your name";
+  static const String createAccount = "Create account";
+  static const String alreadyAMember = "Already a Member? ";
+  static const String register = "Register";
+  static const String personalDetails = "Personal Details";
 }

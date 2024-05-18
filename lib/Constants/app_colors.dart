@@ -35,4 +35,5 @@ class AppColors {
   static Color BRONZE_COLOR = const Color(0xffCD7F32);
   static Color TEXTFIELD_COLOR = const Color(0xffEAE7E7);
   static Color TEXT_BLACK_COLOR = const Color(0xff676767);
+  static Color SETTING_BG_COLOR = const Color(0xffF5F5F8);
 }

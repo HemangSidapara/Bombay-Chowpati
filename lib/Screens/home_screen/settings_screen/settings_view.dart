@@ -76,30 +76,93 @@ class SettingsView extends GetView<SettingsController> {
           ),
           SizedBox(height: 5.h),
 
+          ///Personal Details
+          Card(
+            color: AppColors.TRANSPARENT,
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            elevation: 0,
+            child: InkWell(
+              onTap: () {
+                Get.toNamed(Routes.personalDetailsScreen, id: 1);
+              },
+              child: ExpansionTile(
+                title: Row(
+                  children: [
+                    Icon(
+                      Icons.manage_accounts_rounded,
+                      size: 5.w,
+                      color: AppColors.HINT_GREY_COLOR,
+                    ),
+                    SizedBox(width: 2.w),
+                    Text(
+                      AppStrings.personalDetails.tr,
+                      style: TextStyle(
+                        color: AppColors.BLACK_COLOR,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16.sp,
+                      ),
+                    ),
+                  ],
+                ),
+                enabled: false,
+                collapsedBackgroundColor: AppColors.WHITE_COLOR,
+                backgroundColor: AppColors.WHITE_COLOR,
+                collapsedShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                trailing: RotatedBox(
+                  quarterTurns: 3,
+                  child: Icon(
+                    Icons.expand_more_rounded,
+                    color: AppColors.BLACK_COLOR,
+                    size: 6.w,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 1.h),
+
           ///Change Language
           Card(
             color: AppColors.TRANSPARENT,
             clipBehavior: Clip.antiAlias,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(20),
             ),
+            elevation: 0,
             child: ExpansionTile(
-              controller: controller.expansionTileController,
-              title: Text(
-                AppStrings.changeLanguage.tr,
-                style: TextStyle(
-                  color: AppColors.SECONDARY_COLOR,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16.sp,
-                ),
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.translate_rounded,
+                    size: 5.w,
+                    color: AppColors.HINT_GREY_COLOR,
+                  ),
+                  SizedBox(width: 2.w),
+                  Text(
+                    AppStrings.changeLanguage.tr,
+                    style: TextStyle(
+                      color: AppColors.BLACK_COLOR,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16.sp,
+                    ),
+                  ),
+                ],
               ),
-              collapsedBackgroundColor: AppColors.LIGHT_SECONDARY_COLOR,
-              backgroundColor: AppColors.LIGHT_SECONDARY_COLOR,
+              collapsedBackgroundColor: AppColors.WHITE_COLOR,
+              backgroundColor: AppColors.WHITE_COLOR,
               collapsedShape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(20),
               ),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(20),
               ),
               childrenPadding: EdgeInsets.symmetric(horizontal: 5.w).copyWith(bottom: 2.h),
               children: [
@@ -128,6 +191,7 @@ class SettingsView extends GetView<SettingsController> {
                             controller.isGujaratiLang(true);
                             controller.isHindiLang(false);
                           },
+                          borderRadius: BorderRadius.circular(99),
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 1.h),
                             child: Row(
@@ -138,7 +202,7 @@ class SettingsView extends GetView<SettingsController> {
                                   child: Icon(
                                     Icons.done_rounded,
                                     size: 6.w,
-                                    color: AppColors.SECONDARY_COLOR,
+                                    color: AppColors.DARK_GREEN_COLOR,
                                   ),
                                 ),
                                 SizedBox(width: 2.w),
@@ -147,7 +211,7 @@ class SettingsView extends GetView<SettingsController> {
                                   style: TextStyle(
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w600,
-                                    color: AppColors.SECONDARY_COLOR,
+                                    color: AppColors.BLACK_COLOR,
                                   ),
                                 ),
                               ],
@@ -166,6 +230,7 @@ class SettingsView extends GetView<SettingsController> {
                             controller.isGujaratiLang(false);
                             controller.isHindiLang(false);
                           },
+                          borderRadius: BorderRadius.circular(99),
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 1.h),
                             child: Row(
@@ -176,7 +241,7 @@ class SettingsView extends GetView<SettingsController> {
                                   child: Icon(
                                     Icons.done_rounded,
                                     size: 6.w,
-                                    color: AppColors.SECONDARY_COLOR,
+                                    color: AppColors.DARK_GREEN_COLOR,
                                   ),
                                 ),
                                 SizedBox(width: 2.w),
@@ -185,7 +250,7 @@ class SettingsView extends GetView<SettingsController> {
                                   style: TextStyle(
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w600,
-                                    color: AppColors.SECONDARY_COLOR,
+                                    color: AppColors.BLACK_COLOR,
                                   ),
                                 ),
                               ],
@@ -204,6 +269,7 @@ class SettingsView extends GetView<SettingsController> {
                             controller.isGujaratiLang(false);
                             controller.isHindiLang(true);
                           },
+                          borderRadius: BorderRadius.circular(99),
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 1.h),
                             child: Row(
@@ -214,7 +280,7 @@ class SettingsView extends GetView<SettingsController> {
                                   child: Icon(
                                     Icons.done_rounded,
                                     size: 6.w,
-                                    color: AppColors.SECONDARY_COLOR,
+                                    color: AppColors.DARK_GREEN_COLOR,
                                   ),
                                 ),
                                 SizedBox(width: 2.w),
@@ -223,7 +289,7 @@ class SettingsView extends GetView<SettingsController> {
                                   style: TextStyle(
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w600,
-                                    color: AppColors.SECONDARY_COLOR,
+                                    color: AppColors.BLACK_COLOR,
                                   ),
                                 ),
                               ],
@@ -241,10 +307,10 @@ class SettingsView extends GetView<SettingsController> {
 
           ///LogOut
           ButtonWidget(
-            onPressed: () {
-              clearData();
-              Get.offAllNamed(Routes.authScreen);
+            onPressed: () async {
+              await controller.checkLogOut();
             },
+            isLoading: controller.isLogOutLoading.isTrue,
             buttonTitle: AppStrings.logOut.tr,
           ),
           SizedBox(height: 2.h),
@@ -253,7 +319,7 @@ class SettingsView extends GetView<SettingsController> {
             child: Text(
               AppStrings.copyrightContext.replaceAll('2024', DateTime.now().year.toString()),
               style: TextStyle(
-                color: AppColors.LIGHT_SECONDARY_COLOR.withOpacity(0.55),
+                color: AppColors.HINT_GREY_COLOR.withOpacity(0.55),
                 fontWeight: FontWeight.w700,
                 fontSize: context.isPortrait ? 14.sp : 10.sp,
               ),

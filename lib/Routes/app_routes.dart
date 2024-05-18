@@ -7,10 +7,8 @@ class Routes {
   static const authScreen = '/auth';
   static const signInScreen = '/signIn';
   static const forgotPasswordScreen = '/forgotPassword';
+  static const resetPasswordScreen = '/resetPassword';
   static const homeScreen = '/home';
-  static const createOrderScreen = '/createOrderScreen';
-  static const orderDetailsScreen = '/orderDetailsScreen';
-  static const addOrderCycleScreen = '/addOrderCycleScreen';
-  static const challanScreen = '/challanScreen';
-  static const viewCyclesScreen = '/viewCyclesScreen';
+  static const settingScreen = '/setting';
+  static const personalDetailsScreen = '/personalDetails';
 }

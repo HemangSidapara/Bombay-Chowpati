@@ -9,6 +9,7 @@ import 'package:bombay_chowpati/Network/response_model.dart';
 import 'package:flutter/material.dart';
 
 class AuthServices {
+  ///Login
   static Future<ResponseModel> loginService({
     required String phone,
     required String password,
@@ -20,6 +21,7 @@ class AuthServices {
     final response = await ApiBaseHelper.postHTTP(
       ApiUrls.loginApi,
       params: params,
+      showProgress: false,
       onError: (dioExceptions) {
         Utils.handleMessage(message: dioExceptions.message, isError: true);
       },
@@ -31,6 +33,44 @@ class AuthServices {
           Utils.handleMessage(message: loginModel.msg);
         } else {
           debugPrint("loginApi error :: ${res.message}");
+          Utils.handleMessage(message: res.message, isError: true);
+        }
+      },
+    );
+
+    return response;
+  }
+
+  ///SignUp
+  static Future<ResponseModel> signUpService({
+    required String name,
+    required String email,
+    required String phone,
+    required String password,
+    required String fcmToken,
+  }) async {
+    final params = {
+      ApiKeys.name: name,
+      ApiKeys.email: email,
+      ApiKeys.phone: phone,
+      ApiKeys.password: password,
+      ApiKeys.fcmToken: fcmToken,
+    };
+    final response = await ApiBaseHelper.postHTTP(
+      ApiUrls.signUpApi,
+      params: params,
+      showProgress: false,
+      onError: (dioExceptions) {
+        Utils.handleMessage(message: dioExceptions.message, isError: true);
+      },
+      onSuccess: (res) async {
+        if (res.isSuccess) {
+          LoginModel loginModel = LoginModel.fromJson(res.response?.data);
+          await setData(AppConstance.authorizationToken, loginModel.token);
+          debugPrint("signUpApi success :: ${loginModel.msg}");
+          Utils.handleMessage(message: loginModel.msg);
+        } else {
+          debugPrint("signUpApi error :: ${res.message}");
           Utils.handleMessage(message: res.message, isError: true);
         }
       },

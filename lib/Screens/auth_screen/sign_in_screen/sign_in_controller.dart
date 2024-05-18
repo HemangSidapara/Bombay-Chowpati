@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class SignInController extends GetxController {
-  TextEditingController phoneController = TextEditingController();
+  TextEditingController emailPhoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   RxBool isPasswordVisible = false.obs;
 
@@ -13,7 +13,7 @@ class SignInController extends GetxController {
 
   RxBool isSignInLoading = false.obs;
 
-  String? phoneValidator(String? value) {
+  String? emailPhoneValidator(String? value) {
     if (value == null || value.isEmpty == true) {
       return AppStrings.pleaseEnterEmailPhoneNumber.tr;
     }
@@ -34,7 +34,7 @@ class SignInController extends GetxController {
 
       if (isValid == true) {
         final response = await AuthServices.loginService(
-          phone: phoneController.text,
+          phone: emailPhoneController.text,
           password: passwordController.text,
         );
 
@@ -45,5 +45,11 @@ class SignInController extends GetxController {
     } finally {
       isSignInLoading(false);
     }
+  }
+
+  @override
+  void dispose() {
+    signInFormKey.currentState?.reset();
+    super.dispose();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:bombay_chowpati/Constants/app_colors.dart';
+import 'package:bombay_chowpati/Constants/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -31,7 +32,12 @@ class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: isLoading ? () {} : onPressed,
+      onPressed: () {
+        Utils.unfocus();
+        if (!isLoading) {
+          onPressed?.call();
+        }
+      },
       style: ElevatedButton.styleFrom(
         backgroundColor: buttonColor ?? AppColors.PRIMARY_COLOR,
         shape: RoundedRectangleBorder(

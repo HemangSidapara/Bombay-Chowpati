@@ -1,7 +1,9 @@
 import 'package:bombay_chowpati/Constants/app_colors.dart';
+import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 extension GetKeyboardPadding on BuildContext {
@@ -11,6 +13,16 @@ extension GetKeyboardPadding on BuildContext {
 }
 
 class Utils {
+  ///Set Welcome Screen Seen
+  static Future<void> setWelcomeSeen() async {
+    await GetStorage('Welcome').write(AppConstance.isWelcomeSeen, true);
+  }
+
+  ///Get Welcome Screen Seen
+  static bool? getWelcomeSeen() {
+    return GetStorage('Welcome').read(AppConstance.isWelcomeSeen);
+  }
+
   ///Unfocus
   static void unfocus() {
     FocusManager.instance.primaryFocus?.unfocus();

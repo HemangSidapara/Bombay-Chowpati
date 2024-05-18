@@ -21,54 +21,57 @@ class SplashController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: AppColors.SECONDARY_COLOR,
-      systemNavigationBarIconBrightness: Brightness.light,
-      statusBarColor: AppColors.SECONDARY_COLOR,
-      statusBarIconBrightness: Brightness.light,
-    ));
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        systemNavigationBarColor: AppColors.SECONDARY_COLOR,
+        systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarColor: AppColors.SECONDARY_COLOR,
+        statusBarBrightness: Brightness.light,
+      ),
+    );
 
     await _getLatestVersion().then((value) {
       newAPKUrl(value.$1 ?? '');
       newAPKVersion(value.$2 ?? '');
     });
 
-    newAPKUrl.addListener(GetStream(
-      onListen: () async {
-        currentVersion.value = (await GetPackageInfoService.instance.getInfo()).version;
-        debugPrint('currentVersion :: ${currentVersion.value}');
-        debugPrint('newVersion :: ${newAPKVersion.value}');
-        if (newAPKUrl.value.isNotEmpty && newAPKVersion.value.isNotEmpty) {
-          if (Utils.isUpdateAvailable(currentVersion.value, newAPKVersion.value)) {
-            await showUpdateDialog(
-              onUpdate: () async {},
-              isUpdateLoading: isUpdateLoading,
-              downloadedProgress: downloadedProgress,
-            );
-          } else {
-            nextScreenRoute();
-          }
-        } else {
-          nextScreenRoute();
-        }
+    await Future.delayed(
+      const Duration(milliseconds: 600),
+      () {
+        newAPKUrl.addListener(GetStream(
+          onListen: () async {
+            currentVersion.value = (await GetPackageInfoService.instance.getInfo()).version;
+            debugPrint('currentVersion :: ${currentVersion.value}');
+            debugPrint('newVersion :: ${newAPKVersion.value}');
+            if (newAPKUrl.value.isNotEmpty && newAPKVersion.value.isNotEmpty) {
+              if (Utils.isUpdateAvailable(currentVersion.value, newAPKVersion.value)) {
+                await showUpdateDialog(
+                  onUpdate: () async {},
+                  isUpdateLoading: isUpdateLoading,
+                  downloadedProgress: downloadedProgress,
+                );
+              } else {
+                nextScreenRoute();
+              }
+            } else {
+              nextScreenRoute();
+            }
+          },
+        ));
       },
-    ));
+    );
   }
 
   /// Next Screen Route
   Future<void> nextScreenRoute() async {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        systemNavigationBarColor: AppColors.SECONDARY_COLOR,
-        systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarColor: AppColors.TRANSPARENT,
-        statusBarBrightness: Brightness.light,
-      ),
-    );
     debugPrint("token value ::: ${getData(AppConstance.authorizationToken)}");
     if (getData(AppConstance.authorizationToken) == null) {
-      Get.offAllNamed(Routes.welcomeScreen);
+      if (Utils.getWelcomeSeen() == true) {
+        Get.offAllNamed(Routes.authScreen);
+      } else {
+        Get.offAllNamed(Routes.welcomeScreen);
+      }
     } else {
       Get.offAllNamed(Routes.homeScreen);
     }

@@ -14,49 +14,56 @@ class SplashView extends GetView<SplashController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.SECONDARY_COLOR,
-      body: Column(
-        children: [
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: Image.asset(
-                    AppAssets.splashImage,
-                    height: 50.h,
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Image.asset(
+                      AppAssets.splashImage,
+                      height: 50.h,
+                    ),
                   ),
-                ),
-                Text(
-                  AppStrings.appName.tr,
-                  style: TextStyle(
-                    color: AppColors.PRIMARY_COLOR,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 26.sp,
+                  Center(
+                    child: Text(
+                      AppStrings.appName.tr,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors.PRIMARY_COLOR,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 23.sp,
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Obx(() {
-            return Text(
-              AppConstance.appVersion.replaceAll('1.0.0', controller.currentVersion.value),
+            Obx(() {
+              return Text(
+                AppConstance.appVersion.replaceAll('1.0.0', controller.currentVersion.value),
+                style: TextStyle(
+                  color: AppColors.HINT_GREY_COLOR.withOpacity(0.55),
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14.sp,
+                ),
+              );
+            }),
+            Text(
+              AppStrings.poweredByMindwaveInfoway,
               style: TextStyle(
-                color: AppColors.PRIMARY_COLOR.withOpacity(0.55),
+                color: AppColors.HINT_GREY_COLOR.withOpacity(0.55),
                 fontWeight: FontWeight.w700,
                 fontSize: 14.sp,
               ),
-            );
-          }),
-          Text(
-            AppStrings.poweredByMindwaveInfoway,
-            style: TextStyle(
-              color: AppColors.LIGHT_SECONDARY_COLOR.withOpacity(0.55),
-              fontWeight: FontWeight.w700,
-              fontSize: 14.sp,
             ),
-          ),
-          SizedBox(height: 2.h),
-        ],
+            SizedBox(height: 2.h),
+          ],
+        ),
       ),
     );
   }

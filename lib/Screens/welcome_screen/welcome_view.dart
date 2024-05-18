@@ -1,5 +1,6 @@
 import 'package:bombay_chowpati/Constants/app_assets.dart';
 import 'package:bombay_chowpati/Constants/app_colors.dart';
+import 'package:bombay_chowpati/Constants/app_utils.dart';
 import 'package:bombay_chowpati/Routes/app_pages.dart';
 import 'package:bombay_chowpati/Screens/welcome_screen/welcome_controller.dart';
 import 'package:flutter/material.dart';
@@ -112,7 +113,7 @@ class WelcomeView extends GetView<WelcomeController> {
 
               ///Next Button
               InkWell(
-                onTap: () {
+                onTap: () async {
                   if (index != 2) {
                     controller.pageController.animateToPage(
                       index + 1,
@@ -120,7 +121,8 @@ class WelcomeView extends GetView<WelcomeController> {
                       curve: Curves.easeOut,
                     );
                   } else {
-                    Get.toNamed(Routes.authScreen);
+                    await Utils.setWelcomeSeen();
+                    Get.offAllNamed(Routes.authScreen);
                   }
                 },
                 borderRadius: BorderRadius.circular(99),

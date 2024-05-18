@@ -8,9 +8,12 @@ import 'package:bombay_chowpati/Routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 void main() {
+  GetStorage.init();
+  GetStorage.init('Welcome');
   runApp(const MyApp());
 }
 
@@ -46,6 +49,9 @@ class _MyAppState extends State<MyApp> {
               headerBackgroundColor: AppColors.SECONDARY_COLOR,
             ),
             useMaterial3: true,
+            textSelectionTheme: TextSelectionThemeData(
+              selectionHandleColor: AppColors.DARK_GREEN_COLOR,
+            ),
           ),
           initialRoute: Routes.splashScreen,
           defaultTransition: Transition.downToUp,

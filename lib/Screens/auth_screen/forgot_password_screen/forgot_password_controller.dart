@@ -12,7 +12,6 @@ class ForgotPasswordController extends GetxController {
   TextEditingController otpController = TextEditingController();
 
   RxBool isCodeSent = false.obs;
-  RxBool isCodeConfirm = false.obs;
 
   String? emailValidator(String? value) {
     if (value == null || value.isEmpty == true) {

@@ -53,13 +53,23 @@ class AuthView extends GetView<AuthController> {
                   child: Column(
                     children: [
                       ///Login Image
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5.h),
-                        child: Image.asset(
-                          AppAssets.loginImage,
-                          width: 20.w,
-                        ),
-                      ),
+                      Obx(() {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(vertical: 2.h),
+                          child: AnimatedCrossFade(
+                            crossFadeState: controller.tabIndex.value == 0 ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                            duration: const Duration(milliseconds: 300),
+                            firstChild: Image.asset(
+                              AppAssets.loginImage,
+                              height: 12.h,
+                            ),
+                            secondChild: Image.asset(
+                              AppAssets.createAccountIcon,
+                              height: 12.h,
+                            ),
+                          ),
+                        );
+                      }),
                       const Spacer(),
 
                       ///Tabs
@@ -79,6 +89,9 @@ class AuthView extends GetView<AuthController> {
                           ),
                           indicatorPadding: EdgeInsets.symmetric(horizontal: 8.w),
                           indicatorSize: TabBarIndicatorSize.tab,
+                          onTap: (value) {
+                            Utils.unfocus();
+                          },
                           tabs: [
                             Text(
                               AppStrings.login.tr,
