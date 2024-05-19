@@ -78,4 +78,17 @@ class AppStrings {
   static const String alreadyAMember = "Already a Member? ";
   static const String register = "Register";
   static const String personalDetails = "Personal Details";
+  static const String changePassword = "Change password";
+  static const String enterYourOldPassword = "Enter your old password";
+  static const String pleaseEnterYourOldPassword = "Please enter your old password";
+  static const String enterNewPassword = "Enter new password";
+  static const String pleaseEnterNewPassword = "Please enter new password";
+  static const String confirmNewPassword = "Confirm new password";
+  static const String pleaseConfirmNewPassword = "Please confirm new password";
+  static const String oldAndNewPasswordMustBeDifferent = "Old & New password must be different";
+  static const String change = "Change";
+  static const String deleteAccount = "Delete account";
+  static const String editProfile = "Edit profile";
+  static const String cart = "Cart";
+  static const String orderHistory = "Order history";
 }

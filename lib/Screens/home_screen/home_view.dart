@@ -16,6 +16,8 @@ class HomeView extends GetView<HomeController> {
       onPopInvoked: (didPop) async {
         if (Get.keys[1]?.currentState?.canPop() == true) {
           Get.back(id: 1);
+        } else if (Get.keys[2]?.currentState?.canPop() == true) {
+          Get.back(id: 2);
         } else if (!didPop) {
           await showExitDialog(context);
         }
@@ -24,22 +26,25 @@ class HomeView extends GetView<HomeController> {
         child: Obx(() {
           return Scaffold(
             backgroundColor: controller.bottomIndex.value == 3 ? AppColors.SETTING_BG_COLOR : AppColors.WHITE_COLOR,
-            bottomNavigationBar: Container(
+            bottomNavigationBar: DecoratedBox(
               decoration: BoxDecoration(
                 color: AppColors.SECONDARY_COLOR,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  for (int i = 0; i < controller.bottomItemWidgetList.length; i++)
-                    SizedBox(
-                      width: 100.w / controller.bottomItemWidgetList.length,
-                      child: AssetImages(
-                        index: i,
-                        iconName: controller.listOfImages[i],
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 0.5.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    for (int i = 0; i < controller.bottomItemWidgetList.length; i++)
+                      SizedBox(
+                        width: 100.w / controller.bottomItemWidgetList.length,
+                        child: AssetImages(
+                          index: i,
+                          iconName: controller.listOfImages[i],
+                        ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             ),
             body: PageView(

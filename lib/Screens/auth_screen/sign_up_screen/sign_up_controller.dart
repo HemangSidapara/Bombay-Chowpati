@@ -36,7 +36,7 @@ class SignUpController extends GetxController {
 
   String? phoneValidator(String? value) {
     if (value == null || value.isEmpty == true) {
-      return AppStrings.pleaseEnterEmailPhoneNumber.tr;
+      return AppStrings.pleaseEnterPhoneNumber.tr;
     }
     return null;
   }

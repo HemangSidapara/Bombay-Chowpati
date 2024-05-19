@@ -1,7 +1,8 @@
 class AppAssets {
   ///Animation
-  static const String settingsAnim = "assets/animations/settings.gif";
+  static const String settingsAnim = "assets/animations/settings_animation.gif";
   static const String updateAnim = "assets/animations/update_animation.gif";
+  static const String cartAnim = "assets/animations/cart_animation.gif";
 
   ///Images
   static const String splashImage = "assets/images/splash_image.png";
@@ -22,4 +23,5 @@ class AppAssets {
   static const String appleIcon = "assets/icons/apple.png";
   static const String createAccountIcon = "assets/icons/create_account.png";
   static const String cartIcon = "assets/icons/cart_icon.png";
+  static const String orderHistoryIcon = "assets/icons/order_history_icon.png";
 }

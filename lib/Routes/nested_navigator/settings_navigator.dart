@@ -1,4 +1,6 @@
 import 'package:bombay_chowpati/Routes/app_pages.dart';
+import 'package:bombay_chowpati/Screens/home_screen/settings_screen/change_password_screen/change_password_bindings.dart';
+import 'package:bombay_chowpati/Screens/home_screen/settings_screen/change_password_screen/change_password_view.dart';
 import 'package:bombay_chowpati/Screens/home_screen/settings_screen/personal_details_screen/personal_details_bindings.dart';
 import 'package:bombay_chowpati/Screens/home_screen/settings_screen/personal_details_screen/personal_details_view.dart';
 import 'package:bombay_chowpati/Screens/home_screen/settings_screen/settings_bindings.dart';
@@ -20,6 +22,14 @@ class SettingsNavigator extends StatelessWidget {
               routeName: Routes.personalDetailsScreen,
               page: () => const PersonalDetailsView(),
               binding: PersonalDetailsBindings(),
+              transition: Transition.rightToLeftWithFade,
+              transitionDuration: transitionDuration,
+            );
+          case Routes.changePasswordScreen:
+            return GetPageRoute(
+              routeName: Routes.changePasswordScreen,
+              page: () => const ChangePasswordView(),
+              binding: ChangePasswordBindings(),
               transition: Transition.rightToLeftWithFade,
               transitionDuration: transitionDuration,
             );

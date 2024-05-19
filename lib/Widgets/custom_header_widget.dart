@@ -5,16 +5,20 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CustomHeaderWidget extends StatelessWidget {
   final String title;
-  final String titleIcon;
+  final String? titleIcon;
   final double? titleIconSize;
   final void Function()? onBackPressed;
+  final Widget? titleIconWidget;
+  final Color? backIconBackgroundColor;
 
   const CustomHeaderWidget({
     super.key,
     required this.title,
-    required this.titleIcon,
+    this.titleIcon,
     this.onBackPressed,
     this.titleIconSize,
+    this.titleIconWidget,
+    this.backIconBackgroundColor,
   });
 
   @override
@@ -25,9 +29,9 @@ class CustomHeaderWidget extends StatelessWidget {
           IconButton(
             onPressed: onBackPressed,
             style: IconButton.styleFrom(
-              backgroundColor: AppColors.PRIMARY_COLOR.withOpacity(0.5),
-              surfaceTintColor: AppColors.PRIMARY_COLOR,
-              highlightColor: AppColors.PRIMARY_COLOR,
+              backgroundColor: backIconBackgroundColor ?? AppColors.SETTING_BG_COLOR,
+              surfaceTintColor: backIconBackgroundColor ?? AppColors.SETTING_BG_COLOR,
+              highlightColor: AppColors.PRIMARY_COLOR.withOpacity(0.13),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -51,10 +55,12 @@ class CustomHeaderWidget extends StatelessWidget {
           ),
         ),
         SizedBox(width: 2.w),
-        Image.asset(
-          titleIcon,
-          width: titleIconSize ?? 12.w,
-        ),
+        if (titleIconWidget != null) titleIconWidget!,
+        if (titleIconWidget == null && titleIcon != null)
+          Image.asset(
+            titleIcon!,
+            width: titleIconSize ?? 12.w,
+          ),
       ],
     );
   }

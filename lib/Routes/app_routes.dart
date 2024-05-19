@@ -11,4 +11,7 @@ class Routes {
   static const homeScreen = '/home';
   static const settingScreen = '/setting';
   static const personalDetailsScreen = '/personalDetails';
+  static const changePasswordScreen = '/changePassword';
+  static const cartScreen = '/cart';
+  static const orderHistoryScreen = '/orderHistory';
 }

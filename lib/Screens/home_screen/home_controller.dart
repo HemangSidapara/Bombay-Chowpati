@@ -1,5 +1,6 @@
 import 'package:bombay_chowpati/Constants/app_assets.dart';
 import 'package:bombay_chowpati/Constants/app_colors.dart';
+import 'package:bombay_chowpati/Routes/nested_navigator/cart_navigator.dart';
 import 'package:bombay_chowpati/Routes/nested_navigator/settings_navigator.dart';
 import 'package:bombay_chowpati/Screens/home_screen/dashboard_screen/dashboard_view.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class HomeController extends GetxController {
   RxList<Widget> bottomItemWidgetList = [
     const DashboardView(),
     Container(),
-    Container(),
+    const CartNavigator(),
     const SettingsNavigator(),
   ].obs;
 
