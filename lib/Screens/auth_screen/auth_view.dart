@@ -1,10 +1,12 @@
 import 'package:bombay_chowpati/Constants/app_assets.dart';
 import 'package:bombay_chowpati/Constants/app_colors.dart';
+import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Constants/app_strings.dart';
 import 'package:bombay_chowpati/Constants/app_utils.dart';
 import 'package:bombay_chowpati/Routes/nested_navigator/sign_in_navigator.dart';
+import 'package:bombay_chowpati/Routes/nested_navigator/sign_up_navigator.dart';
 import 'package:bombay_chowpati/Screens/auth_screen/auth_controller.dart';
-import 'package:bombay_chowpati/Screens/auth_screen/sign_up_screen/sign_up_view.dart';
+import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -18,13 +20,15 @@ class AuthView extends GetView<AuthController> {
       return PopScope(
         canPop: controller.canPopSignInNavigator.isFalse,
         onPopInvoked: (didPop) {
-          if (Get.keys[0]?.currentState?.canPop() == true) {
-            Get.back(id: 0);
-            if (Get.keys[0]?.currentState?.canPop() == true) {
+          if (Get.keys[AppConstance.signInNavigatorKey.getNavigatorId]?.currentState?.canPop() == true) {
+            Get.back(id: AppConstance.signInNavigatorKey.getNavigatorId);
+            if (Get.keys[AppConstance.signInNavigatorKey.getNavigatorId]?.currentState?.canPop() == true) {
               controller.canPopSignInNavigator(true);
             } else {
               controller.canPopSignInNavigator(false);
             }
+          } else if (Get.keys[AppConstance.signUpNavigatorKey.getNavigatorId]?.currentState?.canPop() == true) {
+            Get.back(id: AppConstance.signUpNavigatorKey.getNavigatorId);
           } else if (!didPop) {
             Get.back(closeOverlays: true);
           }
@@ -123,7 +127,7 @@ class AuthView extends GetView<AuthController> {
                       controller: controller.tabController,
                       children: const [
                         SignInNavigator(),
-                        SignUpView(),
+                        SignUpNavigator(),
                       ],
                     ),
                   ),

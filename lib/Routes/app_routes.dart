@@ -14,4 +14,7 @@ class Routes {
   static const changePasswordScreen = '/changePassword';
   static const cartScreen = '/cart';
   static const orderHistoryScreen = '/orderHistory';
+  static const privacyPolicyScreen = '/privacyPolicy';
+  static const termsAndConditionsScreen = '/termsAndConditions';
+  static const signUpScreen = '/signUp';
 }

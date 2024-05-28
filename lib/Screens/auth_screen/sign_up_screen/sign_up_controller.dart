@@ -1,4 +1,5 @@
 import 'package:bombay_chowpati/Constants/app_strings.dart';
+import 'package:bombay_chowpati/Constants/app_utils.dart';
 import 'package:bombay_chowpati/Constants/app_validators.dart';
 import 'package:bombay_chowpati/Network/services/auth_services/auth_services.dart';
 import 'package:bombay_chowpati/Screens/auth_screen/auth_controller.dart';
@@ -17,6 +18,8 @@ class SignUpController extends GetxController {
   GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
 
   RxBool isSignUpLoading = false.obs;
+
+  RxBool isTermsAndConditionsChecked = false.obs;
 
   String? nameValidator(String? value) {
     if (value == null || value.isEmpty == true) {
@@ -65,16 +68,20 @@ class SignUpController extends GetxController {
       final isValid = signUpFormKey.currentState?.validate();
 
       if (isValid == true) {
-        final response = await AuthServices.signUpService(
-          name: nameController.text.trim(),
-          email: emailController.text.trim(),
-          phone: phoneController.text.trim(),
-          password: passwordController.text,
-          fcmToken: '',
-        );
+        if (isTermsAndConditionsChecked.isTrue) {
+          final response = await AuthServices.signUpService(
+            name: nameController.text.trim(),
+            email: emailController.text.trim(),
+            phone: phoneController.text.trim(),
+            password: passwordController.text,
+            fcmToken: '',
+          );
 
-        if (response.isSuccess) {
-          Get.find<AuthController>().tabController.animateTo(0);
+          if (response.isSuccess) {
+            Get.find<AuthController>().tabController.animateTo(0);
+          }
+        } else {
+          Utils.handleMessage(message: AppStrings.pleaseAcceptTermsAndConditions.tr, isError: true);
         }
       }
     } finally {

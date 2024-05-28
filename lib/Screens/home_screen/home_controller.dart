@@ -1,8 +1,13 @@
 import 'package:bombay_chowpati/Constants/app_assets.dart';
 import 'package:bombay_chowpati/Constants/app_colors.dart';
+import 'package:bombay_chowpati/Constants/app_constance.dart';
+import 'package:bombay_chowpati/Network/models/auth_models/get_user_details_model.dart';
+import 'package:bombay_chowpati/Network/services/auth_services/auth_services.dart';
 import 'package:bombay_chowpati/Routes/nested_navigator/cart_navigator.dart';
 import 'package:bombay_chowpati/Routes/nested_navigator/settings_navigator.dart';
 import 'package:bombay_chowpati/Screens/home_screen/dashboard_screen/dashboard_view.dart';
+import 'package:bombay_chowpati/Screens/home_screen/favourite_screen/favourite_view.dart';
+import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -14,6 +19,8 @@ class HomeController extends GetxController {
   RxString newAPKUrl = ''.obs;
   RxString newAPKVersion = ''.obs;
 
+  Rx<GetUserDetailsModel> getUserDetails = Rx(GetUserDetailsModel());
+
   RxList<String> listOfImages = [
     AppAssets.homeIcon,
     AppAssets.favouriteIcon,
@@ -23,7 +30,7 @@ class HomeController extends GetxController {
 
   RxList<Widget> bottomItemWidgetList = [
     const DashboardView(),
-    Container(),
+    const FavouriteView(),
     const CartNavigator(),
     const SettingsNavigator(),
   ].obs;
@@ -63,19 +70,32 @@ class HomeController extends GetxController {
         );
       }
     });
+
+    getUserDetailsApiCall();
   }
 
   Future<void> onBottomItemChange({required int index}) async {
     bottomIndex.value = index;
     if (index == 0) {
-      if (Get.keys[0]?.currentState?.canPop() == true) {
-        Get.back(id: 0);
+      if (Get.keys[AppConstance.dashboardNavigatorKey.getNavigatorId]?.currentState?.canPop() == true) {
+        Get.back(id: AppConstance.dashboardNavigatorKey.getNavigatorId);
       }
-    } else if (index == 1) {
-      if (Get.keys[1]?.currentState?.canPop() == true) {
-        Get.back(id: 1);
+    } else if (index == 2) {
+      if (Get.keys[AppConstance.cartNavigatorKey.getNavigatorId]?.currentState?.canPop() == true) {
+        Get.back(id: AppConstance.cartNavigatorKey.getNavigatorId);
+      }
+    } else if (index == 3) {
+      if (Get.keys[AppConstance.settingsNavigatorKey.getNavigatorId]?.currentState?.canPop() == true) {
+        Get.back(id: AppConstance.settingsNavigatorKey.getNavigatorId);
       }
     }
     pageController.jumpToPage(bottomIndex.value);
+  }
+
+  Future<void> getUserDetailsApiCall() async {
+    final response = await AuthServices.getUserDetailsService();
+    if (response.isSuccess) {
+      getUserDetails(GetUserDetailsModel.fromJson(response.response?.data));
+    }
   }
 }

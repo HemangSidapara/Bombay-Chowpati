@@ -1,7 +1,9 @@
 import 'package:bombay_chowpati/Constants/app_colors.dart';
+import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Constants/app_strings.dart';
 import 'package:bombay_chowpati/Constants/app_utils.dart';
 import 'package:bombay_chowpati/Screens/home_screen/settings_screen/change_password_screen/change_password_controller.dart';
+import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:bombay_chowpati/Widgets/button_widget.dart';
 import 'package:bombay_chowpati/Widgets/custom_header_widget.dart';
 import 'package:bombay_chowpati/Widgets/textfield_widget.dart';
@@ -24,7 +26,7 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
             CustomHeaderWidget(
               title: AppStrings.changePassword.tr,
               onBackPressed: () {
-                Get.back(id: 1);
+                Get.back(id: AppConstance.settingsNavigatorKey.getNavigatorId, closeOverlays: true);
               },
             ),
             SizedBox(height: 2.h),

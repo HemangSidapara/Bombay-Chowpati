@@ -1,6 +1,8 @@
 import 'package:bombay_chowpati/Constants/app_colors.dart';
+import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Constants/app_strings.dart';
 import 'package:bombay_chowpati/Screens/home_screen/home_controller.dart';
+import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -14,10 +16,12 @@ class HomeView extends GetView<HomeController> {
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) async {
-        if (Get.keys[1]?.currentState?.canPop() == true) {
-          Get.back(id: 1);
-        } else if (Get.keys[2]?.currentState?.canPop() == true) {
-          Get.back(id: 2);
+        if (Get.keys[AppConstance.dashboardNavigatorKey.getNavigatorId]?.currentState?.canPop() == true) {
+          Get.back(id: AppConstance.dashboardNavigatorKey.getNavigatorId);
+        } else if (Get.keys[AppConstance.cartNavigatorKey.getNavigatorId]?.currentState?.canPop() == true) {
+          Get.back(id: AppConstance.cartNavigatorKey.getNavigatorId);
+        } else if (Get.keys[AppConstance.settingsNavigatorKey.getNavigatorId]?.currentState?.canPop() == true) {
+          Get.back(id: AppConstance.settingsNavigatorKey.getNavigatorId);
         } else if (!didPop) {
           await showExitDialog(context);
         }

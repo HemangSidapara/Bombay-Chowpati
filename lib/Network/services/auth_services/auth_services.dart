@@ -11,11 +11,11 @@ import 'package:flutter/material.dart';
 class AuthServices {
   ///Login
   static Future<ResponseModel> loginService({
-    required String phone,
+    required String userId,
     required String password,
   }) async {
     final params = {
-      ApiKeys.phone: phone,
+      ApiKeys.userId: userId,
       ApiKeys.password: password,
     };
     final response = await ApiBaseHelper.postHTTP(
@@ -71,6 +71,129 @@ class AuthServices {
           Utils.handleMessage(message: loginModel.msg);
         } else {
           debugPrint("signUpApi error :: ${res.message}");
+          Utils.handleMessage(message: res.message, isError: true);
+        }
+      },
+    );
+
+    return response;
+  }
+
+  ///Change password
+  static Future<ResponseModel> changePasswordService({
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    final params = {
+      ApiKeys.oldPassword: oldPassword,
+      ApiKeys.newPassword: newPassword,
+    };
+    final response = await ApiBaseHelper.postHTTP(
+      ApiUrls.changePasswordApi,
+      params: params,
+      showProgress: false,
+      onError: (dioExceptions) {
+        Utils.handleMessage(message: dioExceptions.message, isError: true);
+      },
+      onSuccess: (res) async {
+        if (res.isSuccess) {
+          debugPrint("changePasswordApi success :: ${res.message}");
+        } else {
+          debugPrint("changePasswordApi error :: ${res.message}");
+          Utils.handleMessage(message: res.message, isError: true);
+        }
+      },
+    );
+
+    return response;
+  }
+
+  ///Get user details
+  static Future<ResponseModel> getUserDetailsService() async {
+    final response = await ApiBaseHelper.getHTTP(
+      ApiUrls.getUserDetailApi,
+      showProgress: false,
+      onError: (dioExceptions) {
+        Utils.handleMessage(message: dioExceptions.message, isError: true);
+      },
+      onSuccess: (res) async {
+        if (res.isSuccess) {
+          debugPrint("getUserDetailApi success :: ${res.message}");
+        } else {
+          debugPrint("getUserDetailApi error :: ${res.message}");
+          Utils.handleMessage(message: res.message, isError: true);
+        }
+      },
+    );
+
+    return response;
+  }
+
+  ///Update profile
+  static Future<ResponseModel> updateProfileService({
+    required String name,
+    required String email,
+    required String phone,
+  }) async {
+    final params = {
+      ApiKeys.name: name,
+      ApiKeys.email: email,
+      ApiKeys.phone: phone,
+    };
+    final response = await ApiBaseHelper.postHTTP(
+      ApiUrls.editProfileApi,
+      showProgress: false,
+      params: params,
+      onError: (dioExceptions) {
+        Utils.handleMessage(message: dioExceptions.message, isError: true);
+      },
+      onSuccess: (res) async {
+        if (res.isSuccess) {
+          debugPrint("editProfileApi success :: ${res.message}");
+        } else {
+          debugPrint("editProfileApi error :: ${res.message}");
+          Utils.handleMessage(message: res.message, isError: true);
+        }
+      },
+    );
+
+    return response;
+  }
+
+  ///Logout
+  static Future<ResponseModel> logoutService() async {
+    final response = await ApiBaseHelper.getHTTP(
+      ApiUrls.logoutApi,
+      showProgress: false,
+      onError: (dioExceptions) {
+        Utils.handleMessage(message: dioExceptions.message, isError: true);
+      },
+      onSuccess: (res) async {
+        if (res.isSuccess) {
+          debugPrint("logoutApi success :: ${res.message}");
+        } else {
+          debugPrint("logoutApi error :: ${res.message}");
+          Utils.handleMessage(message: res.message, isError: true);
+        }
+      },
+    );
+
+    return response;
+  }
+
+  ///Delete Account
+  static Future<ResponseModel> deleteAccountService() async {
+    final response = await ApiBaseHelper.deleteHTTP(
+      ApiUrls.deleteAccountApi,
+      showProgress: false,
+      onError: (dioExceptions) {
+        Utils.handleMessage(message: dioExceptions.message, isError: true);
+      },
+      onSuccess: (res) async {
+        if (res.isSuccess) {
+          debugPrint("deleteAccountApi success :: ${res.message}");
+        } else {
+          debugPrint("deleteAccountApi error :: ${res.message}");
           Utils.handleMessage(message: res.message, isError: true);
         }
       },

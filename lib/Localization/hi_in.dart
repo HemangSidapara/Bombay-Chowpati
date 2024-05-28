@@ -90,4 +90,9 @@ Map<String, String> hiIN = <String, String>{
   AppStrings.editProfile: "प्रोफ़ाइल संपादित करें",
   AppStrings.cart: "कार्ट",
   AppStrings.orderHistory: "पुराने ऑर्डर",
+  AppStrings.privacyPolicy: "गोपनीयता नीति",
+  AppStrings.termsAndConditions: "नियम एवं शर्तें",
+  AppStrings.iAgreeWithTermsAndConditions: "मैं नियम एवं शर्तों से सहमत हूं",
+  AppStrings.pleaseAcceptTermsAndConditions: "कृपया नियम एवं शर्तें स्वीकार करें",
+  AppStrings.favourite: "पसंदीदा",
 };

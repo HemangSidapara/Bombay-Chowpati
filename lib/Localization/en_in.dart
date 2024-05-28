@@ -90,4 +90,9 @@ Map<String, String> enIN = <String, String>{
   AppStrings.editProfile: "Edit profile",
   AppStrings.cart: "Cart",
   AppStrings.orderHistory: "Order history",
+  AppStrings.privacyPolicy: "Privacy policy",
+  AppStrings.termsAndConditions: "Terms & Conditions",
+  AppStrings.iAgreeWithTermsAndConditions: "I agree with Terms & Conditions",
+  AppStrings.pleaseAcceptTermsAndConditions: "Please accept Terms & Conditions",
+  AppStrings.favourite: "Favourite",
 };

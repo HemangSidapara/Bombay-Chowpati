@@ -34,7 +34,7 @@ class SignInController extends GetxController {
 
       if (isValid == true) {
         final response = await AuthServices.loginService(
-          phone: emailPhoneController.text,
+          userId: emailPhoneController.text,
           password: passwordController.text,
         );
 

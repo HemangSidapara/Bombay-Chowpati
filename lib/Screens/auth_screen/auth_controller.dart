@@ -13,10 +13,10 @@ class AuthController extends GetxController with GetSingleTickerProviderStateMix
     super.onInit();
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        systemNavigationBarColor: AppColors.WHITE_COLOR,
+        systemNavigationBarColor: AppColors.SECONDARY_COLOR,
         systemNavigationBarIconBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
-        statusBarColor: AppColors.SECONDARY_COLOR,
+        statusBarColor: AppColors.WHITE_COLOR,
         statusBarBrightness: Brightness.light,
       ),
     );

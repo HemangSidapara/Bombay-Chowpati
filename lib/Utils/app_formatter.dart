@@ -1,5 +1,12 @@
+import 'package:bombay_chowpati/Constants/app_navigator_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+extension GetId on String {
+  int? get getNavigatorId {
+    return AppNavigatorKeys.keys[this];
+  }
+}
 
 extension GetArgs on BuildContext {
   dynamic get arguments {

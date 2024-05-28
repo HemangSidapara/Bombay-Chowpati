@@ -1,6 +1,8 @@
+import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Constants/app_strings.dart';
 import 'package:bombay_chowpati/Constants/app_utils.dart';
 import 'package:bombay_chowpati/Screens/home_screen/settings_screen/personal_details_screen/personal_details_controller.dart';
+import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:bombay_chowpati/Widgets/button_widget.dart';
 import 'package:bombay_chowpati/Widgets/custom_header_widget.dart';
 import 'package:bombay_chowpati/Widgets/textfield_widget.dart';
@@ -23,7 +25,7 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
             CustomHeaderWidget(
               title: AppStrings.personalDetails.tr,
               onBackPressed: () {
-                Get.back(id: 1);
+                Get.back(id: AppConstance.settingsNavigatorKey.getNavigatorId, closeOverlays: true);
               },
             ),
             SizedBox(height: 2.h),

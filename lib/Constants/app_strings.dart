@@ -91,4 +91,9 @@ class AppStrings {
   static const String editProfile = "Edit profile";
   static const String cart = "Cart";
   static const String orderHistory = "Order history";
+  static const String privacyPolicy = "Privacy policy";
+  static const String termsAndConditions = "Terms & Conditions";
+  static const String iAgreeWithTermsAndConditions = "I agree with Terms & Conditions";
+  static const String pleaseAcceptTermsAndConditions = "Please accept Terms & Conditions";
+  static const String favourite = "Favourite";
 }

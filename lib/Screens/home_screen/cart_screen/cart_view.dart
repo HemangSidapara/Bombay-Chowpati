@@ -1,8 +1,10 @@
 import 'package:bombay_chowpati/Constants/app_assets.dart';
 import 'package:bombay_chowpati/Constants/app_colors.dart';
+import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Constants/app_strings.dart';
 import 'package:bombay_chowpati/Routes/app_pages.dart';
 import 'package:bombay_chowpati/Screens/home_screen/cart_screen/cart_controller.dart';
+import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:bombay_chowpati/Widgets/custom_header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,7 +34,7 @@ class CartView extends GetView<CartController> {
               ///Order History
               IconButton(
                 onPressed: () {
-                  Get.toNamed(Routes.orderHistoryScreen, id: 2);
+                  Get.toNamed(Routes.orderHistoryScreen, id: AppConstance.cartNavigatorKey.getNavigatorId);
                 },
                 style: IconButton.styleFrom(
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,

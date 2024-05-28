@@ -1,9 +1,11 @@
 import 'package:bombay_chowpati/Constants/app_assets.dart';
 import 'package:bombay_chowpati/Constants/app_colors.dart';
+import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Constants/app_strings.dart';
 import 'package:bombay_chowpati/Constants/app_utils.dart';
 import 'package:bombay_chowpati/Routes/app_pages.dart';
 import 'package:bombay_chowpati/Screens/auth_screen/sign_in_screen/sign_in_controller.dart';
+import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:bombay_chowpati/Widgets/button_widget.dart';
 import 'package:bombay_chowpati/Widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +71,7 @@ class SignInView extends GetView<SignInController> {
                   alignment: Alignment.bottomLeft,
                   child: TextButton(
                     onPressed: () {
-                      Get.toNamed(Routes.forgotPasswordScreen, id: 0);
+                      Get.toNamed(Routes.forgotPasswordScreen, id: AppConstance.signInNavigatorKey.getNavigatorId);
                       Utils.unfocus();
                     },
                     style: TextButton.styleFrom(

@@ -6,10 +6,12 @@ import 'package:bombay_chowpati/Constants/get_storage.dart';
 import 'package:bombay_chowpati/Routes/app_pages.dart';
 import 'package:bombay_chowpati/Screens/home_screen/home_controller.dart';
 import 'package:bombay_chowpati/Screens/home_screen/settings_screen/settings_controller.dart';
+import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:bombay_chowpati/Utils/in_app_update_dialog_widget.dart';
 import 'package:bombay_chowpati/Widgets/button_widget.dart';
 import 'package:bombay_chowpati/Widgets/custom_header_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -93,7 +95,7 @@ class SettingsView extends GetView<SettingsController> {
                     elevation: 0,
                     child: InkWell(
                       onTap: () {
-                        Get.toNamed(Routes.personalDetailsScreen, id: 1);
+                        Get.toNamed(Routes.personalDetailsScreen, id: AppConstance.settingsNavigatorKey.getNavigatorId);
                       },
                       child: ExpansionTile(
                         title: Row(
@@ -148,7 +150,7 @@ class SettingsView extends GetView<SettingsController> {
                     elevation: 0,
                     child: InkWell(
                       onTap: () {
-                        Get.toNamed(Routes.changePasswordScreen, id: 1);
+                        Get.toNamed(Routes.changePasswordScreen, id: AppConstance.settingsNavigatorKey.getNavigatorId);
                       },
                       child: ExpansionTile(
                         title: Row(
@@ -365,6 +367,116 @@ class SettingsView extends GetView<SettingsController> {
                           );
                         })
                       ],
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(child: SizedBox(height: 1.h)),
+
+                ///Privacy policy
+                SliverToBoxAdapter(
+                  child: Card(
+                    color: AppColors.TRANSPARENT,
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    elevation: 0,
+                    child: InkWell(
+                      onTap: () {
+                        Get.toNamed(Routes.privacyPolicyScreen, id: AppConstance.settingsNavigatorKey.getNavigatorId);
+                      },
+                      child: ExpansionTile(
+                        title: Row(
+                          children: [
+                            Icon(
+                              Icons.privacy_tip_rounded,
+                              size: 5.w,
+                              color: AppColors.HINT_GREY_COLOR,
+                            ),
+                            SizedBox(width: 2.w),
+                            Text(
+                              AppStrings.privacyPolicy.tr,
+                              style: TextStyle(
+                                color: AppColors.BLACK_COLOR,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ],
+                        ),
+                        enabled: false,
+                        collapsedBackgroundColor: AppColors.WHITE_COLOR,
+                        backgroundColor: AppColors.WHITE_COLOR,
+                        collapsedShape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        trailing: RotatedBox(
+                          quarterTurns: 3,
+                          child: Icon(
+                            Icons.expand_more_rounded,
+                            color: AppColors.BLACK_COLOR,
+                            size: 6.w,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(child: SizedBox(height: 1.h)),
+
+                ///Terms & Conditions
+                SliverToBoxAdapter(
+                  child: Card(
+                    color: AppColors.TRANSPARENT,
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    elevation: 0,
+                    child: InkWell(
+                      onTap: () {
+                        Get.toNamed(Routes.termsAndConditionsScreen, id: AppConstance.settingsNavigatorKey.getNavigatorId);
+                      },
+                      child: ExpansionTile(
+                        title: Row(
+                          children: [
+                            Icon(
+                              FontAwesomeIcons.fileContract,
+                              size: 5.w,
+                              color: AppColors.HINT_GREY_COLOR,
+                            ),
+                            SizedBox(width: 2.w),
+                            Text(
+                              AppStrings.termsAndConditions.tr,
+                              style: TextStyle(
+                                color: AppColors.BLACK_COLOR,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ],
+                        ),
+                        enabled: false,
+                        collapsedBackgroundColor: AppColors.WHITE_COLOR,
+                        backgroundColor: AppColors.WHITE_COLOR,
+                        collapsedShape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        trailing: RotatedBox(
+                          quarterTurns: 3,
+                          child: Icon(
+                            Icons.expand_more_rounded,
+                            color: AppColors.BLACK_COLOR,
+                            size: 6.w,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),

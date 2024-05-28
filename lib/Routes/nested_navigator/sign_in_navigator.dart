@@ -1,3 +1,4 @@
+import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Routes/app_pages.dart';
 import 'package:bombay_chowpati/Screens/auth_screen/forgot_password_screen/forgot_password_bindings.dart';
 import 'package:bombay_chowpati/Screens/auth_screen/forgot_password_screen/forgot_password_view.dart';
@@ -5,6 +6,7 @@ import 'package:bombay_chowpati/Screens/auth_screen/reset_password_screen/reset_
 import 'package:bombay_chowpati/Screens/auth_screen/reset_password_screen/reset_password_view.dart';
 import 'package:bombay_chowpati/Screens/auth_screen/sign_in_screen/sign_in_bindings.dart';
 import 'package:bombay_chowpati/Screens/auth_screen/sign_in_screen/sign_in_view.dart';
+import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +16,7 @@ class SignInNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      key: Get.nestedKey(0),
+      key: Get.nestedKey(AppConstance.signInNavigatorKey.getNavigatorId),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case Routes.forgotPasswordScreen:

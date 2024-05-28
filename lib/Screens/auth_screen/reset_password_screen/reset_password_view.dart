@@ -1,8 +1,10 @@
 import 'package:bombay_chowpati/Constants/app_colors.dart';
+import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Constants/app_strings.dart';
 import 'package:bombay_chowpati/Constants/app_utils.dart';
 import 'package:bombay_chowpati/Routes/app_pages.dart';
 import 'package:bombay_chowpati/Screens/auth_screen/reset_password_screen/reset_password_controller.dart';
+import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:bombay_chowpati/Widgets/button_widget.dart';
 import 'package:bombay_chowpati/Widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +29,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                 alignment: Alignment.centerLeft,
                 child: IconButton(
                   onPressed: () {
-                    Get.back(id: 0);
+                    Get.back(id: AppConstance.signInNavigatorKey.getNavigatorId);
                   },
                   icon: Icon(
                     Icons.arrow_back_ios_new_rounded,

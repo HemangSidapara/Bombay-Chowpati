@@ -90,4 +90,9 @@ Map<String, String> guIN = <String, String>{
   AppStrings.editProfile: "પ્રોફાઇલ સંપાદિત કરો",
   AppStrings.cart: "કાર્ટ",
   AppStrings.orderHistory: "જૂના ઓર્ડર",
+  AppStrings.privacyPolicy: "ગોપનીયતા નીતિ",
+  AppStrings.termsAndConditions: "શરતો અને નિયમો",
+  AppStrings.iAgreeWithTermsAndConditions: "હું નિયમો અને શરતો સાથે સંમત છું",
+  AppStrings.pleaseAcceptTermsAndConditions: "કૃપા કરીને નિયમો અને શરતો સ્વીકારો",
+  AppStrings.favourite: "મનપસંદ",
 };

@@ -1,5 +1,9 @@
+import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Constants/app_strings.dart';
+import 'package:bombay_chowpati/Constants/app_utils.dart';
 import 'package:bombay_chowpati/Constants/app_validators.dart';
+import 'package:bombay_chowpati/Network/services/auth_services/auth_services.dart';
+import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -48,7 +52,17 @@ class ChangePasswordController extends GetxController {
       isChangePasswordLoading(true);
       final isValid = changePasswordFormKey.currentState?.validate();
 
-      if (isValid == true) {}
+      if (isValid == true) {
+        final response = await AuthServices.changePasswordService(
+          oldPassword: oldPasswordController.text,
+          newPassword: newPasswordController.text,
+        );
+
+        if (response.isSuccess) {
+          Get.back(id: AppConstance.settingsNavigatorKey.getNavigatorId, closeOverlays: true);
+          Utils.handleMessage(message: response.message);
+        }
+      }
     } finally {
       isChangePasswordLoading(false);
     }
