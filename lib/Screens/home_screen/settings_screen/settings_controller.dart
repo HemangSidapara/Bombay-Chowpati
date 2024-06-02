@@ -1,5 +1,7 @@
 import 'package:bombay_chowpati/Constants/app_constance.dart';
+import 'package:bombay_chowpati/Constants/app_utils.dart';
 import 'package:bombay_chowpati/Constants/get_storage.dart';
+import 'package:bombay_chowpati/Network/services/auth_services/auth_services.dart';
 import 'package:bombay_chowpati/Network/services/utils_services/get_package_info_service.dart';
 import 'package:bombay_chowpati/Routes/app_pages.dart';
 import 'package:get/get.dart';
@@ -11,8 +13,6 @@ class SettingsController extends GetxController {
   RxBool isHindiLang = false.obs;
   RxBool isUpdateLoading = false.obs;
   RxInt downloadedProgress = 0.obs;
-
-  RxBool isLogOutLoading = false.obs;
 
   @override
   void onInit() async {
@@ -33,8 +33,23 @@ class SettingsController extends GetxController {
     appVersion.value = (await GetPackageInfoService.instance.getInfo()).version;
   }
 
+  ///LogOut
   Future<void> checkLogOut() async {
-    clearData();
-    Get.offAllNamed(Routes.authScreen);
+    final response = await AuthServices.logoutService();
+    if (response.isSuccess) {
+      clearData();
+      Get.offAllNamed(Routes.authScreen);
+      Utils.handleMessage(message: response.message);
+    }
+  }
+
+  ///Delete Account
+  Future<void> checkDeleteAccount() async {
+    final response = await AuthServices.deleteAccountService();
+    if (response.isSuccess) {
+      clearData();
+      Get.offAllNamed(Routes.authScreen);
+      Utils.handleMessage(message: response.message);
+    }
   }
 }

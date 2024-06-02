@@ -14,6 +14,7 @@ class ButtonWidget extends StatelessWidget {
   final Color? buttonColor;
   final Widget? loaderWidget;
   final Color? loaderColor;
+  final ButtonStyle? style;
 
   const ButtonWidget({
     super.key,
@@ -27,6 +28,7 @@ class ButtonWidget extends StatelessWidget {
     this.buttonTitleColor,
     this.loaderWidget,
     this.loaderColor,
+    this.style,
   });
 
   @override
@@ -38,15 +40,16 @@ class ButtonWidget extends StatelessWidget {
           onPressed?.call();
         }
       },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: buttonColor ?? AppColors.PRIMARY_COLOR,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        elevation: 4,
-        surfaceTintColor: AppColors.PRIMARY_COLOR,
-        fixedSize: fixedSize ?? Size(double.maxFinite, 6.h),
-      ),
+      style: style ??
+          ElevatedButton.styleFrom(
+            backgroundColor: buttonColor ?? AppColors.PRIMARY_COLOR,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            elevation: 4,
+            surfaceTintColor: AppColors.PRIMARY_COLOR,
+            fixedSize: fixedSize ?? Size(double.maxFinite, 6.h),
+          ),
       child: isLoading
           ? loaderWidget ??
               SizedBox(

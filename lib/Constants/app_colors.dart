@@ -15,7 +15,7 @@ class AppColors {
   static Color TERTIARY_COLOR = const Color(0xffFEFDFD);
   static Color WELCOME_SUBTITLE_COLOR = const Color(0xffBABABA);
   static Color MAIN_BORDER_COLOR = const Color(0xff7480ff);
-  static Color LIGHT_SECONDARY_COLOR = const Color(0xffDAE1EF);
+  static Color PRODUCT_BACKGROUND_COLOR = const Color(0xffECEDEF);
   static Color PRIMARY_BACK_COLOR = const Color(0xffF5F5F5);
   static Color HINT_GREY_COLOR = const Color(0xff868686);
   static Color LIGHT_GREY_COLOR = const Color(0xffC5C6CC);

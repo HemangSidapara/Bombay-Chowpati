@@ -9,6 +9,7 @@ import 'package:bombay_chowpati/Screens/home_screen/settings_screen/settings_con
 import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:bombay_chowpati/Utils/in_app_update_dialog_widget.dart';
 import 'package:bombay_chowpati/Widgets/button_widget.dart';
+import 'package:bombay_chowpati/Widgets/confirmation_dialog_widget.dart';
 import 'package:bombay_chowpati/Widgets/custom_header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -492,7 +493,17 @@ class SettingsView extends GetView<SettingsController> {
                     ),
                     elevation: 0,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () async {
+                        await showConfirmationDialog(
+                          context: context,
+                          title: AppStrings.areYouSureYouWantToDeleteAccount.tr,
+                          icon: Icons.delete_forever_rounded,
+                          confirmText: AppStrings.yesDelete.tr,
+                          onConfirm: () async {
+                            await controller.checkDeleteAccount();
+                          },
+                        );
+                      },
                       child: ExpansionTile(
                         title: Row(
                           children: [
@@ -534,9 +545,15 @@ class SettingsView extends GetView<SettingsController> {
           ///LogOut
           ButtonWidget(
             onPressed: () async {
-              await controller.checkLogOut();
+              await showConfirmationDialog(
+                context: context,
+                title: AppStrings.areYouSureYouWantToLogout.tr,
+                confirmText: AppStrings.logOut.tr,
+                onConfirm: () async {
+                  await controller.checkLogOut();
+                },
+              );
             },
-            isLoading: controller.isLogOutLoading.isTrue,
             buttonTitle: AppStrings.logOut.tr,
           ),
           SizedBox(height: 2.h),

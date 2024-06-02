@@ -29,7 +29,7 @@ class HomeController extends GetxController {
   ].obs;
 
   RxList<Widget> bottomItemWidgetList = [
-    const DashboardView(),
+    DashboardView(),
     const FavouriteView(),
     const CartNavigator(),
     const SettingsNavigator(),

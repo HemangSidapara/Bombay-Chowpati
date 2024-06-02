@@ -28,7 +28,7 @@ class CartNavigator extends StatelessWidget {
           default:
             return GetPageRoute(
               routeName: Routes.cartScreen,
-              page: () => const CartView(),
+              page: () => CartView(),
               binding: CartBindings(),
               transition: Transition.rightToLeftWithFade,
               transitionDuration: transitionDuration,

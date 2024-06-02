@@ -93,3 +93,16 @@ extension NotContainsAndAddSubString on String {
     }
   }
 }
+
+extension RupeesTotalFromSize on String {
+  String grandTotalBySize(String? quantity, String? size, String? mrp, String? price) {
+    if (quantity != null && size != null && mrp != null && price != null) {
+      if ((size == "5 Litre" && quantity.toInt() > 1) || (size == "750 ML" && quantity.toInt() > 6)) {
+        return "₹ ${(price.toInt() * quantity.toInt())}.00";
+      } else {
+        return "₹ ${(mrp.toInt() * quantity.toInt())}.00";
+      }
+    }
+    return "₹ 0.00";
+  }
+}

@@ -96,4 +96,15 @@ class AppStrings {
   static const String iAgreeWithTermsAndConditions = "I agree with Terms & Conditions";
   static const String pleaseAcceptTermsAndConditions = "Please accept Terms & Conditions";
   static const String favourite = "Favourite";
+  static const String selectSize = "Select size";
+  static const String yesDelete = "Yes, delete";
+  static const String areYouSureYouWantToLogout = "Are you sure, you want to logout?";
+  static const String areYouSureYouWantToDeleteAccount = "Are you sure, you want to delete your account? After it you will lose your account data.";
+  static const String search = "Search";
+  static const String mrp = "MRP: ";
+  static const String totalAmount = "Total amount: ";
+  static const String productAdded = "Product added";
+  static const String productsAdded = "Products added";
+  static const String viewCart = "View Cart";
+  static const String viewProducts = "View Products";
 }
