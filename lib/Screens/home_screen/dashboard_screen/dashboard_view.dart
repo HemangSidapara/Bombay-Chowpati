@@ -125,7 +125,7 @@ class DashboardView extends GetView<DashboardController> {
                                   ///View Cart
                                   TextButton(
                                     onPressed: () {
-                                      Get.find<HomeController>().onBottomItemChange(index: 0);
+                                      Get.find<HomeController>().onBottomItemChange(index: 2);
                                     },
                                     style: TextButton.styleFrom(
                                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
