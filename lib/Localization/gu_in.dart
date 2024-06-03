@@ -106,4 +106,6 @@ Map<String, String> guIN = <String, String>{
   AppStrings.productsAdded: "ઉત્પાદનો ઉમેર્યા",
   AppStrings.viewCart: "કાર્ટ જુઓ",
   AppStrings.viewProducts: "ઉત્પાદનો જુઓ",
+  AppStrings.totalPayableAmount: "કુલ ચૂકવવાપાત્ર રકમ: ",
+  AppStrings.offerOfferOffer: "ઓફર! ઓફર! ઓફર! દરેક પ્રોડક્ટ પર 10 લિટરથી વધુની ખરીદી પર જથ્થાબંધ ભાવને ધ્યાનમાં લેવું.",
 };

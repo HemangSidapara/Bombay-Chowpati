@@ -1,5 +1,7 @@
 import 'package:bombay_chowpati/Constants/app_navigator_keys.dart';
+import 'package:bombay_chowpati/Network/models/cart_models/cart_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 extension GetId on String {
@@ -72,15 +74,15 @@ extension RupeesFormatterFromString on String {
 
 indianRupeesFormat({String? symbol}) => NumberFormat.currency(name: "INR", locale: 'en_IN', decimalDigits: 0, symbol: symbol ?? '');
 
-extension RupeesGrandTotalFromList on List {
+extension RupeesGrandTotalFromList on RxList {
   String grandTotal() {
-    double totalAmount = 0.0;
-    for (var element in this) {
-      if (element.amount != '' && element.amount != null) {
-        totalAmount = totalAmount + element.amount!.toString().toDouble();
+    double totalAmount = 0.00;
+    for (var element in (this as RxList<CartModel>)) {
+      if (element.quantity != '' && element.quantity != null) {
+        totalAmount = totalAmount + "".grandTotalBySize(element.quantity, element.size, element.mrp, element.price).split(" ").last.toDouble();
       }
     }
-    return totalAmount.toString();
+    return "₹ ${totalAmount.toStringAsFixed(2)}";
   }
 }
 

@@ -12,19 +12,22 @@ class FavouriteView extends GetView<FavouriteController> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 5.w),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomHeaderWidget(
-            title: AppStrings.favourite.tr,
-            titleIconWidget: LottieBuilder.asset(
-              AppAssets.favouriteAnim,
+    return PopScope(
+      canPop: false,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 5.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomHeaderWidget(
+              title: AppStrings.favourite.tr,
+              titleIconWidget: LottieBuilder.asset(
+                AppAssets.favouriteAnim,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

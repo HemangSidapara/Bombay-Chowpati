@@ -3,4 +3,5 @@ import 'package:get/get.dart';
 
 class CartController extends GetxController {
   RxList<CartModel> cartList = RxList();
+  RxString totalPayableAmount = "".obs;
 }

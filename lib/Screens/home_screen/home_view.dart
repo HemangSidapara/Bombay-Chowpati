@@ -23,7 +23,11 @@ class HomeView extends GetView<HomeController> {
         } else if (Get.keys[AppConstance.settingsNavigatorKey.getNavigatorId]?.currentState?.canPop() == true) {
           Get.back(id: AppConstance.settingsNavigatorKey.getNavigatorId);
         } else if (!didPop) {
-          await showExitDialog(context);
+          if (controller.bottomIndex.value != 0) {
+            controller.onBottomItemChange(index: 0);
+          } else {
+            await showExitDialog(context);
+          }
         }
       },
       child: SafeArea(

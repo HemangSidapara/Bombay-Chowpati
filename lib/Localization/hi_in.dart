@@ -106,4 +106,6 @@ Map<String, String> hiIN = <String, String>{
   AppStrings.productsAdded: "उत्पाद जोड़े गए",
   AppStrings.viewCart: "टोकरी देखें",
   AppStrings.viewProducts: "उत्पाद देखें",
+  AppStrings.totalPayableAmount: "कुल देय राशि: ",
+  AppStrings.offerOfferOffer: "प्रस्ताव! प्रस्ताव! प्रस्ताव! प्रत्येक उत्पाद पर 10 लीटर से अधिक की खरीद पर थोक मूल्य पर विचार किया जा रहा है।",
 };

@@ -106,4 +106,6 @@ Map<String, String> enIN = <String, String>{
   AppStrings.productsAdded: "Products added",
   AppStrings.viewCart: "View Cart",
   AppStrings.viewProducts: "View Products",
+  AppStrings.totalPayableAmount: "Total payable amount: ",
+  AppStrings.offerOfferOffer: "Offer! Offer! Offer! Considering wholesale price on more than 10 ltr of purchase on every product.",
 };

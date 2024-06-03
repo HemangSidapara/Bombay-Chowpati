@@ -107,4 +107,6 @@ class AppStrings {
   static const String productsAdded = "Products added";
   static const String viewCart = "View Cart";
   static const String viewProducts = "View Products";
+  static const String totalPayableAmount = "Total payable amount: ";
+  static const String offerOfferOffer = "Offer! Offer! Offer! Considering wholesale price on more than 10 ltr of purchase on every product.";
 }
