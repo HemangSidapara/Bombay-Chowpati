@@ -19,6 +19,7 @@ class CartModel {
     String? mrp,
     String? price,
     String? quantity,
+    String? amount,
     String? image,
     String? title,
   }) {
@@ -28,6 +29,7 @@ class CartModel {
     _mrp = mrp;
     _price = price;
     _quantity = quantity;
+    _amount = amount;
     _image = image;
     _title = title;
   }
@@ -39,6 +41,7 @@ class CartModel {
     _mrp = json['mrp'];
     _price = json['price'];
     _quantity = json['quantity'];
+    _amount = json['amount'];
     _image = json['image'];
     _title = json['title'];
   }
@@ -49,6 +52,7 @@ class CartModel {
   String? _mrp;
   String? _price;
   String? _quantity;
+  String? _amount;
   String? _image;
   String? _title;
 
@@ -59,6 +63,7 @@ class CartModel {
     String? mrp,
     String? price,
     String? quantity,
+    String? amount,
     String? image,
     String? title,
   }) =>
@@ -69,6 +74,7 @@ class CartModel {
         mrp: mrp ?? _mrp,
         price: price ?? _price,
         quantity: quantity ?? _quantity,
+        amount: amount ?? _amount,
         image: image ?? _image,
         title: title ?? _title,
       );
@@ -96,6 +102,10 @@ class CartModel {
   set setQuantity(String? quantity) => _quantity = quantity;
 
   String? get quantity => _quantity;
+
+  set setAmount(String? amount) => _amount = amount;
+
+  String? get amount => _amount;
 
   set setImage(String? image) => _image = image;
 

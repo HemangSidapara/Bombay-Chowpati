@@ -30,7 +30,7 @@ class SettingsController extends GetxController {
       isGujaratiLang.value = false;
       isHindiLang.value = false;
     }
-    appVersion.value = (await GetPackageInfoService.instance.getInfo()).version;
+    appVersion.value = (await GetPackageInfoService.getInfo()).version;
   }
 
   ///LogOut

@@ -1,3 +1,4 @@
+import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Constants/app_navigator_keys.dart';
 import 'package:bombay_chowpati/Network/models/cart_models/cart_model.dart';
 import 'package:flutter/material.dart';
@@ -79,10 +80,10 @@ extension RupeesGrandTotalFromList on RxList {
     double totalAmount = 0.00;
     for (var element in (this as RxList<CartModel>)) {
       if (element.quantity != '' && element.quantity != null) {
-        totalAmount = totalAmount + "".grandTotalBySize(element.quantity, element.size, element.mrp, element.price).split(" ").last.toDouble();
+        totalAmount = totalAmount + "".grandTotalBySize(this, element.quantity, element.size, element.mrp, element.price).split(" ").last.toDouble();
       }
     }
-    return "₹ ${totalAmount.toStringAsFixed(2)}";
+    return totalAmount.toStringAsFixed(2);
   }
 }
 
@@ -97,14 +98,20 @@ extension NotContainsAndAddSubString on String {
 }
 
 extension RupeesTotalFromSize on String {
-  String grandTotalBySize(String? quantity, String? size, String? mrp, String? price) {
-    if (quantity != null && size != null && mrp != null && price != null) {
-      if ((size == "5 Litre" && quantity.toInt() > 1) || (size == "750 ML" && quantity.toInt() > 6)) {
-        return "₹ ${(price.toInt() * quantity.toInt())}.00";
-      } else {
-        return "₹ ${(mrp.toInt() * quantity.toInt())}.00";
+  String grandTotalBySize(RxList? cart, String? quantity, String? size, String? mrp, String? price) {
+    int totalQuantity = 0;
+    for (var e in (cart as List<CartModel>)) {
+      if (e.size == AppConstance.fiveLiter) {
+        totalQuantity += (e.quantity?.toInt() ?? 0);
       }
     }
-    return "₹ 0.00";
+    if (quantity != null && size != null && mrp != null && price != null) {
+      if (totalQuantity >= 2 || (size == AppConstance.fiveLiter && quantity.toInt() > 1) || (size == AppConstance.ml && quantity.toInt() > 6)) {
+        return (price.toInt() * quantity.toInt()).toStringAsFixed(2);
+      } else {
+        return (mrp.toInt() * quantity.toInt()).toStringAsFixed(2);
+      }
+    }
+    return "0.00";
   }
 }

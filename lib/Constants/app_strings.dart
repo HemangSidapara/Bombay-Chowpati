@@ -109,4 +109,15 @@ class AppStrings {
   static const String viewProducts = "View Products";
   static const String totalPayableAmount = "Total payable amount: ";
   static const String offerOfferOffer = "Offer! Offer! Offer! Considering wholesale price on more than 10 ltr of purchase on every product.";
+  static const String addNewAddress = "Add new address";
+  static const String placeOrder = "Place Order";
+  static const String addresses = "Addresses";
+  static const String selectAddressToPlaceOrder = "Select address to place order";
+  static const String enterAddress = "Enter address";
+  static const String pleaseEnterAddress = "Please enter address";
+  static const String selectPinCode = "Select pin-code";
+  static const String pleaseSelectPinCode = "Please select pin-code";
+  static const String editAddress = "Edit address";
+  static const String changeAnAddressDetails = "Change an address details";
+  static const String areYouSureYouWantToDeleteSelectedAddress = "Are you sure, you want to delete selected address?";
 }

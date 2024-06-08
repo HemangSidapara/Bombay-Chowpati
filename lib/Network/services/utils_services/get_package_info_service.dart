@@ -1,26 +1,35 @@
 import 'package:flutter/services.dart';
 
-class GetPackageInfoService {
+class GetPackageInfoService extends PackageInfoData {
   static const _platform = MethodChannel('AndroidMethodChannel');
-  static GetPackageInfoService instance = GetPackageInfoService();
 
-  Future<_PackageInfoData> getInfo() async {
-    final _info = await _platform.invokeMapMethod<String, dynamic>('getPackageInfo');
-    return _PackageInfoData(
-      appName: _info?['appName'] ?? '',
-      packageName: _info?['packageName'] ?? '',
-      version: _info?['version'] ?? '',
-      buildNumber: _info?['buildNumber'] ?? '',
-      installerStore: _info?['installerStore'] as String?,
+  GetPackageInfoService({
+    required super.appName,
+    required super.packageName,
+    required super.version,
+    required super.buildNumber,
+    String? installerStore,
+  });
+
+  static Future<PackageInfoData> getInfo() async {
+    final info = await _platform.invokeMapMethod<String, dynamic>('getPackageInfo');
+    GetPackageInfoService instance = GetPackageInfoService(
+      appName: info?['appName'] ?? '',
+      packageName: info?['packageName'] ?? '',
+      version: info?['version'] ?? '',
+      buildNumber: info?['buildNumber'] ?? '',
+      installerStore: info?['installerStore'] as String?,
     );
+
+    return instance;
   }
 }
 
-class _PackageInfoData {
+abstract class PackageInfoData {
   /// Constructs an instance with the given values for testing. [PackageInfoData]
   /// instances constructed this way won't actually reflect any real information
   /// from the platform, just whatever was passed in at construction time.
-  _PackageInfoData({
+  PackageInfoData({
     required this.appName,
     required this.packageName,
     required this.version,

@@ -16,11 +16,7 @@ class HomeView extends GetView<HomeController> {
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) async {
-        if (Get.keys[AppConstance.dashboardNavigatorKey.getNavigatorId]?.currentState?.canPop() == true) {
-          Get.back(id: AppConstance.dashboardNavigatorKey.getNavigatorId);
-        } else if (Get.keys[AppConstance.cartNavigatorKey.getNavigatorId]?.currentState?.canPop() == true) {
-          Get.back(id: AppConstance.cartNavigatorKey.getNavigatorId);
-        } else if (Get.keys[AppConstance.settingsNavigatorKey.getNavigatorId]?.currentState?.canPop() == true) {
+        if (Get.keys[AppConstance.settingsNavigatorKey.getNavigatorId]?.currentState?.canPop() == true) {
           Get.back(id: AppConstance.settingsNavigatorKey.getNavigatorId);
         } else if (!didPop) {
           if (controller.bottomIndex.value != 0) {
@@ -33,6 +29,7 @@ class HomeView extends GetView<HomeController> {
       child: SafeArea(
         child: Obx(() {
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: controller.bottomIndex.value == 3 ? AppColors.SETTING_BG_COLOR : AppColors.WHITE_COLOR,
             bottomNavigationBar: DecoratedBox(
               decoration: BoxDecoration(

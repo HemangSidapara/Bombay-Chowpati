@@ -12,4 +12,11 @@ class ApiUrls {
   static const String logoutApi = '${_apiPath}logout.php';
   static const String deleteAccountApi = '${_apiPath}deleteAccount.php';
   static const String getProductsApi = '${_apiPath}getProducts.php';
+  static const String getAddressApi = '${_apiPath}getAddress.php';
+  static const String addAddressApi = '${_apiPath}addAddress.php';
+  static const String editAddressApi = '${_apiPath}editAddress.php';
+  static const String deleteAddressApi = '${_apiPath}deleteAddress.php';
+  static const String createOrderApi = '${_apiPath}createOrder.php';
+  static const String getOrdersApi = '${_apiPath}getOrders.php';
+  static const String cancelOrderApi = '${_apiPath}cancelOrder.php';
 }

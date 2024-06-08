@@ -4,9 +4,9 @@ import 'package:bombay_chowpati/Screens/auth_screen/sign_in_screen/sign_in_bindi
 import 'package:bombay_chowpati/Screens/auth_screen/sign_up_screen/sign_up_bindings.dart';
 import 'package:bombay_chowpati/Screens/home_screen/cart_screen/cart_bindings.dart';
 import 'package:bombay_chowpati/Screens/home_screen/dashboard_screen/dashboard_bindings.dart';
-import 'package:bombay_chowpati/Screens/home_screen/favourite_screen/favourite_bindings.dart';
 import 'package:bombay_chowpati/Screens/home_screen/home_bindings.dart';
 import 'package:bombay_chowpati/Screens/home_screen/home_view.dart';
+import 'package:bombay_chowpati/Screens/home_screen/order_history_screen/order_history_bindings.dart';
 import 'package:bombay_chowpati/Screens/home_screen/settings_screen/settings_bindings.dart';
 import 'package:bombay_chowpati/Screens/splash_screen/splash_bindings.dart';
 import 'package:bombay_chowpati/Screens/splash_screen/splash_view.dart';
@@ -58,7 +58,7 @@ class AppPages {
       binding: HomeBindings(),
       bindings: [
         DashboardBindings(),
-        FavouriteBindings(),
+        OrderHistoryBindings(),
         CartBindings(),
         SettingsBindings(),
       ],

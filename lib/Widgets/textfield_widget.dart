@@ -28,6 +28,7 @@ class TextFieldWidget extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final Color? primaryColor;
   final Color? secondaryColor;
+  final Iterable<String>? autofillHints;
 
   const TextFieldWidget({
     super.key,
@@ -54,6 +55,7 @@ class TextFieldWidget extends StatefulWidget {
     this.inputFormatters,
     this.primaryColor,
     this.secondaryColor,
+    this.autofillHints,
   });
 
   @override
@@ -70,6 +72,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         controller: widget.controller,
         validator: widget.validator,
         focusNode: widget.focusNode,
+        autofillHints: widget.autofillHints,
         style: TextStyle(
           color: widget.secondaryColor ?? AppColors.PRIMARY_COLOR,
           fontSize: 16.sp,

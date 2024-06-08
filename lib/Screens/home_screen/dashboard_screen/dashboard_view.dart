@@ -15,7 +15,6 @@ import 'package:bombay_chowpati/Widgets/textfield_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:marquee/marquee.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class DashboardView extends GetView<DashboardController> {
@@ -34,6 +33,7 @@ class DashboardView extends GetView<DashboardController> {
               ? null
               : Stack(
                   children: [
+                    ///Remove
                     GestureDetector(
                       onTap: () {
                         controller.cartController.cartList.clear();
@@ -60,6 +60,8 @@ class DashboardView extends GetView<DashboardController> {
                         ),
                       ),
                     ),
+
+                    ///Details
                     AnimatedPositioned(
                       left: _isRemoving.isTrue ? 23.w : 0,
                       right: _isRemoving.isTrue ? -23.w : 0,
@@ -196,25 +198,32 @@ class DashboardView extends GetView<DashboardController> {
 
               ///Offer
               SizedBox(
-                height: 3.5.h,
-                child: Marquee(
-                  text: AppStrings.offerOfferOffer.tr,
-                  style: TextStyle(
-                    color: AppColors.DARK_GREEN_COLOR,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16.sp,
+                height: 8.h,
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 7.w).copyWith(bottom: 1.h),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColors.PRIMARY_COLOR,
+                          width: 1.8,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.5.h),
+                        child: Text(
+                          AppStrings.offerOfferOffer.tr,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AppColors.DARK_GREEN_COLOR,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.sp,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  scrollAxis: Axis.horizontal,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  blankSpace: 20.w,
-                  velocity: 50,
-                  startAfter: const Duration(seconds: 1),
-                  pauseAfterRound: const Duration(seconds: 1),
-                  startPadding: 7.w,
-                  accelerationDuration: const Duration(seconds: 1),
-                  accelerationCurve: Curves.linear,
-                  decelerationDuration: const Duration(milliseconds: 500),
-                  decelerationCurve: Curves.easeOut,
                 ),
               ),
 
@@ -428,18 +437,24 @@ class DashboardView extends GetView<DashboardController> {
                                         ),
                                         SizedBox(height: 1.h),
 
-                                        ///Amount
+                                        ///MRP & Amount
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             ///MRP
                                             Obx(() {
+                                              RxInt totalQuantity = 0.obs;
+                                              for (var element in controller.cartController.cartList) {
+                                                if (element.size == AppConstance.fiveLiter) {
+                                                  totalQuantity.value += (element.quantity?.toInt() ?? 0);
+                                                }
+                                              }
                                               return Text.rich(
                                                 TextSpan(
                                                   text: AppStrings.mrp.tr,
                                                   children: [
                                                     TextSpan(
-                                                      text: '₹ ${(productInCart.value?.size == "5 Litre" && (productInCart.value?.quantity?.toInt() ?? 0) > 1) || (productInCart.value?.size == "750 ML" && (productInCart.value?.quantity?.toInt() ?? 0) > 6) ? controller.selectedProductData[index]?.price : controller.selectedProductData[index]?.mrp}',
+                                                      text: '₹ ${totalQuantity.value >= 2 || (productInCart.value?.size == AppConstance.fiveLiter && (productInCart.value?.quantity?.toInt() ?? 0) > 1) || (productInCart.value?.size == AppConstance.ml && (productInCart.value?.quantity?.toInt() ?? 0) > 6) ? controller.selectedProductData[index]?.price : controller.selectedProductData[index]?.mrp}',
                                                       style: TextStyle(
                                                         color: AppColors.DARK_GREEN_COLOR,
                                                         fontSize: 16.sp,
@@ -464,7 +479,7 @@ class DashboardView extends GetView<DashboardController> {
                                                   text: AppStrings.totalAmount.tr,
                                                   children: [
                                                     TextSpan(
-                                                      text: '\n${'₹ 0.00'.grandTotalBySize(productInCart.value?.quantity, productInCart.value?.size, productInCart.value?.mrp, productInCart.value?.price)}',
+                                                      text: '\n₹ ${productInCart.value?.amount ?? "0.00"}',
                                                       style: TextStyle(
                                                         color: AppColors.DARK_GREEN_COLOR,
                                                         fontSize: 16.sp,
@@ -521,6 +536,7 @@ class DashboardView extends GetView<DashboardController> {
                                                       ),
                                                       onPressed: () {
                                                         productInCart.value?.setQuantity = "${(productInCart.value?.quantity?.toInt() ?? 0) - 1}";
+                                                        productInCart.value?.setAmount = "0.00".grandTotalBySize(controller.cartController.cartList, productInCart.value?.quantity, productInCart.value?.size, productInCart.value?.mrp, productInCart.value?.price);
                                                         if (productInCart.value?.quantity == "0") {
                                                           controller.cartController.cartList.removeWhere((element) => element.productId == product.pid);
                                                         }
@@ -558,6 +574,7 @@ class DashboardView extends GetView<DashboardController> {
                                                     child: TextButton(
                                                       onPressed: () {
                                                         productInCart.value?.setQuantity = "${(productInCart.value?.quantity?.toInt() ?? 0) + 1}";
+                                                        productInCart.value?.setAmount = "0.00".grandTotalBySize(controller.cartController.cartList, productInCart.value?.quantity, productInCart.value?.size, productInCart.value?.mrp, productInCart.value?.price);
                                                         productInCart.update((val) {
                                                           controller.cartController.totalPayableAmount.value = controller.cartController.cartList.grandTotal();
                                                           setData(AppConstance.cartStorage, controller.cartController.cartList.map((element) => element.toJson()).toList());

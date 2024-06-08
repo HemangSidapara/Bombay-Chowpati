@@ -103,7 +103,7 @@ class _ConfirmationDialogWidgetState extends State<_ConfirmationDialogWidget> {
                 ///No
                 ElevatedButton(
                   onPressed: () {
-                    Get.back();
+                    Get.back(closeOverlays: true);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.DARK_GREEN_COLOR,

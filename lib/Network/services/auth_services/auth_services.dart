@@ -6,7 +6,9 @@ import 'package:bombay_chowpati/Constants/get_storage.dart';
 import 'package:bombay_chowpati/Network/api_base_helper.dart';
 import 'package:bombay_chowpati/Network/models/auth_models/login_model.dart';
 import 'package:bombay_chowpati/Network/response_model.dart';
+import 'package:bombay_chowpati/Routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AuthServices {
   ///Login
@@ -121,6 +123,10 @@ class AuthServices {
           debugPrint("getUserDetailApi success :: ${res.message}");
         } else {
           debugPrint("getUserDetailApi error :: ${res.message}");
+          if (res.message == "Invalid Token") {
+            clearData();
+            Get.offAllNamed(Routes.authScreen);
+          }
           Utils.handleMessage(message: res.message, isError: true);
         }
       },

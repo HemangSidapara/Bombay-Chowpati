@@ -47,8 +47,6 @@ class SignUpController extends GetxController {
   String? passwordValidator(String? value) {
     if (value == null || value.isEmpty) {
       return AppStrings.pleaseEnterPassword.tr;
-    } else if (!AppValidators.passwordValidator.hasMatch(value)) {
-      return AppStrings.passwordMustContain.tr;
     }
     return null;
   }
