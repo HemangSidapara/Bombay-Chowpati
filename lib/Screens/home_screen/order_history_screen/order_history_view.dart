@@ -264,7 +264,12 @@ class OrderHistoryView extends GetView<OrderHistoryController> {
                                                 imageUrl: product?.coverThumb ?? "",
                                                 width: 33.3.w,
                                                 progressIndicatorBuilder: (context, url, progress) {
-                                                  return LoadingWidget(width: 8.w);
+                                                  return SizedBox(
+                                                    height: 10.h,
+                                                    child: Center(
+                                                      child: LoadingWidget(width: 12.w),
+                                                    ),
+                                                  );
                                                 },
                                                 errorWidget: (context, url, error) {
                                                   return Icon(

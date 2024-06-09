@@ -368,7 +368,7 @@ class CartView extends GetView<CartController> {
                           child: ListView.separated(
                             itemCount: controller.cartList.length,
                             shrinkWrap: true,
-                            padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 1.h).copyWith(bottom: controller.cartList.isNotEmpty ? 10.h : 2.h),
+                            padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 1.h).copyWith(bottom: controller.cartList.isNotEmpty ? 26.h : 2.h),
                             itemBuilder: (context, index) {
                               Rx<CartModel> product = controller.cartList[index].obs;
 
