@@ -119,4 +119,7 @@ Map<String, String> enIN = <String, String>{
   AppStrings.editAddress: "Edit address",
   AppStrings.changeAnAddressDetails: "Change an address details",
   AppStrings.areYouSureYouWantToDeleteSelectedAddress: "Are you sure, you want to delete selected address?",
+  AppStrings.status: "Status",
+  AppStrings.pending: "Pending",
+  AppStrings.completed: "Complete",
 };

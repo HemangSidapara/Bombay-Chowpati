@@ -119,4 +119,7 @@ Map<String, String> guIN = <String, String>{
   AppStrings.editAddress: "સરનામું સંપાદિત કરો",
   AppStrings.changeAnAddressDetails: "સરનામાંની વિગતો બદલો",
   AppStrings.areYouSureYouWantToDeleteSelectedAddress: "શું તમે ખરેખર પસંદ કરેલ સરનામું કાઢી નાખવા માંગો છો?",
+  AppStrings.status: "સ્થિતિ",
+  AppStrings.pending: "બાકી છે",
+  AppStrings.completed: "પૂર્ણ",
 };

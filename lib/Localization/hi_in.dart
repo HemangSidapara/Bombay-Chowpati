@@ -119,4 +119,7 @@ Map<String, String> hiIN = <String, String>{
   AppStrings.editAddress: "पता संपादित करें",
   AppStrings.changeAnAddressDetails: "पते का विवरण बदलें",
   AppStrings.areYouSureYouWantToDeleteSelectedAddress: "क्या आप वाकई चयनित पता हटाना चाहते हैं?",
+  AppStrings.status: "स्थिति",
+  AppStrings.pending: "लंबित",
+  AppStrings.completed: "पूरा",
 };

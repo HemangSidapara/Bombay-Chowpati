@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 class OrderHistoryController extends GetxController {
   RxBool isGetOrdersLoading = false.obs;
+  RxBool isCancelOrderLoading = false.obs;
 
   RxList<order_model.Data> orderList = RxList();
 
@@ -27,6 +28,19 @@ class OrderHistoryController extends GetxController {
       }
     } finally {
       isGetOrdersLoading(false);
+    }
+  }
+
+  Future<void> cancelOrderApiCall({required String orderId}) async {
+    try {
+      isCancelOrderLoading(true);
+      final response = await OrderHistoryService.cancelOrderService(orderId: orderId);
+
+      if (response.isSuccess) {
+        await getOrdersApiCall();
+      }
+    } finally {
+      isCancelOrderLoading(false);
     }
   }
 }

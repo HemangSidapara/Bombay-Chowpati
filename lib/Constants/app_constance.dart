@@ -10,4 +10,5 @@ class AppConstance {
   static const String cartStorage = "cartStorage";
   static const String fiveLiter = "5 Litre";
   static const String ml = "750 ML";
+  static const String rupeeSign = "\u{20B9}";
 }

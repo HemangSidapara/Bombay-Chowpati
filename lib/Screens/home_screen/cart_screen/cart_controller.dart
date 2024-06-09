@@ -7,6 +7,7 @@ import 'package:bombay_chowpati/Network/models/cart_models/cart_model.dart';
 import 'package:bombay_chowpati/Network/models/cart_models/get_address_model.dart' as address_model;
 import 'package:bombay_chowpati/Network/services/cart_services/cart_service.dart';
 import 'package:bombay_chowpati/Screens/home_screen/home_controller.dart';
+import 'package:bombay_chowpati/Screens/home_screen/order_history_screen/order_history_controller.dart';
 import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:get/get.dart';
 
@@ -139,6 +140,7 @@ class CartController extends GetxController {
         cartList.clear();
         removeData(AppConstance.cartStorage);
         Get.find<HomeController>().onBottomItemChange(index: 1);
+        Get.find<OrderHistoryController>().getOrdersApiCall();
         Utils.handleMessage(message: response.message);
       }
     } finally {

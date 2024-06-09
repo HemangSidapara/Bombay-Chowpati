@@ -120,4 +120,7 @@ class AppStrings {
   static const String editAddress = "Edit address";
   static const String changeAnAddressDetails = "Change an address details";
   static const String areYouSureYouWantToDeleteSelectedAddress = "Are you sure, you want to delete selected address?";
+  static const String status = "Status";
+  static const String pending = "Pending";
+  static const String completed = "Completed";
 }
