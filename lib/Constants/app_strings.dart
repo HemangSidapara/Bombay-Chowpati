@@ -123,4 +123,6 @@ class AppStrings {
   static const String status = "Status";
   static const String pending = "Pending";
   static const String completed = "Completed";
+  static const String cancelled = "Cancelled";
+  static const String areYouSureYouWantToPlaceOrderWithSelectedItems = "Are you sure, you want to place order with selected items?";
 }

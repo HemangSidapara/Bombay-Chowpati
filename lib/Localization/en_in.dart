@@ -121,5 +121,6 @@ Map<String, String> enIN = <String, String>{
   AppStrings.areYouSureYouWantToDeleteSelectedAddress: "Are you sure, you want to delete selected address?",
   AppStrings.status: "Status",
   AppStrings.pending: "Pending",
-  AppStrings.completed: "Complete",
+  AppStrings.completed: "Completed",
+  AppStrings.areYouSureYouWantToPlaceOrderWithSelectedItems: "Are you sure, you want to place order with selected items?",
 };

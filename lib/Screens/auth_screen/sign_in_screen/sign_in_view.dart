@@ -1,4 +1,3 @@
-import 'package:bombay_chowpati/Constants/app_assets.dart';
 import 'package:bombay_chowpati/Constants/app_colors.dart';
 import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Constants/app_strings.dart';
@@ -103,30 +102,30 @@ class SignInView extends GetView<SignInController> {
                 SizedBox(height: 2.h),
 
                 ///Or
-                Text(
-                  AppStrings.or.tr,
-                  style: TextStyle(
-                    color: AppColors.BLACK_COLOR,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.sp,
-                  ),
-                ),
-                SizedBox(height: 5.h),
+                // Text(
+                //   AppStrings.or.tr,
+                //   style: TextStyle(
+                //     color: AppColors.BLACK_COLOR,
+                //     fontWeight: FontWeight.w600,
+                //     fontSize: 18.sp,
+                //   ),
+                // ),
+                // SizedBox(height: 5.h),
 
                 ///Social Login
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ///Google
-                    SocialLoginWidget(image: AppAssets.googleIcon),
-
-                    ///Apple
-                    SocialLoginWidget(image: AppAssets.appleIcon),
-
-                    ///Facebook
-                    SocialLoginWidget(image: AppAssets.facebookIcon),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   children: [
+                //     ///Google
+                //     SocialLoginWidget(image: AppAssets.googleIcon),
+                //
+                //     ///Apple
+                //     SocialLoginWidget(image: AppAssets.appleIcon),
+                //
+                //     ///Facebook
+                //     SocialLoginWidget(image: AppAssets.facebookIcon),
+                //   ],
+                // ),
                 SizedBox(height: 5.h),
               ],
             ),

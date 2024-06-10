@@ -4,6 +4,7 @@ import 'package:bombay_chowpati/Constants/get_storage.dart';
 import 'package:bombay_chowpati/Network/services/auth_services/auth_services.dart';
 import 'package:bombay_chowpati/Network/services/utils_services/get_package_info_service.dart';
 import 'package:bombay_chowpati/Routes/app_pages.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SettingsController extends GetxController {
@@ -31,6 +32,11 @@ class SettingsController extends GetxController {
       isHindiLang.value = false;
     }
     appVersion.value = (await GetPackageInfoService.getInfo()).version;
+  }
+
+  @override
+  void onReady() async {
+    await Get.updateLocale(Locale(getString(AppConstance.languageCode) ?? "en", getString(AppConstance.languageCountryCode) ?? "IN"));
   }
 
   ///LogOut

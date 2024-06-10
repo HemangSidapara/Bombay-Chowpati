@@ -122,4 +122,6 @@ Map<String, String> hiIN = <String, String>{
   AppStrings.status: "स्थिति",
   AppStrings.pending: "लंबित",
   AppStrings.completed: "पूरा",
+  AppStrings.cancelled: "रद्द",
+  AppStrings.areYouSureYouWantToPlaceOrderWithSelectedItems: "क्या आप वाकई चयनित वस्तुओं के साथ ऑर्डर देना चाहते हैं?",
 };

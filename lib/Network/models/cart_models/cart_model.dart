@@ -123,6 +123,7 @@ class CartModel {
     map['mrp'] = _mrp;
     map['price'] = _price;
     map['quantity'] = _quantity;
+    map['amount'] = _amount;
     map['image'] = _image;
     map['title'] = _title;
     return map;

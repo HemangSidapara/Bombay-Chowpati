@@ -20,8 +20,6 @@ class CartController extends GetxController {
   RxList<address_model.Data> addressList = RxList();
   RxString selectedAddressId = "".obs;
 
-  RxBool isPlaceOrderLoading = false.obs;
-
   @override
   void onInit() async {
     super.onInit();
@@ -119,32 +117,27 @@ class CartController extends GetxController {
   }
 
   Future<void> createOrderApiCall() async {
-    try {
-      isPlaceOrderLoading(true);
-      final response = await CartService.createOrderService(
-        addressId: selectedAddressId.value,
-        totalAmount: totalPayableAmount.value,
-        orderMeta: cartList
-            .map(
-              (element) => {
-                ApiKeys.pid: element.productId ?? "",
-                ApiKeys.pMetaId: element.productDataId ?? "",
-                ApiKeys.quantity: element.quantity ?? "",
-                ApiKeys.amount: "".grandTotalBySize(cartList, element.quantity, element.size, element.mrp, element.price).split("₹ ").last,
-              },
-            )
-            .toList(),
-      );
+    final response = await CartService.createOrderService(
+      addressId: selectedAddressId.value,
+      totalAmount: totalPayableAmount.value,
+      orderMeta: cartList
+          .map(
+            (element) => {
+              ApiKeys.pid: element.productId ?? "",
+              ApiKeys.pMetaId: element.productDataId ?? "",
+              ApiKeys.quantity: element.quantity ?? "",
+              ApiKeys.amount: "".grandTotalBySize(cartList, element.quantity, element.size, element.mrp, element.price).split("₹ ").last,
+            },
+          )
+          .toList(),
+    );
 
-      if (response.isSuccess) {
-        cartList.clear();
-        removeData(AppConstance.cartStorage);
-        Get.find<HomeController>().onBottomItemChange(index: 1);
-        Get.find<OrderHistoryController>().getOrdersApiCall();
-        Utils.handleMessage(message: response.message);
-      }
-    } finally {
-      isPlaceOrderLoading(false);
+    if (response.isSuccess) {
+      cartList.clear();
+      removeData(AppConstance.cartStorage);
+      Get.find<HomeController>().onBottomItemChange(index: 1);
+      Get.find<OrderHistoryController>().getOrdersApiCall();
+      Utils.handleMessage(message: response.message);
     }
   }
 }

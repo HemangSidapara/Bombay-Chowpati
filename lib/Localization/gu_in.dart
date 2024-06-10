@@ -122,4 +122,6 @@ Map<String, String> guIN = <String, String>{
   AppStrings.status: "સ્થિતિ",
   AppStrings.pending: "બાકી છે",
   AppStrings.completed: "પૂર્ણ",
+  AppStrings.cancelled: "રદ કરેલ",
+  AppStrings.areYouSureYouWantToPlaceOrderWithSelectedItems: "શું તમે ખરેખર પસંદ કરેલી વસ્તુઓ સાથે ઓર્ડર આપવા માંગો છો?",
 };
