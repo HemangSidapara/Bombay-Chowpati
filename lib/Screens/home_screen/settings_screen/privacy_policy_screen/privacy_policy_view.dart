@@ -46,10 +46,12 @@ class PrivacyPolicyView extends GetView<PrivacyPolicyController> {
                     ),
                   );
                 } else {
-                  return HtmlWidget(
-                    controller.privacyPolicyTag.value,
-                    textStyle: TextStyle(
-                      fontSize: 16.sp,
+                  return SingleChildScrollView(
+                    child: HtmlWidget(
+                      controller.privacyPolicyTag.value,
+                      textStyle: TextStyle(
+                        fontSize: 16.sp,
+                      ),
                     ),
                   );
                 }

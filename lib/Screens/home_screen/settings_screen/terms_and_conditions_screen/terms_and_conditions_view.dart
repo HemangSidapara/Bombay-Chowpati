@@ -1,6 +1,8 @@
 import 'package:bombay_chowpati/Constants/app_colors.dart';
 import 'package:bombay_chowpati/Constants/app_constance.dart';
+import 'package:bombay_chowpati/Constants/app_navigator_keys.dart';
 import 'package:bombay_chowpati/Constants/app_strings.dart';
+import 'package:bombay_chowpati/Routes/app_pages.dart';
 import 'package:bombay_chowpati/Screens/home_screen/settings_screen/terms_and_conditions_screen/terms_and_conditions_controller.dart';
 import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:bombay_chowpati/Widgets/custom_header_widget.dart';
@@ -75,10 +77,16 @@ class TermsAndConditionsView extends GetView<TermsAndConditionsController> {
                     ),
                   );
                 } else {
-                  return HtmlWidget(
-                    controller.termsAndConditionsTag.value,
-                    textStyle: TextStyle(
-                      fontSize: 16.sp,
+                  return SingleChildScrollView(
+                    child: HtmlWidget(
+                      controller.termsAndConditionsTag.value,
+                      textStyle: TextStyle(
+                        fontSize: 16.sp,
+                      ),
+                      onTapUrl: (url) async {
+                        Get.offNamed(Routes.privacyPolicyScreen, id: AppNavigatorKeys.keys[AppConstance.settingsNavigatorKey]);
+                        return false;
+                      },
                     ),
                   );
                 }

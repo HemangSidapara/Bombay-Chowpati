@@ -26,18 +26,6 @@ class SplashView extends GetView<SplashController> {
                   Center(
                     child: Image.asset(
                       AppAssets.splashImage,
-                      height: 50.h,
-                    ),
-                  ),
-                  Center(
-                    child: Text(
-                      AppStrings.appName.tr,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.PRIMARY_COLOR,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 23.sp,
-                      ),
                     ),
                   ),
                 ],
