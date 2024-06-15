@@ -45,7 +45,7 @@ class CartView extends GetView<CartController> {
                         removeData(AppConstance.cartStorage);
                       },
                       child: SizedBox(
-                        height: 23.5.h,
+                        height: 25.h,
                         child: Material(
                           color: AppColors.DARK_RED_COLOR,
                           child: Padding(
@@ -71,270 +71,289 @@ class CartView extends GetView<CartController> {
                       left: _isRemoving.isTrue ? -23.w : 0,
                       right: _isRemoving.isTrue ? 23.w : 0,
                       duration: const Duration(milliseconds: 300),
-                      child: Material(
-                        color: AppColors.SECONDARY_COLOR,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ///Items
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.5.h).copyWith(bottom: 0.8.h, left: 2.w),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ///View Products
-                                  TextButton(
-                                    onPressed: () {
-                                      Get.find<HomeController>().onBottomItemChange(index: 0);
-                                    },
-                                    style: TextButton.styleFrom(
-                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.keyboard_arrow_left_rounded,
-                                          size: 5.w,
-                                          color: AppColors.DARK_GREEN_COLOR,
-                                        ),
-                                        Text(
-                                          AppStrings.viewProducts.tr,
-                                          style: TextStyle(
+                      child: SizedBox(
+                        height: 25.h,
+                        child: Material(
+                          color: AppColors.SECONDARY_COLOR,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              ///Total products
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.5.h).copyWith(bottom: 0.8.h, left: 2.w),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ///View Products
+                                    TextButton(
+                                      onPressed: () {
+                                        Get.find<HomeController>().onBottomItemChange(index: 0);
+                                      },
+                                      style: TextButton.styleFrom(
+                                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.keyboard_arrow_left_rounded,
+                                            size: 5.w,
                                             color: AppColors.DARK_GREEN_COLOR,
+                                          ),
+                                          Text(
+                                            AppStrings.viewProducts.tr,
+                                            style: TextStyle(
+                                              color: AppColors.DARK_GREEN_COLOR,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 15.sp,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(width: 2.w),
+
+                                    ///Clear cart & Items
+                                    Row(
+                                      children: [
+                                        ///Item Count
+                                        Text(
+                                          '${controller.cartList.length} ${controller.cartList.length > 1 ? AppStrings.productsAdded.tr : AppStrings.productAdded.tr}',
+                                          style: TextStyle(
+                                            color: AppColors.BLACK_COLOR,
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        SizedBox(width: 3.w),
+
+                                        ///Clear cart
+                                        IconButton(
+                                          onPressed: () async {
+                                            Future.delayed(
+                                              const Duration(seconds: 3),
+                                              () {
+                                                if (_isRemoving.isTrue) {
+                                                  _isRemoving.toggle();
+                                                }
+                                              },
+                                            );
+                                            _isRemoving.toggle();
+                                          },
+                                          style: TextButton.styleFrom(
+                                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                            maximumSize: Size(6.w, 6.w),
+                                            minimumSize: Size(6.w, 6.w),
+                                            padding: EdgeInsets.zero,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(99),
+                                              side: BorderSide(
+                                                color: AppColors.DARK_RED_COLOR,
+                                                width: 1.5,
+                                              ),
+                                            ),
+                                          ),
+                                          icon: Icon(
+                                            Icons.close_rounded,
+                                            color: AppColors.DARK_RED_COLOR,
+                                            size: 4.w,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Divider(
+                                color: AppColors.GREY_COLOR,
+                                thickness: 0.3,
+                              ),
+
+                              ///Payment details
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5.w),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ///Total Payable Amount
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        ///Total Payable
+                                        Text(
+                                          AppStrings.totalPayableAmount.tr,
+                                          style: TextStyle(
+                                            color: AppColors.BLACK_COLOR,
                                             fontWeight: FontWeight.w600,
                                             fontSize: 15.sp,
+                                          ),
+                                        ),
+                                        SizedBox(width: 2.w),
+
+                                        ///Amount
+                                        Obx(() {
+                                          return Text(
+                                            "₹ ${controller.totalPayableAmount.value}",
+                                            style: TextStyle(
+                                              color: AppColors.DARK_GREEN_COLOR,
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          );
+                                        }),
+                                      ],
+                                    ),
+                                    SizedBox(height: 0.5.h),
+
+                                    ///Address
+                                    Obx(() {
+                                      return Flexible(
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            ElevatedButton(
+                                              onPressed: () async {
+                                                await showBottomSheetAddress(
+                                                  context: context,
+                                                  selectAddressId: controller.selectedAddressId.value,
+                                                );
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                elevation: 4,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(99),
+                                                  side: BorderSide(
+                                                    color: AppColors.PRIMARY_COLOR,
+                                                    width: 1.5,
+                                                  ),
+                                                ),
+                                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                padding: EdgeInsets.zero,
+                                                minimumSize: Size(8.w, 8.w),
+                                                maximumSize: Size(8.w, 8.w),
+                                              ),
+                                              child: Icon(
+                                                FontAwesomeIcons.locationDot,
+                                                color: AppColors.ORANGE_COLOR,
+                                                size: 4.w,
+                                              ),
+                                            ),
+                                            SizedBox(width: 2.5.w),
+                                            if (controller.addressList.isNotEmpty)
+                                              Flexible(
+                                                child: TextWithTooltipWidget(
+                                                  child: Text(
+                                                    "${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.address ?? ""}, ${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.pinCode ?? ""}",
+                                                    overflow: TextOverflow.ellipsis,
+                                                    maxLines: 2,
+                                                    style: TextStyle(
+                                                      color: AppColors.BLACK_COLOR,
+                                                      fontWeight: FontWeight.w600,
+                                                      fontSize: 15.sp,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            else
+                                              Text(
+                                                AppStrings.addressNotAddedYet.tr,
+                                                style: TextStyle(
+                                                  color: AppColors.TEXT_BLACK_COLOR,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 15.sp,
+                                                ),
+                                              ),
+                                          ],
+                                        ),
+                                      );
+                                    }),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 1.h),
+
+                              ///Create Order
+                              Expanded(
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      top: BorderSide(color: AppColors.GREY_COLOR, width: 0.3),
+                                      bottom: BorderSide(color: AppColors.GREY_COLOR, width: 0.3),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 5.w),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        ///Add address
+                                        TextButton(
+                                          onPressed: () async {
+                                            await showBottomSheetAddNewAddress(context: context);
+                                          },
+                                          style: TextButton.styleFrom(
+                                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                            padding: EdgeInsets.zero,
+                                            maximumSize: Size(35.w, 3.h),
+                                            minimumSize: Size(35.w, 3.h),
+                                            elevation: 4,
+                                          ),
+                                          child: Text(
+                                            AppStrings.addNewAddress.tr,
+                                            style: TextStyle(
+                                              color: AppColors.DARK_RED_COLOR,
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+
+                                        ///Place Order
+                                        ButtonWidget(
+                                          onPressed: () async {
+                                            if (controller.selectedAddressId.isNotEmpty) {
+                                              await showConfirmationDialog(
+                                                context: context,
+                                                title: AppStrings.areYouSureYouWantToPlaceOrderWithSelectedItems.tr,
+                                                confirmText: AppStrings.confirm.tr,
+                                                icon: FontAwesomeIcons.truckFast,
+                                                onConfirm: () async {
+                                                  Get.back();
+                                                  await controller.createOrderApiCall();
+                                                },
+                                              );
+                                            } else {
+                                              Utils.handleMessage(message: AppStrings.pleaseSelectOrAddAddress, isError: true);
+                                            }
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: AppColors.WARNING_COLOR,
+                                            minimumSize: Size(35.w, 4.h),
+                                            maximumSize: Size(45.w, 4.h),
+                                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                            elevation: 4,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                          child: Text(
+                                            AppStrings.placeOrder.tr,
+                                            style: TextStyle(
+                                              color: AppColors.SECONDARY_COLOR,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 16.sp,
+                                            ),
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  SizedBox(width: 2.w),
-
-                                  ///Clear cart & Items
-                                  Row(
-                                    children: [
-                                      ///Item Count
-                                      Text(
-                                        '${controller.cartList.length} ${controller.cartList.length > 1 ? AppStrings.productsAdded.tr : AppStrings.productAdded.tr}',
-                                        style: TextStyle(
-                                          color: AppColors.BLACK_COLOR,
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      SizedBox(width: 3.w),
-
-                                      ///Clear cart
-                                      IconButton(
-                                        onPressed: () async {
-                                          Future.delayed(
-                                            const Duration(seconds: 3),
-                                            () {
-                                              if (_isRemoving.isTrue) {
-                                                _isRemoving.toggle();
-                                              }
-                                            },
-                                          );
-                                          _isRemoving.toggle();
-                                        },
-                                        style: TextButton.styleFrom(
-                                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                          maximumSize: Size(6.w, 6.w),
-                                          minimumSize: Size(6.w, 6.w),
-                                          padding: EdgeInsets.zero,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(99),
-                                            side: BorderSide(
-                                              color: AppColors.DARK_RED_COLOR,
-                                              width: 1.5,
-                                            ),
-                                          ),
-                                        ),
-                                        icon: Icon(
-                                          Icons.close_rounded,
-                                          color: AppColors.DARK_RED_COLOR,
-                                          size: 4.w,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-                            Divider(
-                              color: AppColors.GREY_COLOR,
-                              thickness: 0.3,
-                            ),
-
-                            ///Payment details
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 5.w),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ///Total Payable Amount
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      ///Total Payable
-                                      Text(
-                                        AppStrings.totalPayableAmount.tr,
-                                        style: TextStyle(
-                                          color: AppColors.BLACK_COLOR,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 15.sp,
-                                        ),
-                                      ),
-                                      SizedBox(width: 2.w),
-
-                                      ///Amount
-                                      Obx(() {
-                                        return Text(
-                                          "₹ ${controller.totalPayableAmount.value}",
-                                          style: TextStyle(
-                                            color: AppColors.DARK_GREEN_COLOR,
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        );
-                                      }),
-                                    ],
-                                  ),
-                                  SizedBox(height: 0.5.h),
-
-                                  ///Address
-                                  Obx(() {
-                                    return Flexible(
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          ElevatedButton(
-                                            onPressed: () async {
-                                              await showBottomSheetAddress(
-                                                context: context,
-                                                selectAddressId: controller.selectedAddressId.value,
-                                              );
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              elevation: 4,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(99),
-                                                side: BorderSide(
-                                                  color: AppColors.PRIMARY_COLOR,
-                                                  width: 1.5,
-                                                ),
-                                              ),
-                                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                              padding: EdgeInsets.zero,
-                                              minimumSize: Size(8.w, 8.w),
-                                              maximumSize: Size(8.w, 8.w),
-                                            ),
-                                            child: Icon(
-                                              FontAwesomeIcons.locationDot,
-                                              color: AppColors.ORANGE_COLOR,
-                                              size: 4.w,
-                                            ),
-                                          ),
-                                          SizedBox(width: 2.5.w),
-                                          if (controller.addressList.isNotEmpty)
-                                            Flexible(
-                                              child: TextWithTooltipWidget(
-                                                child: Text(
-                                                  "${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.address ?? ""}, ${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.pinCode ?? ""}",
-                                                  overflow: TextOverflow.ellipsis,
-                                                  maxLines: 2,
-                                                  style: TextStyle(
-                                                    color: AppColors.BLACK_COLOR,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 15.sp,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                        ],
-                                      ),
-                                    );
-                                  }),
-                                ],
-                              ),
-                            ),
-                            Divider(
-                              color: AppColors.GREY_COLOR,
-                              thickness: 0.3,
-                            ),
-
-                            ///Create Order
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 5.w),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  ///Add address
-                                  TextButton(
-                                    onPressed: () async {
-                                      await showBottomSheetAddNewAddress(context: context);
-                                    },
-                                    style: TextButton.styleFrom(
-                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                      padding: EdgeInsets.zero,
-                                      maximumSize: Size(35.w, 3.h),
-                                      minimumSize: Size(35.w, 3.h),
-                                      elevation: 4,
-                                    ),
-                                    child: Text(
-                                      AppStrings.addNewAddress.tr,
-                                      style: TextStyle(
-                                        color: AppColors.DARK_RED_COLOR,
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-
-                                  ///Place Order
-                                  ButtonWidget(
-                                    onPressed: () async {
-                                      await showConfirmationDialog(
-                                        context: context,
-                                        title: AppStrings.areYouSureYouWantToPlaceOrderWithSelectedItems.tr,
-                                        confirmText: AppStrings.confirm.tr,
-                                        icon: FontAwesomeIcons.truckFast,
-                                        onConfirm: () async {
-                                          Get.back();
-                                          await controller.createOrderApiCall();
-                                        },
-                                      );
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColors.WARNING_COLOR,
-                                      minimumSize: Size(35.w, 4.h),
-                                      maximumSize: Size(45.w, 4.h),
-                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                      elevation: 4,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                    child: Text(
-                                      AppStrings.placeOrder.tr,
-                                      style: TextStyle(
-                                        color: AppColors.SECONDARY_COLOR,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Divider(
-                              color: AppColors.GREY_COLOR,
-                              thickness: 0.3,
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -400,7 +419,7 @@ class CartView extends GetView<CartController> {
                                         ],
                                       ),
                                       clipBehavior: Clip.hardEdge,
-                                      height: 22.h,
+                                      height: 24.h,
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -449,13 +468,36 @@ class CartView extends GetView<CartController> {
                                                       ),
                                                     ),
                                                   ),
-                                                  SizedBox(height: 0.5.h),
 
-                                                  ///MRP & Amount
+                                                  ///Size, MRP & Amount
                                                   Center(
                                                     child: Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
+                                                        ///Size
+                                                        Obx(() {
+                                                          return Text.rich(
+                                                            TextSpan(
+                                                              text: AppStrings.size.tr,
+                                                              children: [
+                                                                TextSpan(
+                                                                  text: product.value.size,
+                                                                  style: TextStyle(
+                                                                    color: AppColors.DARK_GREEN_COLOR,
+                                                                    fontSize: 16.sp,
+                                                                    fontWeight: FontWeight.w600,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                              style: TextStyle(
+                                                                color: AppColors.BLACK_COLOR,
+                                                                fontSize: 16.sp,
+                                                                fontWeight: FontWeight.w500,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }),
+
                                                         ///MRP
                                                         Obx(() {
                                                           RxInt totalQuantity = 0.obs;
@@ -485,7 +527,6 @@ class CartView extends GetView<CartController> {
                                                             ),
                                                           );
                                                         }),
-                                                        SizedBox(height: 0.5.h),
 
                                                         ///Total Amount
                                                         Obx(() {
@@ -995,15 +1036,19 @@ class CartView extends GetView<CartController> {
                                             ElevatedButton(
                                               onPressed: () async {
                                                 Get.back(closeOverlays: true);
-                                                await showConfirmationDialog(
-                                                  context: context,
-                                                  title: AppStrings.areYouSureYouWantToDeleteSelectedAddress.tr,
-                                                  confirmText: AppStrings.yesDelete.tr,
-                                                  icon: Icons.delete_forever_rounded,
-                                                  onConfirm: () async {
-                                                    await controller.deleteAddressApiCall(addressId: addressDetails.addressId ?? "");
-                                                  },
-                                                );
+                                                if (selectedAddressIndex.value != index) {
+                                                  await showConfirmationDialog(
+                                                    context: context,
+                                                    title: AppStrings.areYouSureYouWantToDeleteSelectedAddress.tr,
+                                                    confirmText: AppStrings.yesDelete.tr,
+                                                    icon: Icons.delete_forever_rounded,
+                                                    onConfirm: () async {
+                                                      await controller.deleteAddressApiCall(addressId: addressDetails.addressId ?? "");
+                                                    },
+                                                  );
+                                                } else {
+                                                  Utils.handleMessage(message: AppStrings.defaultAddressCantBeDeleted.tr, isError: true);
+                                                }
                                               },
                                               style: ElevatedButton.styleFrom(
                                                 backgroundColor: AppColors.DARK_RED_COLOR,

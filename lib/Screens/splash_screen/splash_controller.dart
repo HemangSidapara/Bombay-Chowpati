@@ -7,6 +7,7 @@ import 'package:bombay_chowpati/Constants/get_storage.dart';
 import 'package:bombay_chowpati/Network/services/utils_services/get_package_info_service.dart';
 import 'package:bombay_chowpati/Routes/app_pages.dart';
 import 'package:bombay_chowpati/Utils/in_app_update_dialog_widget.dart';
+import 'package:bombay_chowpati/Utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -31,6 +32,8 @@ class SplashController extends GetxController {
       ),
     );
 
+    Stopwatch stopwatch = Stopwatch()..start();
+
     await _getLatestVersion().then((value) {
       newAPKUrl(value.$1 ?? '');
       newAPKVersion(value.$2 ?? '');
@@ -42,6 +45,8 @@ class SplashController extends GetxController {
         newAPKUrl.addListener(GetStream(
           onListen: () async {
             currentVersion.value = (await GetPackageInfoService.getInfo()).version;
+            stopwatch.stop();
+            Logger.printLog(isTimer: true, printLog: stopwatch.elapsed.inMilliseconds, timerUnit: 'Milliseconds');
             debugPrint('currentVersion :: ${currentVersion.value}');
             debugPrint('newVersion :: ${newAPKVersion.value}');
             if (newAPKUrl.value.isNotEmpty && newAPKVersion.value.isNotEmpty) {
@@ -52,10 +57,20 @@ class SplashController extends GetxController {
                   downloadedProgress: downloadedProgress,
                 );
               } else {
-                nextScreenRoute();
+                await Future.delayed(
+                  Duration(milliseconds: stopwatch.elapsed.inSeconds < 3 ? 2500 - stopwatch.elapsedMilliseconds : 0),
+                  () {
+                    nextScreenRoute();
+                  },
+                );
               }
             } else {
-              nextScreenRoute();
+              await Future.delayed(
+                Duration(milliseconds: stopwatch.elapsed.inSeconds < 3 ? 2500 - stopwatch.elapsedMilliseconds : 0),
+                () {
+                  nextScreenRoute();
+                },
+              );
             }
           },
         ));

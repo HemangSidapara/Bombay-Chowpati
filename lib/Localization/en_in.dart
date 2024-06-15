@@ -123,4 +123,8 @@ Map<String, String> enIN = <String, String>{
   AppStrings.pending: "Pending",
   AppStrings.completed: "Completed",
   AppStrings.areYouSureYouWantToPlaceOrderWithSelectedItems: "Are you sure, you want to place order with selected items?",
+  AppStrings.pleaseSelectOrAddAddress: "Please select or add address.",
+  AppStrings.addressNotAddedYet: "Address not added yet",
+  AppStrings.defaultAddressCantBeDeleted: "Default address can't be deleted. Or add new address and set as default then delete you want.",
+  AppStrings.size: "Size: ",
 };

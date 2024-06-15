@@ -336,8 +336,8 @@ class DashboardView extends GetView<DashboardController> {
                                           ///Image
                                           Center(
                                             child: CachedNetworkImage(
-                                              cacheKey: product.thumb,
-                                              imageUrl: product.thumb ?? '',
+                                              cacheKey: product.image,
+                                              imageUrl: product.image ?? '',
                                               fit: BoxFit.contain,
                                               width: 40.w,
                                               progressIndicatorBuilder: (context, url, progress) {
@@ -382,7 +382,7 @@ class DashboardView extends GetView<DashboardController> {
 
                                                   ///Size
                                                   DropdownButtonFormField(
-                                                    value: 0,
+                                                    value: productInCart.value?.size == AppConstance.ml ? 1 : 0,
                                                     hint: Text(
                                                       AppStrings.selectSize.tr,
                                                       style: TextStyle(
@@ -452,6 +452,7 @@ class DashboardView extends GetView<DashboardController> {
                                                           size: tempData?.size,
                                                           price: tempData?.price,
                                                           mrp: tempData?.mrp,
+                                                          productId: product.pid,
                                                         );
 
                                                         if (controller.cartController.cartList.isNotEmpty) {
@@ -462,10 +463,18 @@ class DashboardView extends GetView<DashboardController> {
                                                             mrp: controller.selectedProductData[index]?.mrp,
                                                             price: controller.selectedProductData[index]?.price,
                                                             quantity: productInCart.value?.quantity,
-                                                            image: product.thumb,
+                                                            image: product.image,
                                                             title: product.title,
+                                                            amount: "0.00".grandTotalBySize(controller.cartController.cartList, productInCart.value?.quantity, controller.selectedProductData[index]?.size, controller.selectedProductData[index]?.mrp, controller.selectedProductData[index]?.price),
                                                           );
-                                                          productInCart.update((val) => {});
+                                                          productInCart.update((val) {
+                                                            controller.cartController.totalPayableAmount.value = controller.cartController.cartList.grandTotal();
+                                                            setData(AppConstance.cartStorage, controller.cartController.cartList.map((element) => element.toJson()).toList());
+                                                            final getIndex = controller.cartController.cartList.indexWhere((element) => element.productId == controller.selectedProductData[index]?.productId);
+                                                            if (getIndex != -1) {
+                                                              controller.cartController.cartList.replaceRange(getIndex, getIndex + 1, [productInCart.value!]);
+                                                            }
+                                                          });
                                                         }
                                                       }
                                                     },
@@ -514,7 +523,7 @@ class DashboardView extends GetView<DashboardController> {
                                                             text: AppStrings.totalAmount.tr,
                                                             children: [
                                                               TextSpan(
-                                                                text: '\n₹ ${productInCart.value?.amount ?? "0.00"}',
+                                                                text: '\n${AppConstance.rupeeSign} ${productInCart.value?.amount ?? "0.00"}',
                                                                 style: TextStyle(
                                                                   color: AppColors.DARK_GREEN_COLOR,
                                                                   fontSize: 16.sp,
@@ -571,7 +580,7 @@ class DashboardView extends GetView<DashboardController> {
                                                                 ),
                                                                 onPressed: () {
                                                                   productInCart.value?.setQuantity = "${(productInCart.value?.quantity?.toInt() ?? 0) - 1}";
-                                                                  productInCart.value?.setAmount = "0.00".grandTotalBySize(controller.cartController.cartList, productInCart.value?.quantity, productInCart.value?.size, productInCart.value?.mrp, productInCart.value?.price);
+                                                                  productInCart.value?.setAmount = "0.00".grandTotalBySize(controller.cartController.cartList, productInCart.value?.quantity, controller.selectedProductData[index]?.size, controller.selectedProductData[index]?.mrp, controller.selectedProductData[index]?.price);
                                                                   if (productInCart.value?.quantity == "0") {
                                                                     controller.cartController.cartList.removeWhere((element) => element.productId == product.pid);
                                                                   }
@@ -583,6 +592,7 @@ class DashboardView extends GetView<DashboardController> {
                                                                   productInCart.update((val) {
                                                                     controller.cartController.totalPayableAmount.value = controller.cartController.cartList.grandTotal();
                                                                     setData(AppConstance.cartStorage, controller.cartController.cartList.map((element) => element.toJson()).toList());
+                                                                    controller.cartController.cartList.refresh();
                                                                   });
                                                                 },
                                                                 child: Icon(
@@ -615,7 +625,7 @@ class DashboardView extends GetView<DashboardController> {
                                                               child: TextButton(
                                                                 onPressed: () {
                                                                   productInCart.value?.setQuantity = "${(productInCart.value?.quantity?.toInt() ?? 0) + 1}";
-                                                                  productInCart.value?.setAmount = "0.00".grandTotalBySize(controller.cartController.cartList, productInCart.value?.quantity, productInCart.value?.size, productInCart.value?.mrp, productInCart.value?.price);
+                                                                  productInCart.value?.setAmount = "0.00".grandTotalBySize(controller.cartController.cartList, productInCart.value?.quantity, controller.selectedProductData[index]?.size, controller.selectedProductData[index]?.mrp, controller.selectedProductData[index]?.price);
                                                                   productInCart.update((val) {
                                                                     controller.cartController.totalPayableAmount.value = controller.cartController.cartList.grandTotal();
                                                                     setData(AppConstance.cartStorage, controller.cartController.cartList.map((element) => element.toJson()).toList());
@@ -647,7 +657,7 @@ class DashboardView extends GetView<DashboardController> {
                                                             price: controller.selectedProductData[index]?.price,
                                                             quantity: "1",
                                                             size: controller.selectedProductData[index]?.size,
-                                                            image: product.thumb,
+                                                            image: product.image,
                                                             title: product.title,
                                                             amount: controller.selectedProductData[index]?.mrp,
                                                           ));

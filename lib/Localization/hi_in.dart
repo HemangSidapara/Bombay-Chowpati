@@ -124,4 +124,8 @@ Map<String, String> hiIN = <String, String>{
   AppStrings.completed: "पूरा",
   AppStrings.cancelled: "रद्द",
   AppStrings.areYouSureYouWantToPlaceOrderWithSelectedItems: "क्या आप वाकई चयनित वस्तुओं के साथ ऑर्डर देना चाहते हैं?",
+  AppStrings.pleaseSelectOrAddAddress: "कृपया पता चुनें या जोड़ें",
+  AppStrings.addressNotAddedYet: "पता अभी तक नहीं जोड़ा गया",
+  AppStrings.defaultAddressCantBeDeleted: "बुनियादी पता हटाया नहीं जा सकता। या नया पता जोड़ें और बुनियादी के रूप में सेट करें, फिर अपनी इच्छानुसार हटा दे।",
+  AppStrings.size: "माप: ",
 };

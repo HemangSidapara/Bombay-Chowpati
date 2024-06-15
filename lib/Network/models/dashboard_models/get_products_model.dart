@@ -175,11 +175,13 @@ String productDataToJson(ProductData data) => json.encode(data.toJson());
 
 class ProductData {
   ProductData({
+    String? productId,
     String? id,
     String? size,
     String? mrp,
     String? price,
   }) {
+    _productId = productId;
     _id = id;
     _size = size;
     _mrp = mrp;
@@ -187,29 +189,35 @@ class ProductData {
   }
 
   ProductData.fromJson(dynamic json) {
+    _productId = json['productId'];
     _id = json['id'];
     _size = json['size'];
     _mrp = json['mrp'];
     _price = json['price'];
   }
 
+  String? _productId;
   String? _id;
   String? _size;
   String? _mrp;
   String? _price;
 
   ProductData copyWith({
+    String? productId,
     String? id,
     String? size,
     String? mrp,
     String? price,
   }) =>
       ProductData(
+        productId: productId ?? _productId,
         id: id ?? _id,
         size: size ?? _size,
         mrp: mrp ?? _mrp,
         price: price ?? _price,
       );
+
+  String? get productId => _productId;
 
   String? get id => _id;
 
@@ -221,6 +229,7 @@ class ProductData {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['productId'] = _productId;
     map['id'] = _id;
     map['size'] = _size;
     map['mrp'] = _mrp;

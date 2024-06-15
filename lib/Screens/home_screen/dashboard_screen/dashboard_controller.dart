@@ -41,11 +41,39 @@ class DashboardController extends GetxController {
         productsList.addAll(productsModel.data ?? []);
         searchedProductsList.addAll(productsModel.data ?? []);
         for (var element in (productsModel.data ?? <get_products.Data>[])) {
-          selectedProductData.add(element.productData?.firstOrNull);
+          selectedProductData.add(
+            get_products.ProductData(
+              productId: element.pid,
+              id: element.productData?.firstOrNull?.id,
+              mrp: element.productData?.firstOrNull?.mrp,
+              price: element.productData?.firstOrNull?.price,
+              size: element.productData?.firstOrNull?.size,
+            ),
+          );
         }
         if (getData(AppConstance.cartStorage) != null) {
           cartController.cartList.addAll((getData(AppConstance.cartStorage) as List<dynamic>).map((e) => CartModel.fromJson(e)));
           cartController.totalPayableAmount.value = cartController.cartList.grandTotal();
+        }
+        if (cartController.cartList.isNotEmpty) {
+          for (var product in cartController.cartList) {
+            final getIndex = selectedProductData.indexWhere((element) => element?.productId == product.productId);
+            if (getIndex != -1) {
+              selectedProductData.replaceRange(
+                getIndex,
+                getIndex + 1,
+                [
+                  get_products.ProductData(
+                    productId: product.productId,
+                    id: product.productDataId,
+                    mrp: product.mrp,
+                    price: product.price,
+                    size: product.size,
+                  ),
+                ],
+              );
+            }
+          }
         }
       }
     } finally {

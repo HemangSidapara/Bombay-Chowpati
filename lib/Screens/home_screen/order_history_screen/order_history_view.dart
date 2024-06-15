@@ -279,8 +279,8 @@ class OrderHistoryView extends GetView<OrderHistoryController> {
                                                 children: [
                                                   ///Image
                                                   CachedNetworkImage(
-                                                    cacheKey: product?.coverThumb,
-                                                    imageUrl: product?.coverThumb ?? "",
+                                                    cacheKey: product?.cover,
+                                                    imageUrl: product?.cover ?? "",
                                                     width: 33.3.w,
                                                     progressIndicatorBuilder: (context, url, progress) {
                                                       return SizedBox(

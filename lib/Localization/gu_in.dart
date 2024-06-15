@@ -124,4 +124,8 @@ Map<String, String> guIN = <String, String>{
   AppStrings.completed: "પૂર્ણ",
   AppStrings.cancelled: "રદ કરેલ",
   AppStrings.areYouSureYouWantToPlaceOrderWithSelectedItems: "શું તમે ખરેખર પસંદ કરેલી વસ્તુઓ સાથે ઓર્ડર આપવા માંગો છો?",
+  AppStrings.pleaseSelectOrAddAddress: "કૃપા કરીને સરનામું પસંદ કરો અથવા ઉમેરો",
+  AppStrings.addressNotAddedYet: "સરનામું હજી ઉમેર્યું નથી",
+  AppStrings.defaultAddressCantBeDeleted: "મૂળભૂત સરનામું કાઢી શકાતું નથી. અથવા નવું સરનામું ઉમેરો અને મૂળભૂત તરીકે સેટ કરો પછી તમે ઇચ્છો તે કાઢી શકશો.",
+  AppStrings.size: "કદ: ",
 };

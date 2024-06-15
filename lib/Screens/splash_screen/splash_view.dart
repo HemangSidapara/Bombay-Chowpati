@@ -32,12 +32,16 @@ class SplashView extends GetView<SplashController> {
               ),
             ),
             Obx(() {
-              return Text(
-                AppConstance.appVersion.replaceAll('1.0.0', controller.currentVersion.value),
-                style: TextStyle(
-                  color: AppColors.HINT_GREY_COLOR.withOpacity(0.55),
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14.sp,
+              return AnimatedOpacity(
+                opacity: controller.currentVersion.isNotEmpty ? 1 : 0,
+                duration: const Duration(milliseconds: 250),
+                child: Text(
+                  AppConstance.appVersion.replaceAll('1.0.0', controller.currentVersion.value),
+                  style: TextStyle(
+                    color: AppColors.HINT_GREY_COLOR.withOpacity(0.55),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14.sp,
+                  ),
                 ),
               );
             }),

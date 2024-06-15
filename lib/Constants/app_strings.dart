@@ -125,4 +125,8 @@ class AppStrings {
   static const String completed = "Completed";
   static const String cancelled = "Cancelled";
   static const String areYouSureYouWantToPlaceOrderWithSelectedItems = "Are you sure, you want to place order with selected items?";
+  static const String pleaseSelectOrAddAddress = "Please select or add address";
+  static const String addressNotAddedYet = "Address not added yet";
+  static const String defaultAddressCantBeDeleted = "Default address can't be deleted. Or add new address and set as default then delete you want.";
+  static const String size = "Size: ";
 }
