@@ -43,6 +43,7 @@ android {
         applicationId = "com.order.bombaychowpati"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
+        multiDexEnabled true
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
     }
@@ -58,7 +59,7 @@ android {
 
     buildTypes {
         release {
-            signingConfigs.release
+            signingConfig signingConfigs.release
         }
     }
 }

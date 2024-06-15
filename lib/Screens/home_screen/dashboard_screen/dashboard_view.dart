@@ -299,412 +299,415 @@ class DashboardView extends GetView<DashboardController> {
                           );
                         },
                         child: AnimationLimiter(
-                          child: ListView.separated(
-                            itemCount: controller.searchedProductsList.length,
-                            shrinkWrap: true,
-                            padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 1.h).copyWith(bottom: controller.cartController.cartList.isNotEmpty ? 12.h : 4.h),
-                            itemBuilder: (context, index) {
-                              final product = controller.searchedProductsList[index];
-                              Rx<CartModel?> productInCart = controller.cartController.cartList.firstWhereOrNull((element) => element.productId == product.pid).obs;
+                          child: ColoredBox(
+                            color: AppColors.WHITE_COLOR,
+                            child: ListView.separated(
+                              itemCount: controller.searchedProductsList.length,
+                              shrinkWrap: true,
+                              padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 1.h).copyWith(bottom: controller.cartController.cartList.isNotEmpty ? 12.h : 4.h),
+                              itemBuilder: (context, index) {
+                                final product = controller.searchedProductsList[index];
+                                Rx<CartModel?> productInCart = controller.cartController.cartList.firstWhereOrNull((element) => element.productId == product.pid).obs;
 
-                              return AnimationConfiguration.staggeredList(
-                                position: index,
-                                duration: const Duration(milliseconds: 400),
-                                child: SlideAnimation(
-                                  verticalOffset: 50.0,
-                                  child: FadeInAnimation(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: AppColors.WHITE_COLOR,
-                                        borderRadius: BorderRadius.circular(12),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black12.withOpacity(0.09),
-                                            blurRadius: 10,
-                                            spreadRadius: 3,
-                                            offset: const Offset(-5, 5),
-                                          ),
-                                        ],
-                                      ),
-                                      clipBehavior: Clip.hardEdge,
-                                      height: 30.h,
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          ///Image
-                                          Center(
-                                            child: CachedNetworkImage(
-                                              cacheKey: product.image,
-                                              imageUrl: product.image ?? '',
-                                              fit: BoxFit.contain,
-                                              width: 40.w,
-                                              progressIndicatorBuilder: (context, url, progress) {
-                                                return LoadingWidget(width: 20.w);
-                                              },
-                                              errorWidget: (context, url, error) {
-                                                return Icon(
-                                                  FontAwesomeIcons.bug,
-                                                  color: AppColors.DARK_RED_COLOR,
-                                                  size: 5.w,
-                                                );
-                                              },
+                                return AnimationConfiguration.staggeredList(
+                                  position: index,
+                                  duration: const Duration(milliseconds: 400),
+                                  child: SlideAnimation(
+                                    verticalOffset: 50.0,
+                                    child: FadeInAnimation(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: AppColors.WHITE_COLOR,
+                                          borderRadius: BorderRadius.circular(12),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black12.withOpacity(0.09),
+                                              blurRadius: 10,
+                                              spreadRadius: 3,
+                                              offset: const Offset(-5, 5),
                                             ),
-                                          ),
+                                          ],
+                                        ),
+                                        clipBehavior: Clip.hardEdge,
+                                        height: 30.h,
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            ///Image
+                                            Center(
+                                              child: CachedNetworkImage(
+                                                cacheKey: product.image,
+                                                imageUrl: product.image ?? '',
+                                                fit: BoxFit.contain,
+                                                width: 40.w,
+                                                progressIndicatorBuilder: (context, url, progress) {
+                                                  return LoadingWidget(width: 20.w);
+                                                },
+                                                errorWidget: (context, url, error) {
+                                                  return Icon(
+                                                    FontAwesomeIcons.bug,
+                                                    color: AppColors.DARK_RED_COLOR,
+                                                    size: 5.w,
+                                                  );
+                                                },
+                                              ),
+                                            ),
 
-                                          ///Product Details
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(vertical: 1.h).copyWith(right: 4.w, bottom: 0, left: 2.w),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-                                                  ///Name
-                                                  Align(
-                                                    alignment: Alignment.centerLeft,
-                                                    child: Tooltip(
-                                                      message: product.title,
-                                                      child: Text(
-                                                        "◆ ${product.title ?? ""}",
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow.ellipsis,
+                                            ///Product Details
+                                            Expanded(
+                                              child: Padding(
+                                                padding: EdgeInsets.symmetric(vertical: 1.h).copyWith(right: 4.w, bottom: 0, left: 2.w),
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    ///Name
+                                                    Align(
+                                                      alignment: Alignment.centerLeft,
+                                                      child: Tooltip(
+                                                        message: product.title,
+                                                        child: Text(
+                                                          "◆ ${product.title ?? ""}",
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: TextStyle(
+                                                            color: AppColors.BLACK_COLOR,
+                                                            fontSize: 16.sp,
+                                                            fontWeight: FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 0.5.h),
+
+                                                    ///Size
+                                                    DropdownButtonFormField(
+                                                      value: productInCart.value?.size == AppConstance.ml ? 1 : 0,
+                                                      hint: Text(
+                                                        AppStrings.selectSize.tr,
                                                         style: TextStyle(
-                                                          color: AppColors.BLACK_COLOR,
+                                                          color: AppColors.HINT_COLOR,
+                                                          fontWeight: FontWeight.w500,
                                                           fontSize: 16.sp,
-                                                          fontWeight: FontWeight.w600,
                                                         ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 0.5.h),
-
-                                                  ///Size
-                                                  DropdownButtonFormField(
-                                                    value: productInCart.value?.size == AppConstance.ml ? 1 : 0,
-                                                    hint: Text(
-                                                      AppStrings.selectSize.tr,
-                                                      style: TextStyle(
-                                                        color: AppColors.HINT_COLOR,
-                                                        fontWeight: FontWeight.w500,
-                                                        fontSize: 16.sp,
-                                                      ),
-                                                    ),
-                                                    decoration: InputDecoration(
-                                                      isCollapsed: true,
-                                                      contentPadding: EdgeInsets.only(left: 3.w, top: 0.8.h, right: 2.w, bottom: 0.8.h),
-                                                      border: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        borderSide: BorderSide(
-                                                          color: AppColors.HINT_COLOR,
-                                                          width: 0.8,
-                                                        ),
-                                                      ),
-                                                      focusedBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        borderSide: BorderSide(
-                                                          color: AppColors.HINT_COLOR,
-                                                          width: 0.8,
-                                                        ),
-                                                      ),
-                                                      enabledBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        borderSide: BorderSide(
-                                                          color: AppColors.HINT_COLOR,
-                                                          width: 0.8,
-                                                        ),
-                                                      ),
-                                                      disabledBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        borderSide: BorderSide(
-                                                          color: AppColors.HINT_COLOR,
-                                                          width: 0.8,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    icon: Icon(
-                                                      Icons.keyboard_arrow_down_rounded,
-                                                      color: AppColors.GREY_COLOR,
-                                                      size: 5.w,
-                                                    ),
-                                                    dropdownColor: AppColors.SECONDARY_COLOR,
-                                                    borderRadius: BorderRadius.circular(12),
-                                                    items: [
-                                                      for (int i = 0; i < (product.productData?.length ?? 0); i++)
-                                                        DropdownMenuItem(
-                                                          value: i,
-                                                          child: Text(
-                                                            product.productData?[i].size ?? "",
-                                                            style: TextStyle(
-                                                              color: AppColors.BLACK_COLOR,
-                                                              fontSize: 16.sp,
-                                                              fontWeight: FontWeight.w500,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                    ],
-                                                    onChanged: (value) {
-                                                      if (value != null) {
-                                                        final tempData = product.productData?[value];
-                                                        controller.selectedProductData[index] = ProductData(
-                                                          id: tempData?.id,
-                                                          size: tempData?.size,
-                                                          price: tempData?.price,
-                                                          mrp: tempData?.mrp,
-                                                          productId: product.pid,
-                                                        );
-
-                                                        if (controller.cartController.cartList.isNotEmpty) {
-                                                          productInCart.value = CartModel(
-                                                            productId: product.pid,
-                                                            productDataId: controller.selectedProductData[index]?.id,
-                                                            size: controller.selectedProductData[index]?.size,
-                                                            mrp: controller.selectedProductData[index]?.mrp,
-                                                            price: controller.selectedProductData[index]?.price,
-                                                            quantity: productInCart.value?.quantity,
-                                                            image: product.image,
-                                                            title: product.title,
-                                                            amount: "0.00".grandTotalBySize(controller.cartController.cartList, productInCart.value?.quantity, controller.selectedProductData[index]?.size, controller.selectedProductData[index]?.mrp, controller.selectedProductData[index]?.price),
-                                                          );
-                                                          productInCart.update((val) {
-                                                            controller.cartController.totalPayableAmount.value = controller.cartController.cartList.grandTotal();
-                                                            setData(AppConstance.cartStorage, controller.cartController.cartList.map((element) => element.toJson()).toList());
-                                                            final getIndex = controller.cartController.cartList.indexWhere((element) => element.productId == controller.selectedProductData[index]?.productId);
-                                                            if (getIndex != -1) {
-                                                              controller.cartController.cartList.replaceRange(getIndex, getIndex + 1, [productInCart.value!]);
-                                                            }
-                                                          });
-                                                        }
-                                                      }
-                                                    },
-                                                  ),
-                                                  SizedBox(height: 1.h),
-
-                                                  ///MRP & Amount
-                                                  Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      ///MRP
-                                                      Obx(() {
-                                                        RxInt totalQuantity = 0.obs;
-                                                        for (var element in controller.cartController.cartList) {
-                                                          if (element.size == AppConstance.fiveLiter) {
-                                                            totalQuantity.value += (element.quantity?.toInt() ?? 0);
-                                                          }
-                                                        }
-                                                        return Text.rich(
-                                                          TextSpan(
-                                                            text: AppStrings.mrp.tr,
-                                                            children: [
-                                                              TextSpan(
-                                                                text: '₹ ${totalQuantity.value >= 2 || (productInCart.value?.size == AppConstance.fiveLiter && (productInCart.value?.quantity?.toInt() ?? 0) > 1) || (productInCart.value?.size == AppConstance.ml && (productInCart.value?.quantity?.toInt() ?? 0) > 6) ? controller.selectedProductData[index]?.price : controller.selectedProductData[index]?.mrp}',
-                                                                style: TextStyle(
-                                                                  color: AppColors.DARK_GREEN_COLOR,
-                                                                  fontSize: 16.sp,
-                                                                  fontWeight: FontWeight.w600,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                            style: TextStyle(
-                                                              color: AppColors.BLACK_COLOR,
-                                                              fontSize: 16.sp,
-                                                              fontWeight: FontWeight.w500,
-                                                            ),
-                                                          ),
-                                                        );
-                                                      }),
-                                                      SizedBox(height: 0.5.h),
-
-                                                      ///Total Amount
-                                                      Obx(() {
-                                                        return Text.rich(
-                                                          TextSpan(
-                                                            text: AppStrings.totalAmount.tr,
-                                                            children: [
-                                                              TextSpan(
-                                                                text: '\n${AppConstance.rupeeSign} ${productInCart.value?.amount ?? "0.00"}',
-                                                                style: TextStyle(
-                                                                  color: AppColors.DARK_GREEN_COLOR,
-                                                                  fontSize: 16.sp,
-                                                                  fontWeight: FontWeight.w600,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                            style: TextStyle(
-                                                              color: AppColors.BLACK_COLOR,
-                                                              fontSize: 16.sp,
-                                                              fontWeight: FontWeight.w500,
-                                                            ),
-                                                          ),
-                                                        );
-                                                      }),
-                                                    ],
-                                                  ),
-                                                  SizedBox(height: 1.h),
-
-                                                  ///Add
-                                                  Obx(() {
-                                                    if (controller.cartController.cartList.isNotEmpty && productInCart.value?.quantity != null && productInCart.value?.quantity?.toInt() != 0) {
-                                                      return DecoratedBox(
-                                                        decoration: BoxDecoration(
-                                                          color: AppColors.WHITE_COLOR,
-                                                          borderRadius: BorderRadius.circular(12),
-                                                          border: Border.all(
+                                                      decoration: InputDecoration(
+                                                        isCollapsed: true,
+                                                        contentPadding: EdgeInsets.only(left: 3.w, top: 0.8.h, right: 2.w, bottom: 0.8.h),
+                                                        border: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.circular(8),
+                                                          borderSide: BorderSide(
                                                             color: AppColors.HINT_COLOR,
                                                             width: 0.8,
                                                           ),
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: Colors.black12.withOpacity(0.07),
-                                                              blurRadius: 4,
-                                                              spreadRadius: 0.4,
-                                                              offset: const Offset(0, 5),
-                                                            ),
-                                                          ],
                                                         ),
-                                                        child: Row(
-                                                          mainAxisSize: MainAxisSize.min,
-                                                          children: [
-                                                            ///-
-                                                            SizedBox(
-                                                              width: 13.w,
-                                                              height: 5.h,
-                                                              child: TextButton(
-                                                                style: TextButton.styleFrom(
-                                                                  padding: EdgeInsets.zero,
-                                                                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                                                  shape: const RoundedRectangleBorder(
-                                                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
-                                                                  ),
-                                                                ),
-                                                                onPressed: () {
-                                                                  productInCart.value?.setQuantity = "${(productInCart.value?.quantity?.toInt() ?? 0) - 1}";
-                                                                  productInCart.value?.setAmount = "0.00".grandTotalBySize(controller.cartController.cartList, productInCart.value?.quantity, controller.selectedProductData[index]?.size, controller.selectedProductData[index]?.mrp, controller.selectedProductData[index]?.price);
-                                                                  if (productInCart.value?.quantity == "0") {
-                                                                    controller.cartController.cartList.removeWhere((element) => element.productId == product.pid);
-                                                                  }
-                                                                  if (controller.cartController.cartList.length == 1) {
-                                                                    for (var element in controller.cartController.cartList) {
-                                                                      element.setAmount = "0.00".grandTotalBySize(controller.cartController.cartList, element.quantity, element.size, element.mrp, element.price);
-                                                                    }
-                                                                  }
-                                                                  productInCart.update((val) {
-                                                                    controller.cartController.totalPayableAmount.value = controller.cartController.cartList.grandTotal();
-                                                                    setData(AppConstance.cartStorage, controller.cartController.cartList.map((element) => element.toJson()).toList());
-                                                                    controller.cartController.cartList.refresh();
-                                                                  });
-                                                                },
-                                                                child: Icon(
-                                                                  Icons.remove_rounded,
-                                                                  color: AppColors.DARK_RED_COLOR,
-                                                                ),
-                                                              ).paddingZero,
-                                                            ),
-
-                                                            ///Count
-                                                            Obx(() {
-                                                              return SizedBox(
-                                                                width: 10.w,
-                                                                child: Text(
-                                                                  productInCart.value?.quantity ?? '',
-                                                                  textAlign: TextAlign.center,
-                                                                  style: TextStyle(
-                                                                    color: AppColors.BLACK_COLOR,
-                                                                    fontWeight: FontWeight.w500,
-                                                                    fontSize: 16.sp,
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            }),
-
-                                                            ///+
-                                                            SizedBox(
-                                                              height: 5.h,
-                                                              width: 13.w,
-                                                              child: TextButton(
-                                                                onPressed: () {
-                                                                  productInCart.value?.setQuantity = "${(productInCart.value?.quantity?.toInt() ?? 0) + 1}";
-                                                                  productInCart.value?.setAmount = "0.00".grandTotalBySize(controller.cartController.cartList, productInCart.value?.quantity, controller.selectedProductData[index]?.size, controller.selectedProductData[index]?.mrp, controller.selectedProductData[index]?.price);
-                                                                  productInCart.update((val) {
-                                                                    controller.cartController.totalPayableAmount.value = controller.cartController.cartList.grandTotal();
-                                                                    setData(AppConstance.cartStorage, controller.cartController.cartList.map((element) => element.toJson()).toList());
-                                                                  });
-                                                                },
-                                                                style: TextButton.styleFrom(
-                                                                  padding: EdgeInsets.zero,
-                                                                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                                                  shape: const RoundedRectangleBorder(
-                                                                    borderRadius: BorderRadius.only(topRight: Radius.circular(10), bottomRight: Radius.circular(10)),
-                                                                  ),
-                                                                ),
-                                                                child: Icon(
-                                                                  Icons.add_rounded,
-                                                                  color: AppColors.DARK_GREEN_COLOR,
-                                                                ),
+                                                        focusedBorder: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.circular(8),
+                                                          borderSide: BorderSide(
+                                                            color: AppColors.HINT_COLOR,
+                                                            width: 0.8,
+                                                          ),
+                                                        ),
+                                                        enabledBorder: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.circular(8),
+                                                          borderSide: BorderSide(
+                                                            color: AppColors.HINT_COLOR,
+                                                            width: 0.8,
+                                                          ),
+                                                        ),
+                                                        disabledBorder: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.circular(8),
+                                                          borderSide: BorderSide(
+                                                            color: AppColors.HINT_COLOR,
+                                                            width: 0.8,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      icon: Icon(
+                                                        Icons.keyboard_arrow_down_rounded,
+                                                        color: AppColors.GREY_COLOR,
+                                                        size: 5.w,
+                                                      ),
+                                                      dropdownColor: AppColors.SECONDARY_COLOR,
+                                                      borderRadius: BorderRadius.circular(12),
+                                                      items: [
+                                                        for (int i = 0; i < (product.productData?.length ?? 0); i++)
+                                                          DropdownMenuItem(
+                                                            value: i,
+                                                            child: Text(
+                                                              product.productData?[i].size ?? "",
+                                                              style: TextStyle(
+                                                                color: AppColors.BLACK_COLOR,
+                                                                fontSize: 16.sp,
+                                                                fontWeight: FontWeight.w500,
                                                               ),
                                                             ),
-                                                          ],
-                                                        ),
-                                                      );
-                                                    } else {
-                                                      return ElevatedButton(
-                                                        onPressed: () {
-                                                          controller.cartController.cartList.add(CartModel(
+                                                          ),
+                                                      ],
+                                                      onChanged: (value) {
+                                                        if (value != null) {
+                                                          final tempData = product.productData?[value];
+                                                          controller.selectedProductData[index] = ProductData(
+                                                            id: tempData?.id,
+                                                            size: tempData?.size,
+                                                            price: tempData?.price,
+                                                            mrp: tempData?.mrp,
                                                             productId: product.pid,
-                                                            productDataId: controller.selectedProductData[index]?.id,
-                                                            mrp: controller.selectedProductData[index]?.mrp,
-                                                            price: controller.selectedProductData[index]?.price,
-                                                            quantity: "1",
-                                                            size: controller.selectedProductData[index]?.size,
-                                                            image: product.image,
-                                                            title: product.title,
-                                                            amount: controller.selectedProductData[index]?.mrp,
-                                                          ));
-                                                          for (var element in controller.cartController.cartList) {
-                                                            element.setAmount = "0.00".grandTotalBySize(controller.cartController.cartList, element.quantity, element.size, element.mrp, element.price);
+                                                          );
+
+                                                          if (controller.cartController.cartList.isNotEmpty) {
+                                                            productInCart.value = CartModel(
+                                                              productId: product.pid,
+                                                              productDataId: controller.selectedProductData[index]?.id,
+                                                              size: controller.selectedProductData[index]?.size,
+                                                              mrp: controller.selectedProductData[index]?.mrp,
+                                                              price: controller.selectedProductData[index]?.price,
+                                                              quantity: productInCart.value?.quantity,
+                                                              image: product.image,
+                                                              title: product.title,
+                                                              amount: "0.00".grandTotalBySize(controller.cartController.cartList, productInCart.value?.quantity, controller.selectedProductData[index]?.size, controller.selectedProductData[index]?.mrp, controller.selectedProductData[index]?.price),
+                                                            );
+                                                            productInCart.update((val) {
+                                                              controller.cartController.totalPayableAmount.value = controller.cartController.cartList.grandTotal();
+                                                              setData(AppConstance.cartStorage, controller.cartController.cartList.map((element) => element.toJson()).toList());
+                                                              final getIndex = controller.cartController.cartList.indexWhere((element) => element.productId == controller.selectedProductData[index]?.productId);
+                                                              if (getIndex != -1) {
+                                                                controller.cartController.cartList.replaceRange(getIndex, getIndex + 1, [productInCart.value!]);
+                                                              }
+                                                            });
                                                           }
-                                                          controller.cartController.totalPayableAmount.value = controller.cartController.cartList.grandTotal();
-                                                          setData(AppConstance.cartStorage, controller.cartController.cartList.map((element) => element.toJson()).toList());
-                                                        },
-                                                        style: ElevatedButton.styleFrom(
-                                                          backgroundColor: AppColors.WHITE_COLOR,
-                                                          surfaceTintColor: AppColors.WHITE_COLOR,
-                                                          elevation: 4,
-                                                          fixedSize: Size(36.w, 5.h),
-                                                          shape: RoundedRectangleBorder(
-                                                            borderRadius: BorderRadius.circular(10),
-                                                            side: BorderSide(
-                                                              color: AppColors.DARK_GREEN_COLOR,
-                                                              width: 1,
+                                                        }
+                                                      },
+                                                    ),
+                                                    SizedBox(height: 1.h),
+
+                                                    ///MRP & Amount
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        ///MRP
+                                                        Obx(() {
+                                                          RxInt totalQuantity = 0.obs;
+                                                          for (var element in controller.cartController.cartList) {
+                                                            if (element.size == AppConstance.fiveLiter) {
+                                                              totalQuantity.value += (element.quantity?.toInt() ?? 0);
+                                                            }
+                                                          }
+                                                          return Text.rich(
+                                                            TextSpan(
+                                                              text: AppStrings.mrp.tr,
+                                                              children: [
+                                                                TextSpan(
+                                                                  text: '₹ ${totalQuantity.value >= 2 || (productInCart.value?.size == AppConstance.fiveLiter && (productInCart.value?.quantity?.toInt() ?? 0) > 1) || (productInCart.value?.size == AppConstance.ml && (productInCart.value?.quantity?.toInt() ?? 0) > 6) ? controller.selectedProductData[index]?.price : controller.selectedProductData[index]?.mrp}',
+                                                                  style: TextStyle(
+                                                                    color: AppColors.DARK_GREEN_COLOR,
+                                                                    fontSize: 16.sp,
+                                                                    fontWeight: FontWeight.w600,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                              style: TextStyle(
+                                                                color: AppColors.BLACK_COLOR,
+                                                                fontSize: 16.sp,
+                                                                fontWeight: FontWeight.w500,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }),
+                                                        SizedBox(height: 0.5.h),
+
+                                                        ///Total Amount
+                                                        Obx(() {
+                                                          return Text.rich(
+                                                            TextSpan(
+                                                              text: AppStrings.totalAmount.tr,
+                                                              children: [
+                                                                TextSpan(
+                                                                  text: '\n${AppConstance.rupeeSign} ${productInCart.value?.amount ?? "0.00"}',
+                                                                  style: TextStyle(
+                                                                    color: AppColors.DARK_GREEN_COLOR,
+                                                                    fontSize: 16.sp,
+                                                                    fontWeight: FontWeight.w600,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                              style: TextStyle(
+                                                                color: AppColors.BLACK_COLOR,
+                                                                fontSize: 16.sp,
+                                                                fontWeight: FontWeight.w500,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 1.h),
+
+                                                    ///Add
+                                                    Obx(() {
+                                                      if (controller.cartController.cartList.isNotEmpty && productInCart.value?.quantity != null && productInCart.value?.quantity?.toInt() != 0) {
+                                                        return DecoratedBox(
+                                                          decoration: BoxDecoration(
+                                                            color: AppColors.WHITE_COLOR,
+                                                            borderRadius: BorderRadius.circular(12),
+                                                            border: Border.all(
+                                                              color: AppColors.HINT_COLOR,
+                                                              width: 0.8,
+                                                            ),
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                color: Colors.black12.withOpacity(0.07),
+                                                                blurRadius: 4,
+                                                                spreadRadius: 0.4,
+                                                                offset: const Offset(0, 5),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: [
+                                                              ///-
+                                                              SizedBox(
+                                                                width: 13.w,
+                                                                height: 5.h,
+                                                                child: TextButton(
+                                                                  style: TextButton.styleFrom(
+                                                                    padding: EdgeInsets.zero,
+                                                                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                                    shape: const RoundedRectangleBorder(
+                                                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
+                                                                    ),
+                                                                  ),
+                                                                  onPressed: () {
+                                                                    productInCart.value?.setQuantity = "${(productInCart.value?.quantity?.toInt() ?? 0) - 1}";
+                                                                    productInCart.value?.setAmount = "0.00".grandTotalBySize(controller.cartController.cartList, productInCart.value?.quantity, controller.selectedProductData[index]?.size, controller.selectedProductData[index]?.mrp, controller.selectedProductData[index]?.price);
+                                                                    if (productInCart.value?.quantity == "0") {
+                                                                      controller.cartController.cartList.removeWhere((element) => element.productId == product.pid);
+                                                                    }
+                                                                    if (controller.cartController.cartList.length == 1) {
+                                                                      for (var element in controller.cartController.cartList) {
+                                                                        element.setAmount = "0.00".grandTotalBySize(controller.cartController.cartList, element.quantity, element.size, element.mrp, element.price);
+                                                                      }
+                                                                    }
+                                                                    productInCart.update((val) {
+                                                                      controller.cartController.totalPayableAmount.value = controller.cartController.cartList.grandTotal();
+                                                                      setData(AppConstance.cartStorage, controller.cartController.cartList.map((element) => element.toJson()).toList());
+                                                                      controller.cartController.cartList.refresh();
+                                                                    });
+                                                                  },
+                                                                  child: Icon(
+                                                                    Icons.remove_rounded,
+                                                                    color: AppColors.DARK_RED_COLOR,
+                                                                  ),
+                                                                ).paddingZero,
+                                                              ),
+
+                                                              ///Count
+                                                              Obx(() {
+                                                                return SizedBox(
+                                                                  width: 10.w,
+                                                                  child: Text(
+                                                                    productInCart.value?.quantity ?? '',
+                                                                    textAlign: TextAlign.center,
+                                                                    style: TextStyle(
+                                                                      color: AppColors.BLACK_COLOR,
+                                                                      fontWeight: FontWeight.w500,
+                                                                      fontSize: 16.sp,
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              }),
+
+                                                              ///+
+                                                              SizedBox(
+                                                                height: 5.h,
+                                                                width: 13.w,
+                                                                child: TextButton(
+                                                                  onPressed: () {
+                                                                    productInCart.value?.setQuantity = "${(productInCart.value?.quantity?.toInt() ?? 0) + 1}";
+                                                                    productInCart.value?.setAmount = "0.00".grandTotalBySize(controller.cartController.cartList, productInCart.value?.quantity, controller.selectedProductData[index]?.size, controller.selectedProductData[index]?.mrp, controller.selectedProductData[index]?.price);
+                                                                    productInCart.update((val) {
+                                                                      controller.cartController.totalPayableAmount.value = controller.cartController.cartList.grandTotal();
+                                                                      setData(AppConstance.cartStorage, controller.cartController.cartList.map((element) => element.toJson()).toList());
+                                                                    });
+                                                                  },
+                                                                  style: TextButton.styleFrom(
+                                                                    padding: EdgeInsets.zero,
+                                                                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                                    shape: const RoundedRectangleBorder(
+                                                                      borderRadius: BorderRadius.only(topRight: Radius.circular(10), bottomRight: Radius.circular(10)),
+                                                                    ),
+                                                                  ),
+                                                                  child: Icon(
+                                                                    Icons.add_rounded,
+                                                                    color: AppColors.DARK_GREEN_COLOR,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      } else {
+                                                        return ElevatedButton(
+                                                          onPressed: () {
+                                                            controller.cartController.cartList.add(CartModel(
+                                                              productId: product.pid,
+                                                              productDataId: controller.selectedProductData[index]?.id,
+                                                              mrp: controller.selectedProductData[index]?.mrp,
+                                                              price: controller.selectedProductData[index]?.price,
+                                                              quantity: "1",
+                                                              size: controller.selectedProductData[index]?.size,
+                                                              image: product.image,
+                                                              title: product.title,
+                                                              amount: controller.selectedProductData[index]?.mrp,
+                                                            ));
+                                                            for (var element in controller.cartController.cartList) {
+                                                              element.setAmount = "0.00".grandTotalBySize(controller.cartController.cartList, element.quantity, element.size, element.mrp, element.price);
+                                                            }
+                                                            controller.cartController.totalPayableAmount.value = controller.cartController.cartList.grandTotal();
+                                                            setData(AppConstance.cartStorage, controller.cartController.cartList.map((element) => element.toJson()).toList());
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                            backgroundColor: AppColors.WHITE_COLOR,
+                                                            surfaceTintColor: AppColors.WHITE_COLOR,
+                                                            elevation: 4,
+                                                            fixedSize: Size(36.w, 5.h),
+                                                            shape: RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.circular(10),
+                                                              side: BorderSide(
+                                                                color: AppColors.DARK_GREEN_COLOR,
+                                                                width: 1,
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                        child: Text(
-                                                          AppStrings.add.tr,
-                                                          style: TextStyle(
-                                                            fontSize: 16.sp,
-                                                            fontWeight: FontWeight.w600,
-                                                            color: AppColors.DARK_GREEN_COLOR,
+                                                          child: Text(
+                                                            AppStrings.add.tr,
+                                                            style: TextStyle(
+                                                              fontSize: 16.sp,
+                                                              fontWeight: FontWeight.w600,
+                                                              color: AppColors.DARK_GREEN_COLOR,
+                                                            ),
                                                           ),
-                                                        ),
-                                                      );
-                                                    }
-                                                  }),
-                                                ],
+                                                        );
+                                                      }
+                                                    }),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          )
-                                        ],
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                            separatorBuilder: (context, index) {
-                              return SizedBox(height: 2.h);
-                            },
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return SizedBox(height: 2.h);
+                              },
+                            ),
                           ),
                         ),
                       );
