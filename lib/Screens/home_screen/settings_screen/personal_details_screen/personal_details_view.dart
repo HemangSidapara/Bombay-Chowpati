@@ -60,6 +60,8 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           maxLength: 50,
+                          readOnly: true,
+                          isDisable: true,
                         ),
                         SizedBox(height: 1.5.h),
 
@@ -71,6 +73,8 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.next,
                           maxLength: 10,
+                          readOnly: true,
+                          isDisable: true,
                         ),
                         SizedBox(height: 5.h),
 
