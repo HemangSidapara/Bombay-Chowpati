@@ -79,8 +79,10 @@ extension RupeesGrandTotalFromList on RxList {
   String grandTotal() {
     double totalAmount = 0.00;
     for (var element in (this as RxList<CartModel>)) {
-      if (element.quantity != '' && element.quantity != null) {
-        totalAmount = totalAmount + "".grandTotalBySize(this, element.quantity, element.size, element.mrp, element.price).split(" ").last.toDouble();
+      if (element.sizes?.every((element) => element.quantity != '' && element.quantity != null) == true) {
+        totalAmount = totalAmount +
+            "".grandTotalBySize(this, element.sizes?.firstWhereOrNull((element) => element.size == AppConstance.fiveLiter)?.quantity, element.sizes?.firstWhereOrNull((element) => element.size == AppConstance.fiveLiter)?.size, element.sizes?.firstWhereOrNull((element) => element.size == AppConstance.fiveLiter)?.mrp, element.sizes?.firstWhereOrNull((element) => element.size == AppConstance.fiveLiter)?.price).split(" ").last.toDouble() +
+            "".grandTotalBySize(this, element.sizes?.firstWhereOrNull((element) => element.size == AppConstance.ml)?.quantity, element.sizes?.firstWhereOrNull((element) => element.size == AppConstance.ml)?.size, element.sizes?.firstWhereOrNull((element) => element.size == AppConstance.ml)?.mrp, element.sizes?.firstWhereOrNull((element) => element.size == AppConstance.ml)?.price).split(" ").last.toDouble();
       }
     }
     return totalAmount.toStringAsFixed(2);
@@ -99,14 +101,20 @@ extension NotContainsAndAddSubString on String {
 
 extension RupeesTotalFromSize on String {
   String grandTotalBySize(RxList? cart, String? quantity, String? size, String? mrp, String? price) {
-    int totalQuantity = 0;
+    int totalQuantityFiveLiterInCart = 0;
+    int totalQuantityMLInCart = 0;
     for (var e in (cart as List<CartModel>)) {
-      if (e.size == AppConstance.fiveLiter) {
-        totalQuantity += (e.quantity?.toInt() ?? 0);
+      if (e.sizes?.any((element) => element.size == AppConstance.fiveLiter) == true) {
+        totalQuantityFiveLiterInCart += (e.sizes?.firstWhereOrNull((element) => element.size == AppConstance.fiveLiter)?.quantity?.toInt() ?? 0);
+      }
+    }
+    for (var e in (cart as List<CartModel>)) {
+      if (e.sizes?.any((element) => element.size == AppConstance.ml) == true) {
+        totalQuantityMLInCart += (e.sizes?.firstWhereOrNull((element) => element.size == AppConstance.ml)?.quantity?.toInt() ?? 0);
       }
     }
     if (quantity != null && size != null && mrp != null && price != null) {
-      if (totalQuantity >= 2 || (size == AppConstance.fiveLiter && quantity.toInt() > 1) || (size == AppConstance.ml && quantity.toInt() > 6)) {
+      if (totalQuantityFiveLiterInCart >= 2 || totalQuantityMLInCart > 6 || (size == AppConstance.fiveLiter && quantity.toInt() > 1) || (size == AppConstance.ml && quantity.toInt() > 6)) {
         return (price.toInt() * quantity.toInt()).toStringAsFixed(2);
       } else {
         return (mrp.toInt() * quantity.toInt()).toStringAsFixed(2);

@@ -128,4 +128,9 @@ Map<String, String> hiIN = <String, String>{
   AppStrings.addressNotAddedYet: "पता अभी तक नहीं जोड़ा गया",
   AppStrings.defaultAddressCantBeDeleted: "बुनियादी पता हटाया नहीं जा सकता। या नया पता जोड़ें और बुनियादी के रूप में सेट करें, फिर अपनी इच्छानुसार हटा दे।",
   AppStrings.size: "माप: ",
+  AppStrings.pleaseEnterValidPhoneNumber: "कृपया एक वैध नंबर डालें",
+  AppStrings.enterPhoneNumberOptional: "फ़ोन नंबर दर्ज करें (वैकल्पिक)",
+  AppStrings.refresh: "पुनश्चर्या",
+  AppStrings.total: "कुल",
+  AppStrings.price: "कीमत",
 };

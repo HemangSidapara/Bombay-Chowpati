@@ -129,4 +129,9 @@ class AppStrings {
   static const String addressNotAddedYet = "Address not added yet";
   static const String defaultAddressCantBeDeleted = "Default address can't be deleted. Or add new address and set as default then delete you want.";
   static const String size = "Size: ";
+  static const String pleaseEnterValidPhoneNumber = "Please enter valid phone number";
+  static const String enterPhoneNumberOptional = "Enter phone number (Optional)";
+  static const String refresh = "Refresh";
+  static const String total = "Total";
+  static const String price = "Price";
 }

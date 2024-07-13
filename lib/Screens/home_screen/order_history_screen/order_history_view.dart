@@ -3,6 +3,7 @@ import 'package:bombay_chowpati/Constants/app_colors.dart';
 import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Constants/app_strings.dart';
 import 'package:bombay_chowpati/Screens/home_screen/order_history_screen/order_history_controller.dart';
+import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:bombay_chowpati/Widgets/button_widget.dart';
 import 'package:bombay_chowpati/Widgets/custom_header_widget.dart';
 import 'package:bombay_chowpati/Widgets/loading_widget.dart';
@@ -268,7 +269,7 @@ class OrderHistoryView extends GetView<OrderHistoryController> {
                                         ///Products
                                         Flexible(
                                           child: SizedBox(
-                                            height: 12.h,
+                                            height: 17.5.h,
                                             child: ListView.builder(
                                               itemCount: (order.orderMeta?.length ?? 0),
                                               shrinkWrap: true,
@@ -347,11 +348,37 @@ class OrderHistoryView extends GetView<OrderHistoryController> {
 
                                                         ///Price
                                                         Text(
-                                                          "${AppConstance.rupeeSign} ${product?.amount ?? "0.00"} / pc",
+                                                          "${AppConstance.rupeeSign} ${product?.quantity != null && product?.quantity?.isNotEmpty == true ? ((product?.amount?.toDouble() ?? 0) / (product!.quantity!.toInt())).toStringAsFixed(2) : 0.00}",
                                                           style: TextStyle(
                                                             color: AppColors.BLACK_COLOR,
                                                             fontWeight: FontWeight.w600,
                                                             fontSize: 15.sp,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          AppStrings.price.tr,
+                                                          style: TextStyle(
+                                                            color: AppColors.HINT_GREY_COLOR.withOpacity(0.7),
+                                                            fontWeight: FontWeight.w600,
+                                                            fontSize: 13.sp,
+                                                          ),
+                                                        ),
+
+                                                        ///Total
+                                                        Text(
+                                                          "${AppConstance.rupeeSign} ${product?.amount ?? "0.00"}",
+                                                          style: TextStyle(
+                                                            color: AppColors.BLACK_COLOR,
+                                                            fontWeight: FontWeight.w600,
+                                                            fontSize: 15.sp,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          AppStrings.total.tr,
+                                                          style: TextStyle(
+                                                            color: AppColors.HINT_GREY_COLOR.withOpacity(0.7),
+                                                            fontWeight: FontWeight.w600,
+                                                            fontSize: 13.sp,
                                                           ),
                                                         ),
                                                       ],

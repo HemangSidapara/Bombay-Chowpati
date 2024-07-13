@@ -78,6 +78,7 @@ class Data {
   Data({
     String? pid,
     String? title,
+    String? status,
     String? image,
     String? thumb,
     String? cover,
@@ -86,6 +87,7 @@ class Data {
   }) {
     _pid = pid;
     _title = title;
+    _status = status;
     _image = image;
     _thumb = thumb;
     _cover = cover;
@@ -96,6 +98,7 @@ class Data {
   Data.fromJson(dynamic json) {
     _pid = json['pid'];
     _title = json['title'];
+    _status = json['status'];
     _image = json['image'];
     _thumb = json['thumb'];
     _cover = json['cover'];
@@ -110,6 +113,7 @@ class Data {
 
   String? _pid;
   String? _title;
+  String? _status;
   String? _image;
   String? _thumb;
   String? _cover;
@@ -119,6 +123,7 @@ class Data {
   Data copyWith({
     String? pid,
     String? title,
+    String? status,
     String? image,
     String? thumb,
     String? cover,
@@ -128,6 +133,7 @@ class Data {
       Data(
         pid: pid ?? _pid,
         title: title ?? _title,
+        status: status ?? _status,
         image: image ?? _image,
         thumb: thumb ?? _thumb,
         cover: cover ?? _cover,
@@ -138,6 +144,8 @@ class Data {
   String? get pid => _pid;
 
   String? get title => _title;
+
+  String? get status => _status;
 
   String? get image => _image;
 
@@ -153,6 +161,7 @@ class Data {
     final map = <String, dynamic>{};
     map['pid'] = _pid;
     map['title'] = _title;
+    map['status'] = _status;
     map['image'] = _image;
     map['thumb'] = _thumb;
     map['cover'] = _cover;

@@ -2,6 +2,7 @@ plugins {
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.gms.google-services"
 }
 
 def localProperties = new Properties()
@@ -30,19 +31,19 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.order.bombaychowpati"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 34
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
 
     defaultConfig {
         applicationId = "com.order.bombaychowpati"
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 19
+        targetSdk = 34
         multiDexEnabled true
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
@@ -66,4 +67,8 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    implementation 'com.android.support:multidex:1.0.3'
 }

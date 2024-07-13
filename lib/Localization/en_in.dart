@@ -127,4 +127,9 @@ Map<String, String> enIN = <String, String>{
   AppStrings.addressNotAddedYet: "Address not added yet",
   AppStrings.defaultAddressCantBeDeleted: "Default address can't be deleted. Or add new address and set as default then delete you want.",
   AppStrings.size: "Size: ",
+  AppStrings.pleaseEnterValidPhoneNumber: "Please enter valid phone number",
+  AppStrings.enterPhoneNumberOptional: "Enter phone number (Optional)",
+  AppStrings.refresh: "Refresh",
+  AppStrings.total: "Total",
+  AppStrings.price: "Price",
 };

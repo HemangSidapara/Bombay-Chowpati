@@ -128,4 +128,9 @@ Map<String, String> guIN = <String, String>{
   AppStrings.addressNotAddedYet: "સરનામું હજી ઉમેર્યું નથી",
   AppStrings.defaultAddressCantBeDeleted: "મૂળભૂત સરનામું કાઢી શકાતું નથી. અથવા નવું સરનામું ઉમેરો અને મૂળભૂત તરીકે સેટ કરો પછી તમે ઇચ્છો તે કાઢી શકશો.",
   AppStrings.size: "કદ: ",
+  AppStrings.pleaseEnterValidPhoneNumber: "કૃપા કરીને માન્ય ફોન નંબર દાખલ કરો",
+  AppStrings.enterPhoneNumberOptional: "ફોન નંબર દાખલ કરો (વૈકલ્પિક)",
+  AppStrings.refresh: "રિફ્રેશ",
+  AppStrings.total: "કુલ",
+  AppStrings.price: "કિંમત",
 };

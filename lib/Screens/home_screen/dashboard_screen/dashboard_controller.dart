@@ -18,7 +18,7 @@ class DashboardController extends GetxController {
 
   CartController cartController = Get.put(CartController());
 
-  RxList<get_products.ProductData?> selectedProductData = RxList();
+  // RxList<get_products.ProductData?> selectedProductData = RxList();
 
   @override
   void onInit() async {
@@ -36,45 +36,46 @@ class DashboardController extends GetxController {
 
         productsList.clear();
         searchedProductsList.clear();
-        selectedProductData.clear();
+        // selectedProductData.clear();
         cartController.cartList.clear();
         productsList.addAll(productsModel.data ?? []);
         searchedProductsList.addAll(productsModel.data ?? []);
-        for (var element in (productsModel.data ?? <get_products.Data>[])) {
-          selectedProductData.add(
-            get_products.ProductData(
-              productId: element.pid,
-              id: element.productData?.firstOrNull?.id,
-              mrp: element.productData?.firstOrNull?.mrp,
-              price: element.productData?.firstOrNull?.price,
-              size: element.productData?.firstOrNull?.size,
-            ),
-          );
-        }
+        // for (var element in (productsModel.data ?? <get_products.Data>[])) {
+        //   selectedProductData.add(
+        //     get_products.ProductData(
+        //       productId: element.pid,
+        //       id: element.productData?.firstOrNull?.id,
+        //       mrp: element.productData?.firstOrNull?.mrp,
+        //       price: element.productData?.firstOrNull?.price,
+        //       size: element.productData?.firstOrNull?.size,
+        //     ),
+        //   );
+        // }
         if (getData(AppConstance.cartStorage) != null) {
           cartController.cartList.addAll((getData(AppConstance.cartStorage) as List<dynamic>).map((e) => CartModel.fromJson(e)));
           cartController.totalPayableAmount.value = cartController.cartList.grandTotal();
         }
-        if (cartController.cartList.isNotEmpty) {
-          for (var product in cartController.cartList) {
-            final getIndex = selectedProductData.indexWhere((element) => element?.productId == product.productId);
-            if (getIndex != -1) {
-              selectedProductData.replaceRange(
-                getIndex,
-                getIndex + 1,
-                [
-                  get_products.ProductData(
-                    productId: product.productId,
-                    id: product.productDataId,
-                    mrp: product.mrp,
-                    price: product.price,
-                    size: product.size,
-                  ),
-                ],
-              );
-            }
-          }
-        }
+        // if (cartController.cartList.isNotEmpty) {
+        //   for (var product in cartController.cartList) {
+        //     final getIndex = selectedProductData.indexWhere((element) => element?.productId == product.productId);
+        //     if (getIndex != -1) {
+        //       selectedProductData.replaceRange(
+        //         getIndex,
+        //         getIndex + 1,
+        //         [
+        //           for (int i = 0; i < (product.sizes?.length ?? 0); i++)
+        //             get_products.ProductData(
+        //               productId: product.productId,
+        //               id: product.sizes?[i].productDataId,
+        //               mrp: product.sizes?[i].mrp,
+        //               price: product.sizes?[i].price,
+        //               size: product.sizes?[i].size,
+        //             ),
+        //         ],
+        //       );
+        //     }
+        //   }
+        // }
       }
     } finally {
       isGetProductsLoading(false);

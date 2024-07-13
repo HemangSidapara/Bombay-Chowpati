@@ -31,10 +31,12 @@ class CartService {
   static Future<ResponseModel> addAddressService({
     required String address,
     required String pinCode,
+    String? phone,
   }) async {
     final params = {
       ApiKeys.address: address,
       ApiKeys.pinCode: pinCode,
+      ApiKeys.phone: phone,
     };
     final response = await ApiBaseHelper.postHTTP(
       ApiUrls.addAddressApi,
@@ -61,11 +63,13 @@ class CartService {
     required String addressId,
     required String address,
     required String pinCode,
+    String? phone,
   }) async {
     final params = {
       ApiKeys.addressId: addressId,
       ApiKeys.address: address,
       ApiKeys.pinCode: pinCode,
+      ApiKeys.phone: phone,
     };
     final response = await ApiBaseHelper.postHTTP(
       ApiUrls.editAddressApi,
@@ -137,6 +141,27 @@ class CartService {
           debugPrint("createOrderApi success :: ${res.message}");
         } else {
           debugPrint("createOrderApi error :: ${res.message}");
+          Utils.handleMessage(message: res.message, isError: true);
+        }
+      },
+    );
+
+    return response;
+  }
+
+  ///Get pin-codes
+  static Future<ResponseModel> getPinCodesService() async {
+    final response = await ApiBaseHelper.getHTTP(
+      ApiUrls.getPinCodesApi,
+      showProgress: false,
+      onError: (dioExceptions) {
+        Utils.handleMessage(message: dioExceptions.message, isError: true);
+      },
+      onSuccess: (res) async {
+        if (res.isSuccess) {
+          debugPrint("getPinCodesApi success :: ${res.message}");
+        } else {
+          debugPrint("getPinCodesApi error :: ${res.message}");
           Utils.handleMessage(message: res.message, isError: true);
         }
       },

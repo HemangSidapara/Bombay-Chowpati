@@ -19,4 +19,5 @@ class ApiUrls {
   static const String createOrderApi = '${_apiPath}createOrder.php';
   static const String getOrdersApi = '${_apiPath}getOrders.php';
   static const String cancelOrderApi = '${_apiPath}cancelOrder.php';
+  static const String getPinCodesApi = '${_apiPath}getPinCodes.php';
 }

@@ -215,6 +215,7 @@ class CartView extends GetView<CartController> {
                                           children: [
                                             ElevatedButton(
                                               onPressed: () async {
+                                                controller.getPinCodesApiCall();
                                                 await showBottomSheetAddress(
                                                   context: context,
                                                   selectAddressId: controller.selectedAddressId.value,
@@ -245,7 +246,7 @@ class CartView extends GetView<CartController> {
                                               Flexible(
                                                 child: TextWithTooltipWidget(
                                                   child: Text(
-                                                    "${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.address ?? ""}, ${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.pinCode ?? ""}",
+                                                    "${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.address ?? ""}, ${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.pinCode ?? ""}${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.phone != null && controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.phone?.isNotEmpty == true ? ", +91 ${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.phone ?? ""}" : ""}",
                                                     overflow: TextOverflow.ellipsis,
                                                     maxLines: 2,
                                                     style: TextStyle(
@@ -291,6 +292,7 @@ class CartView extends GetView<CartController> {
                                         ///Add address
                                         TextButton(
                                           onPressed: () async {
+                                            controller.getPinCodesApiCall();
                                             await showBottomSheetAddNewAddress(context: context);
                                           },
                                           style: TextButton.styleFrom(
@@ -421,12 +423,24 @@ class CartView extends GetView<CartController> {
                                           ],
                                         ),
                                         clipBehavior: Clip.hardEdge,
-                                        height: 24.h,
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        padding: EdgeInsets.only(top: 1.h),
+                                        child: Column(
                                           children: [
+                                            ///Name
+                                            Tooltip(
+                                              message: product.value.title,
+                                              child: Text(
+                                                "◆ ${product.value.title ?? ""} ◆",
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  color: AppColors.BLACK_COLOR,
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ),
+
                                             ///Image
                                             Center(
                                               child: CachedNetworkImage(
@@ -448,230 +462,247 @@ class CartView extends GetView<CartController> {
                                             ),
 
                                             ///Product Details
-                                            Expanded(
-                                              child: Padding(
-                                                padding: EdgeInsets.symmetric(vertical: 1.h).copyWith(right: 4.w, bottom: 0, left: 2.w),
-                                                child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    ///Name
-                                                    Tooltip(
-                                                      message: product.value.title,
-                                                      child: Text(
-                                                        "◆ ${product.value.title ?? ""}",
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: TextStyle(
-                                                          color: AppColors.BLACK_COLOR,
-                                                          fontSize: 16.sp,
-                                                          fontWeight: FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                    ),
-
-                                                    ///Size, MRP & Amount
-                                                    Center(
-                                                      child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        children: [
-                                                          ///Size
-                                                          Obx(() {
-                                                            return Text.rich(
-                                                              TextSpan(
-                                                                text: AppStrings.size.tr,
-                                                                children: [
-                                                                  TextSpan(
-                                                                    text: product.value.size,
-                                                                    style: TextStyle(
-                                                                      color: AppColors.DARK_GREEN_COLOR,
-                                                                      fontSize: 16.sp,
-                                                                      fontWeight: FontWeight.w600,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                                style: TextStyle(
-                                                                  color: AppColors.BLACK_COLOR,
-                                                                  fontSize: 16.sp,
-                                                                  fontWeight: FontWeight.w500,
-                                                                ),
-                                                              ),
-                                                            );
-                                                          }),
-
-                                                          ///MRP
-                                                          Obx(() {
-                                                            RxInt totalQuantity = 0.obs;
-                                                            for (var element in controller.cartList) {
-                                                              if (element.size == AppConstance.fiveLiter) {
-                                                                totalQuantity.value += (element.quantity?.toInt() ?? 0);
-                                                              }
-                                                            }
-                                                            return Text.rich(
-                                                              TextSpan(
-                                                                text: AppStrings.mrp.tr,
-                                                                children: [
-                                                                  TextSpan(
-                                                                    text: '₹ ${totalQuantity.value >= 2 || (product.value.size == AppConstance.fiveLiter && (product.value.quantity?.toInt() ?? 0) > 1) || (product.value.size == AppConstance.ml && (product.value.quantity?.toInt() ?? 0) > 6) ? product.value.price : product.value.mrp}',
-                                                                    style: TextStyle(
-                                                                      color: AppColors.DARK_GREEN_COLOR,
-                                                                      fontSize: 16.sp,
-                                                                      fontWeight: FontWeight.w600,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                                style: TextStyle(
-                                                                  color: AppColors.BLACK_COLOR,
-                                                                  fontSize: 16.sp,
-                                                                  fontWeight: FontWeight.w500,
-                                                                ),
-                                                              ),
-                                                            );
-                                                          }),
-
-                                                          ///Total Amount
-                                                          Obx(() {
-                                                            return Text.rich(
-                                                              TextSpan(
-                                                                text: AppStrings.totalAmount.tr,
-                                                                children: [
-                                                                  TextSpan(
-                                                                    text: "\n₹ ${product.value.amount}",
-                                                                    style: TextStyle(
-                                                                      color: AppColors.DARK_GREEN_COLOR,
-                                                                      fontSize: 16.sp,
-                                                                      fontWeight: FontWeight.w600,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                                style: TextStyle(
-                                                                  color: AppColors.BLACK_COLOR,
-                                                                  fontSize: 16.sp,
-                                                                  fontWeight: FontWeight.w500,
-                                                                ),
-                                                              ),
-                                                            );
-                                                          }),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    const Spacer(),
-
-                                                    ///Add
-                                                    Obx(() {
-                                                      if (controller.cartList.isNotEmpty && product.value.quantity != null && product.value.quantity?.toInt() != 0) {
-                                                        return Center(
-                                                          child: DecoratedBox(
+                                            Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                ///Size, MRP, Amount & Add
+                                                for (int i = 0; i < (product.value.sizes?.length ?? 0); i++) ...[
+                                                  SizedBox(
+                                                    width: 43.w,
+                                                    child: Column(
+                                                      mainAxisSize: MainAxisSize.min,
+                                                      children: [
+                                                        ///Size
+                                                        Obx(() {
+                                                          return DecoratedBox(
                                                             decoration: BoxDecoration(
-                                                              color: AppColors.WHITE_COLOR,
-                                                              borderRadius: BorderRadius.circular(12),
                                                               border: Border.all(
-                                                                color: AppColors.HINT_COLOR,
-                                                                width: 0.8,
+                                                                color: AppColors.TEXT_BLACK_COLOR,
+                                                                width: 1.5,
                                                               ),
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                  color: Colors.black12.withOpacity(0.07),
-                                                                  blurRadius: 4,
-                                                                  spreadRadius: 0.4,
-                                                                  offset: const Offset(0, 5),
-                                                                ),
-                                                              ],
+                                                              borderRadius: BorderRadius.circular(7),
                                                             ),
-                                                            child: Row(
-                                                              mainAxisSize: MainAxisSize.min,
-                                                              children: [
-                                                                ///-
-                                                                SizedBox(
-                                                                  width: 13.w,
-                                                                  height: 4.5.h,
-                                                                  child: TextButton(
-                                                                    style: TextButton.styleFrom(
-                                                                      padding: EdgeInsets.zero,
-                                                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                                                      shape: const RoundedRectangleBorder(
-                                                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
-                                                                      ),
-                                                                    ),
-                                                                    onPressed: () {
-                                                                      product.value.setQuantity = "${(product.value.quantity?.toInt() ?? 1) - 1}";
-                                                                      product.value.setAmount = "0.00".grandTotalBySize(controller.cartList, product.value.quantity, product.value.size, product.value.mrp, product.value.price);
-                                                                      if (product.value.quantity == "0") {
-                                                                        controller.cartList.removeWhere((element) => element.productId == product.value.productId);
-                                                                      }
-                                                                      if (controller.cartList.length == 1) {
-                                                                        for (var element in controller.cartList) {
-                                                                          element.setAmount = "0.00".grandTotalBySize(controller.cartList, element.quantity, element.size, element.mrp, element.price);
-                                                                        }
-                                                                      }
-                                                                      product.update((val) {
-                                                                        controller.totalPayableAmount.value = controller.cartList.grandTotal();
-                                                                        setData(AppConstance.cartStorage, controller.cartList.map((element) => element.toJson()).toList());
-                                                                      });
-                                                                    },
-                                                                    child: Icon(
-                                                                      Icons.remove_rounded,
-                                                                      color: AppColors.DARK_RED_COLOR,
-                                                                    ),
-                                                                  ).paddingZero,
+                                                            child: Padding(
+                                                              padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.5.h),
+                                                              child: Text(
+                                                                product.value.sizes?[i].size ?? " ",
+                                                                style: TextStyle(
+                                                                  color: AppColors.BLACK_COLOR,
+                                                                  fontSize: 15.sp,
+                                                                  fontWeight: FontWeight.w500,
                                                                 ),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }),
+                                                        SizedBox(height: 1.h),
 
-                                                                ///Count
-                                                                Obx(() {
-                                                                  return SizedBox(
-                                                                    width: 10.w,
-                                                                    child: Text(
-                                                                      product.value.quantity ?? '',
-                                                                      textAlign: TextAlign.center,
-                                                                      style: TextStyle(
-                                                                        color: AppColors.BLACK_COLOR,
-                                                                        fontWeight: FontWeight.w500,
-                                                                        fontSize: 16.sp,
+                                                        ///MRP & Amount
+                                                        Center(
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              ///MRP
+                                                              Obx(() {
+                                                                RxInt totalQuantityFiveLiterInCart = 0.obs;
+                                                                RxInt totalQuantityMLInCart = 0.obs;
+                                                                for (var element in controller.cartList) {
+                                                                  element.sizes?.forEach((e) {
+                                                                    if (e.size == AppConstance.fiveLiter) {
+                                                                      totalQuantityFiveLiterInCart.value += (e.quantity?.toInt() ?? 0);
+                                                                    }
+                                                                  });
+                                                                }
+                                                                for (var element in controller.cartList) {
+                                                                  element.sizes?.forEach((e) {
+                                                                    if (e.size == AppConstance.ml) {
+                                                                      totalQuantityMLInCart.value += (e.quantity?.toInt() ?? 0);
+                                                                    }
+                                                                  });
+                                                                }
+                                                                return Text.rich(
+                                                                  TextSpan(
+                                                                    text: AppStrings.mrp.tr,
+                                                                    children: [
+                                                                      TextSpan(
+                                                                        text: '₹ ${totalQuantityFiveLiterInCart.value >= 2 || totalQuantityMLInCart.value > 6 || (product.value.sizes?[i].size == AppConstance.fiveLiter && (product.value.sizes?[i].quantity?.toInt() ?? 0) > 1) || (product.value.sizes?[i].size == AppConstance.ml && (product.value.sizes?[i].quantity?.toInt() ?? 0) > 6) ? (product.value.sizes?[i].price) : (product.value.sizes?[i].mrp)}',
+                                                                        style: TextStyle(
+                                                                          color: AppColors.DARK_GREEN_COLOR,
+                                                                          fontSize: 16.sp,
+                                                                          fontWeight: FontWeight.w600,
+                                                                        ),
                                                                       ),
-                                                                    ),
-                                                                  );
-                                                                }),
-
-                                                                ///+
-                                                                SizedBox(
-                                                                  height: 4.5.h,
-                                                                  width: 13.w,
-                                                                  child: TextButton(
-                                                                    onPressed: () {
-                                                                      product.value.setQuantity = "${(product.value.quantity?.toInt() ?? 0) + 1}";
-                                                                      product.value.setAmount = "0.00".grandTotalBySize(controller.cartList, product.value.quantity, product.value.size, product.value.mrp, product.value.price);
-                                                                      product.update((val) {
-                                                                        controller.totalPayableAmount.value = controller.cartList.grandTotal();
-                                                                        setData(AppConstance.cartStorage, controller.cartList.map((element) => element.toJson()).toList());
-                                                                      });
-                                                                    },
-                                                                    style: TextButton.styleFrom(
-                                                                      padding: EdgeInsets.zero,
-                                                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                                                      shape: const RoundedRectangleBorder(
-                                                                        borderRadius: BorderRadius.only(topRight: Radius.circular(10), bottomRight: Radius.circular(10)),
-                                                                      ),
-                                                                    ),
-                                                                    child: Icon(
-                                                                      Icons.add_rounded,
-                                                                      color: AppColors.DARK_GREEN_COLOR,
+                                                                    ],
+                                                                    style: TextStyle(
+                                                                      color: AppColors.BLACK_COLOR,
+                                                                      fontSize: 16.sp,
+                                                                      fontWeight: FontWeight.w500,
                                                                     ),
                                                                   ),
-                                                                ),
-                                                              ],
-                                                            ),
+                                                                );
+                                                              }),
+
+                                                              ///Total Amount
+                                                              Obx(() {
+                                                                return Text.rich(
+                                                                  TextSpan(
+                                                                    text: AppStrings.totalAmount.tr,
+                                                                    children: [
+                                                                      TextSpan(
+                                                                        text: "\n₹ ${product.value.sizes?[i].amount}",
+                                                                        style: TextStyle(
+                                                                          color: AppColors.DARK_GREEN_COLOR,
+                                                                          fontSize: 16.sp,
+                                                                          fontWeight: FontWeight.w600,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                    style: TextStyle(
+                                                                      color: AppColors.BLACK_COLOR,
+                                                                      fontSize: 16.sp,
+                                                                      fontWeight: FontWeight.w500,
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              }),
+                                                            ],
                                                           ),
-                                                        );
-                                                      } else {
-                                                        return const SizedBox();
-                                                      }
-                                                    }),
-                                                    SizedBox(height: 1.5.h),
-                                                  ],
-                                                ),
-                                              ),
-                                            )
+                                                        ),
+                                                        SizedBox(height: 1.5.h),
+
+                                                        ///Add
+                                                        Obx(() {
+                                                          if (controller.cartList.isNotEmpty && product.value.sizes?[i].quantity != null && product.value.sizes?[i].quantity?.toInt() != 0) {
+                                                            return Center(
+                                                              child: DecoratedBox(
+                                                                decoration: BoxDecoration(
+                                                                  color: AppColors.WHITE_COLOR,
+                                                                  borderRadius: BorderRadius.circular(12),
+                                                                  border: Border.all(
+                                                                    color: AppColors.HINT_COLOR,
+                                                                    width: 0.8,
+                                                                  ),
+                                                                  boxShadow: [
+                                                                    BoxShadow(
+                                                                      color: Colors.black12.withOpacity(0.07),
+                                                                      blurRadius: 4,
+                                                                      spreadRadius: 0.4,
+                                                                      offset: const Offset(0, 5),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                child: Row(
+                                                                  mainAxisSize: MainAxisSize.min,
+                                                                  children: [
+                                                                    ///-
+                                                                    SizedBox(
+                                                                      width: 13.w,
+                                                                      height: 4.5.h,
+                                                                      child: TextButton(
+                                                                        style: TextButton.styleFrom(
+                                                                          padding: EdgeInsets.zero,
+                                                                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                                          shape: const RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
+                                                                          ),
+                                                                        ),
+                                                                        onPressed: () {
+                                                                          product.value.sizes?[i].setQuantity = "${(product.value.sizes?[i].quantity?.toInt() ?? 1) - 1}";
+                                                                          product.value.sizes?[i].setAmount = "0.00".grandTotalBySize(controller.cartList, product.value.sizes?[i].quantity, product.value.sizes?[i].size, product.value.sizes?[i].mrp, product.value.sizes?[i].price);
+                                                                          if (product.value.sizes?.every((element) => element.quantity == "0" || element.quantity == null || element.quantity?.isEmpty == true) == true) {
+                                                                            controller.cartList.removeWhere((element) => element.productId == product.value.productId);
+                                                                          } else {
+                                                                            if (product.value.sizes?.any((element) => element.productDataId == product.value.sizes?[i].productDataId) == true) {
+                                                                              final sizeData = product.value.sizes?.firstWhereOrNull((element) => element.productDataId == product.value.sizes?[i].productDataId);
+                                                                              if (sizeData?.quantity == "0" || sizeData?.quantity == null || sizeData?.quantity?.isEmpty == true) {
+                                                                                controller.cartList.firstWhereOrNull((element) => element.productId == product.value.productId)?.removeSizes = sizeData?.productDataId;
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                          for (var element in controller.cartList) {
+                                                                            element.sizes?.forEach((e) {
+                                                                              e.setAmount = "0.00".grandTotalBySize(controller.cartList, e.quantity, e.size, e.mrp, e.price);
+                                                                            });
+                                                                          }
+                                                                          product.update((val) {
+                                                                            controller.totalPayableAmount.value = controller.cartList.grandTotal();
+                                                                            setData(AppConstance.cartStorage, controller.cartList.map((element) => element.toJson()).toList());
+                                                                            controller.cartList.refresh();
+                                                                          });
+                                                                        },
+                                                                        child: Icon(
+                                                                          Icons.remove_rounded,
+                                                                          color: AppColors.DARK_RED_COLOR,
+                                                                        ),
+                                                                      ).paddingZero,
+                                                                    ),
+
+                                                                    ///Count
+                                                                    Obx(() {
+                                                                      return SizedBox(
+                                                                        width: 10.w,
+                                                                        child: Text(
+                                                                          product.value.sizes?[i].quantity ?? '',
+                                                                          textAlign: TextAlign.center,
+                                                                          style: TextStyle(
+                                                                            color: AppColors.BLACK_COLOR,
+                                                                            fontWeight: FontWeight.w500,
+                                                                            fontSize: 16.sp,
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    }),
+
+                                                                    ///+
+                                                                    SizedBox(
+                                                                      height: 4.5.h,
+                                                                      width: 13.w,
+                                                                      child: TextButton(
+                                                                        onPressed: () {
+                                                                          product.value.sizes?[i].setQuantity = "${(product.value.sizes?[i].quantity?.toInt() ?? 0) + 1}";
+                                                                          product.value.sizes?[i].setAmount = "0.00".grandTotalBySize(controller.cartList, product.value.sizes?[i].quantity, product.value.sizes?[i].size, product.value.sizes?[i].mrp, product.value.sizes?[i].price);
+                                                                          for (var element in controller.cartList) {
+                                                                            element.sizes?.forEach((e) {
+                                                                              e.setAmount = "0.00".grandTotalBySize(controller.cartList, e.quantity, e.size, e.mrp, e.price);
+                                                                              controller.cartList.refresh();
+                                                                            });
+                                                                          }
+                                                                          product.update((val) {
+                                                                            controller.totalPayableAmount.value = controller.cartList.grandTotal();
+                                                                            setData(AppConstance.cartStorage, controller.cartList.map((element) => element.toJson()).toList());
+                                                                            controller.cartList.refresh();
+                                                                          });
+                                                                        },
+                                                                        style: TextButton.styleFrom(
+                                                                          padding: EdgeInsets.zero,
+                                                                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                                          shape: const RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.only(topRight: Radius.circular(10), bottomRight: Radius.circular(10)),
+                                                                          ),
+                                                                        ),
+                                                                        child: Icon(
+                                                                          Icons.add_rounded,
+                                                                          color: AppColors.DARK_GREEN_COLOR,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            );
+                                                          } else {
+                                                            return const SizedBox();
+                                                          }
+                                                        }),
+                                                        SizedBox(height: 2.h),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ],
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -707,17 +738,7 @@ class CartView extends GetView<CartController> {
     GlobalKey<FormState> editAddressFormKey = GlobalKey<FormState>();
     RxString editAddressId = "".obs;
     TextEditingController addressController = TextEditingController();
-    List<String> pinCodeList = [
-      "360001",
-      "360002",
-      "360003",
-      "360004",
-      "360005",
-      "360006",
-      "360007",
-      "360020",
-      "360022",
-    ];
+    TextEditingController phoneNumberController = TextEditingController();
     RxInt selectedPinCodeIndex = (-1).obs;
 
     await showModalBottomSheet(
@@ -796,8 +817,9 @@ class CartView extends GetView<CartController> {
                                 await controller
                                     .editAddressApiCall(
                                   addressId: editAddressId.value,
-                                  address: addressController.text,
-                                  pinCode: pinCodeList[selectedPinCodeIndex.value],
+                                  address: addressController.text.trim(),
+                                  pinCode: controller.pinCodesList[selectedPinCodeIndex.value],
+                                  phone: phoneNumberController.text.isNotEmpty ? phoneNumberController.text.trim() : null,
                                 )
                                     .then((value) {
                                   isEdited(false);
@@ -992,13 +1014,34 @@ class CartView extends GetView<CartController> {
                                                     ),
 
                                                     ///PinCode
-                                                    Text(
-                                                      addressDetails.pinCode ?? "",
-                                                      style: TextStyle(
-                                                        color: AppColors.BLACK_COLOR,
-                                                        fontWeight: FontWeight.w500,
-                                                        fontSize: 15.sp,
-                                                      ),
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          addressDetails.pinCode ?? "",
+                                                          style: TextStyle(
+                                                            color: AppColors.BLACK_COLOR,
+                                                            fontWeight: FontWeight.w500,
+                                                            fontSize: 15.sp,
+                                                          ),
+                                                        ),
+                                                        if (addressDetails.phone != null && addressDetails.phone?.isNotEmpty == true) ...[
+                                                          SizedBox(
+                                                            height: 2.h,
+                                                            child: VerticalDivider(
+                                                              color: AppColors.HINT_GREY_COLOR,
+                                                              thickness: 1,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "+91 ${addressDetails.phone ?? ""}",
+                                                            style: TextStyle(
+                                                              color: AppColors.BLACK_COLOR,
+                                                              fontWeight: FontWeight.w500,
+                                                              fontSize: 15.sp,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ],
                                                     ),
                                                   ],
                                                 ),
@@ -1016,7 +1059,8 @@ class CartView extends GetView<CartController> {
                                               onPressed: () {
                                                 editAddressId(addressDetails.addressId ?? "");
                                                 addressController.text = addressDetails.address ?? "";
-                                                selectedPinCodeIndex.value = pinCodeList.indexWhere((element) => element == addressDetails.pinCode);
+                                                phoneNumberController.text = addressDetails.phone ?? "";
+                                                selectedPinCodeIndex.value = controller.pinCodesList.indexWhere((element) => element == addressDetails.pinCode);
                                                 isEdited(true);
                                               },
                                               style: ElevatedButton.styleFrom(
@@ -1083,130 +1127,146 @@ class CartView extends GetView<CartController> {
                             }
                           },
                         ),
-                        secondChild: Form(
-                          key: editAddressFormKey,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(height: 2.h),
+                        secondChild: SingleChildScrollView(
+                          child: Form(
+                            key: editAddressFormKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(height: 2.h),
 
-                              ///Address
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 5.w).copyWith(bottom: keyboardPadding != 0 ? 20.h : 0),
-                                child: TextFieldWidget(
-                                  controller: addressController,
-                                  hintText: AppStrings.enterAddress.tr,
-                                  textFieldWidth: 80.w,
-                                  maxLength: 150,
-                                  validator: controller.addressValidator,
-                                ),
-                              ),
-                              SizedBox(height: 1.2.h),
-
-                              ///Pin-code
-                              Obx(() {
-                                return DropdownButtonFormField(
+                                ///Address
+                                Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5.w),
-                                  validator: controller.pinCodeValidator,
-                                  value: selectedPinCodeIndex.value == -1 ? null : selectedPinCodeIndex.value,
-                                  onChanged: (value) {
-                                    if (value != null) {
-                                      selectedPinCodeIndex(value);
-                                    } else {
-                                      selectedPinCodeIndex(-1);
-                                    }
-                                  },
-                                  hint: Text(
-                                    AppStrings.selectPinCode.tr,
-                                    style: TextStyle(
-                                      color: AppColors.HINT_GREY_COLOR,
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                  child: TextFieldWidget(
+                                    controller: addressController,
+                                    hintText: AppStrings.enterAddress.tr,
+                                    textFieldWidth: 80.w,
+                                    maxLength: 150,
+                                    validator: controller.addressValidator,
                                   ),
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_down_rounded,
-                                    color: AppColors.GREY_COLOR,
-                                    size: 5.w,
-                                  ),
-                                  dropdownColor: AppColors.WHITE_COLOR,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: AppColors.TEXTFIELD_COLOR,
-                                    errorStyle: TextStyle(
-                                      color: AppColors.ERROR_COLOR,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500,
+                                ),
+                                SizedBox(height: 1.2.h),
+
+                                ///Pin-code
+                                Obx(() {
+                                  return DropdownButtonFormField(
+                                    padding: EdgeInsets.symmetric(horizontal: 5.w),
+                                    validator: controller.pinCodeValidator,
+                                    value: selectedPinCodeIndex.value == -1 ? null : selectedPinCodeIndex.value,
+                                    onChanged: (value) {
+                                      if (value != null) {
+                                        selectedPinCodeIndex(value);
+                                      } else {
+                                        selectedPinCodeIndex(-1);
+                                      }
+                                    },
+                                    hint: Text(
+                                      AppStrings.selectPinCode.tr,
+                                      style: TextStyle(
+                                        color: AppColors.HINT_GREY_COLOR,
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: BorderSide(
+                                    icon: Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      color: AppColors.GREY_COLOR,
+                                      size: 5.w,
+                                    ),
+                                    dropdownColor: AppColors.WHITE_COLOR,
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: AppColors.TEXTFIELD_COLOR,
+                                      errorStyle: TextStyle(
                                         color: AppColors.ERROR_COLOR,
-                                        width: 1,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w500,
                                       ),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: BorderSide(
-                                        color: AppColors.ERROR_COLOR,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide(
-                                        color: AppColors.TRANSPARENT,
-                                      ),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide(
-                                        color: AppColors.TRANSPARENT,
-                                      ),
-                                    ),
-                                    disabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide(
-                                        color: AppColors.TRANSPARENT,
-                                      ),
-                                    ),
-                                    errorMaxLines: 2,
-                                    isDense: true,
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h).copyWith(right: 1.5.w),
-                                  ),
-                                  selectedItemBuilder: selectedPinCodeIndex.value == -1
-                                      ? null
-                                      : (context) {
-                                          return [
-                                            for (int i = 0; i < pinCodeList.length; i++)
-                                              Text(
-                                                pinCodeList[i],
-                                                style: TextStyle(
-                                                  color: selectedPinCodeIndex.value == i ? AppColors.PRIMARY_COLOR : AppColors.BLACK_COLOR,
-                                                  fontSize: 16.sp,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                          ];
-                                        },
-                                  items: [
-                                    for (int i = 0; i < pinCodeList.length; i++)
-                                      DropdownMenuItem(
-                                        value: i,
-                                        child: Text(
-                                          pinCodeList[i],
-                                          style: TextStyle(
-                                            color: AppColors.BLACK_COLOR,
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: BorderSide(
+                                          color: AppColors.ERROR_COLOR,
+                                          width: 1,
                                         ),
                                       ),
-                                  ],
-                                );
-                              }),
-                              SizedBox(height: 5.h),
-                            ],
+                                      errorBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: BorderSide(
+                                          color: AppColors.ERROR_COLOR,
+                                          width: 1,
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide(
+                                          color: AppColors.TRANSPARENT,
+                                        ),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide(
+                                          color: AppColors.TRANSPARENT,
+                                        ),
+                                      ),
+                                      disabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide(
+                                          color: AppColors.TRANSPARENT,
+                                        ),
+                                      ),
+                                      errorMaxLines: 2,
+                                      isDense: true,
+                                      contentPadding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h).copyWith(right: 1.5.w),
+                                    ),
+                                    selectedItemBuilder: selectedPinCodeIndex.value == -1
+                                        ? null
+                                        : (context) {
+                                            return [
+                                              for (int i = 0; i < controller.pinCodesList.length; i++)
+                                                Text(
+                                                  controller.pinCodesList[i],
+                                                  style: TextStyle(
+                                                    color: selectedPinCodeIndex.value == i ? AppColors.PRIMARY_COLOR : AppColors.BLACK_COLOR,
+                                                    fontSize: 16.sp,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                            ];
+                                          },
+                                    items: [
+                                      for (int i = 0; i < controller.pinCodesList.length; i++)
+                                        DropdownMenuItem(
+                                          value: i,
+                                          child: Text(
+                                            controller.pinCodesList[i],
+                                            style: TextStyle(
+                                              color: AppColors.BLACK_COLOR,
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  );
+                                }),
+                                SizedBox(height: 2.h),
+
+                                ///Address
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 5.w).copyWith(bottom: keyboardPadding != 0 ? 22.h : 0),
+                                  child: TextFieldWidget(
+                                    controller: phoneNumberController,
+                                    hintText: AppStrings.enterPhoneNumberOptional.tr,
+                                    textFieldWidth: 80.w,
+                                    maxLength: 10,
+                                    keyboardType: TextInputType.number,
+                                    validator: controller.phoneNumberValidator,
+                                  ),
+                                ),
+                                SizedBox(height: 5.h),
+                              ],
+                            ),
                           ),
                         ),
                         duration: const Duration(milliseconds: 300),
@@ -1229,17 +1289,7 @@ class CartView extends GetView<CartController> {
   }) async {
     GlobalKey<FormState> addNewAddressFormKey = GlobalKey<FormState>();
     TextEditingController addressController = TextEditingController();
-    List<String> pinCodeList = [
-      "360001",
-      "360002",
-      "360003",
-      "360004",
-      "360005",
-      "360006",
-      "360007",
-      "360020",
-      "360022",
-    ];
+    TextEditingController phoneNumberController = TextEditingController();
     RxInt selectedPinCodeIndex = (-1).obs;
     await showModalBottomSheet(
       context: context,
@@ -1309,7 +1359,7 @@ class CartView extends GetView<CartController> {
 
                     ///Address
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.w).copyWith(bottom: keyboardPadding != 0 ? 15.h : 0),
+                      padding: EdgeInsets.symmetric(horizontal: 5.w),
                       child: TextFieldWidget(
                         controller: addressController,
                         hintText: AppStrings.enterAddress.tr,
@@ -1395,9 +1445,9 @@ class CartView extends GetView<CartController> {
                             ? null
                             : (context) {
                                 return [
-                                  for (int i = 0; i < pinCodeList.length; i++)
+                                  for (int i = 0; i < controller.pinCodesList.length; i++)
                                     Text(
-                                      pinCodeList[i],
+                                      controller.pinCodesList[i],
                                       style: TextStyle(
                                         color: selectedPinCodeIndex.value == i ? AppColors.PRIMARY_COLOR : AppColors.BLACK_COLOR,
                                         fontSize: 16.sp,
@@ -1407,11 +1457,11 @@ class CartView extends GetView<CartController> {
                                 ];
                               },
                         items: [
-                          for (int i = 0; i < pinCodeList.length; i++)
+                          for (int i = 0; i < controller.pinCodesList.length; i++)
                             DropdownMenuItem(
                               value: i,
                               child: Text(
-                                pinCodeList[i],
+                                controller.pinCodesList[i],
                                 style: TextStyle(
                                   color: AppColors.BLACK_COLOR,
                                   fontSize: 16.sp,
@@ -1422,6 +1472,20 @@ class CartView extends GetView<CartController> {
                         ],
                       );
                     }),
+                    SizedBox(height: 2.h),
+
+                    ///Phone Number
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.w).copyWith(bottom: keyboardPadding != 0 ? 17.h : 0),
+                      child: TextFieldWidget(
+                        controller: phoneNumberController,
+                        hintText: AppStrings.enterPhoneNumberOptional.tr,
+                        textFieldWidth: 80.w,
+                        maxLength: 10,
+                        keyboardType: TextInputType.number,
+                        validator: controller.phoneNumberValidator,
+                      ),
+                    ),
                     SizedBox(height: 5.h),
 
                     ///Add
@@ -1431,8 +1495,9 @@ class CartView extends GetView<CartController> {
                           final isValidate = addNewAddressFormKey.currentState?.validate();
                           if (isValidate == true) {
                             await controller.addAddressApiCall(
-                              address: addressController.text,
-                              pinCode: pinCodeList[selectedPinCodeIndex.value],
+                              address: addressController.text.trim(),
+                              pinCode: controller.pinCodesList[selectedPinCodeIndex.value],
+                              phone: phoneNumberController.text.isNotEmpty ? phoneNumberController.text.trim() : null,
                             );
                           }
                         },

@@ -1,15 +1,14 @@
 import 'dart:convert';
 
 /// code : "200"
-/// msg : "get Address Successfully"
-/// Data : [{"addressId":"3","address":"512, Shivalay Complex, Near Ashirwad Hospital Rajkot","pinCode":"360311"}]
+/// msg : "get Pin Codes Successfully"
+/// Data : [{"pinCode":"360001"},{"pinCode":"360002"},{"pinCode":"360003"},{"pinCode":"360004"},{"pinCode":"360005"},{"pinCode":"360006"},{"pinCode":"360007"},{"pinCode":"360020"},{"pinCode":"360022"}]
 
-GetAddressModel getAddressModelFromJson(String str) => GetAddressModel.fromJson(json.decode(str));
+GetPincodesModel getPincodesModelFromJson(String str) => GetPincodesModel.fromJson(json.decode(str));
+String getPincodesModelToJson(GetPincodesModel data) => json.encode(data.toJson());
 
-String getAddressModelToJson(GetAddressModel data) => json.encode(data.toJson());
-
-class GetAddressModel {
-  GetAddressModel({
+class GetPincodesModel {
+  GetPincodesModel({
     String? code,
     String? msg,
     List<Data>? data,
@@ -19,7 +18,7 @@ class GetAddressModel {
     _data = data;
   }
 
-  GetAddressModel.fromJson(dynamic json) {
+  GetPincodesModel.fromJson(dynamic json) {
     _code = json['code'];
     _msg = json['msg'];
     if (json['Data'] != null) {
@@ -29,26 +28,21 @@ class GetAddressModel {
       });
     }
   }
-
   String? _code;
   String? _msg;
   List<Data>? _data;
-
-  GetAddressModel copyWith({
+  GetPincodesModel copyWith({
     String? code,
     String? msg,
     List<Data>? data,
   }) =>
-      GetAddressModel(
+      GetPincodesModel(
         code: code ?? _code,
         msg: msg ?? _msg,
         data: data ?? _data,
       );
-
   String? get code => _code;
-
   String? get msg => _msg;
-
   List<Data>? get data => _data;
 
   Map<String, dynamic> toJson() {
@@ -62,66 +56,33 @@ class GetAddressModel {
   }
 }
 
-/// addressId : "3"
-/// address : "512, Shivalay Complex, Near Ashirwad Hospital Rajkot"
-/// pinCode : "360311"
+/// pinCode : "360001"
 
 Data dataFromJson(String str) => Data.fromJson(json.decode(str));
-
 String dataToJson(Data data) => json.encode(data.toJson());
 
 class Data {
   Data({
-    String? addressId,
-    String? address,
     String? pinCode,
-    String? phone,
   }) {
-    _addressId = addressId;
-    _address = address;
     _pinCode = pinCode;
-    _phone = phone;
   }
 
   Data.fromJson(dynamic json) {
-    _addressId = json['addressId'];
-    _address = json['address'];
     _pinCode = json['pinCode'];
-    _phone = json['phone'];
   }
-
-  String? _addressId;
-  String? _address;
   String? _pinCode;
-  String? _phone;
-
   Data copyWith({
-    String? addressId,
-    String? address,
     String? pinCode,
-    String? phone,
   }) =>
       Data(
-        addressId: addressId ?? _addressId,
-        address: address ?? _address,
         pinCode: pinCode ?? _pinCode,
-        phone: phone ?? _phone,
       );
-
-  String? get addressId => _addressId;
-
-  String? get address => _address;
-
   String? get pinCode => _pinCode;
-
-  String? get phone => _phone;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['addressId'] = _addressId;
-    map['address'] = _address;
     map['pinCode'] = _pinCode;
-    map['phone'] = _phone;
     return map;
   }
 }
