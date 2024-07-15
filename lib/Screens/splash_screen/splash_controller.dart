@@ -5,18 +5,13 @@ import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Constants/app_utils.dart';
 import 'package:bombay_chowpati/Constants/get_storage.dart';
 import 'package:bombay_chowpati/Network/services/utils_services/get_package_info_service.dart';
+import 'package:bombay_chowpati/Network/services/utils_services/update_app_service.dart';
 import 'package:bombay_chowpati/Routes/app_pages.dart';
-import 'package:bombay_chowpati/Utils/in_app_update_dialog_widget.dart';
-import 'package:bombay_chowpati/Utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class SplashController extends GetxController {
-  RxString newAPKUrl = ''.obs;
-  RxString newAPKVersion = ''.obs;
-  RxBool isUpdateLoading = false.obs;
-  RxInt downloadedProgress = 0.obs;
   RxString currentVersion = ''.obs;
 
   @override
@@ -34,48 +29,15 @@ class SplashController extends GetxController {
 
     Stopwatch stopwatch = Stopwatch()..start();
 
-    await _getLatestVersion().then((value) {
-      newAPKUrl(value.$1 ?? '');
-      newAPKVersion(value.$2 ?? '');
+    await UpdateAppService().getStoreVersion(context: Get.context!).then((value) async {
+      currentVersion.value = (await GetPackageInfoService.getInfo()).version;
+      await Future.delayed(
+        Duration(milliseconds: stopwatch.elapsed.inSeconds < 3 ? 2500 - stopwatch.elapsedMilliseconds : 0),
+        () {
+          nextScreenRoute();
+        },
+      );
     });
-
-    await Future.delayed(
-      const Duration(milliseconds: 600),
-      () {
-        newAPKUrl.addListener(GetStream(
-          onListen: () async {
-            currentVersion.value = (await GetPackageInfoService.getInfo()).version;
-            stopwatch.stop();
-            Logger.printLog(isTimer: true, printLog: stopwatch.elapsed.inMilliseconds, timerUnit: 'Milliseconds');
-            debugPrint('currentVersion :: ${currentVersion.value}');
-            debugPrint('newVersion :: ${newAPKVersion.value}');
-            if (newAPKUrl.value.isNotEmpty && newAPKVersion.value.isNotEmpty) {
-              if (Utils.isUpdateAvailable(currentVersion.value, newAPKVersion.value)) {
-                await showUpdateDialog(
-                  onUpdate: () async {},
-                  isUpdateLoading: isUpdateLoading,
-                  downloadedProgress: downloadedProgress,
-                );
-              } else {
-                await Future.delayed(
-                  Duration(milliseconds: stopwatch.elapsed.inSeconds < 3 ? 2500 - stopwatch.elapsedMilliseconds : 0),
-                  () {
-                    nextScreenRoute();
-                  },
-                );
-              }
-            } else {
-              await Future.delayed(
-                Duration(milliseconds: stopwatch.elapsed.inSeconds < 3 ? 2500 - stopwatch.elapsedMilliseconds : 0),
-                () {
-                  nextScreenRoute();
-                },
-              );
-            }
-          },
-        ));
-      },
-    );
   }
 
   /// Next Screen Route
@@ -90,10 +52,5 @@ class SplashController extends GetxController {
     } else {
       Get.offAllNamed(Routes.homeScreen);
     }
-  }
-
-  /// Get latest Version on server
-  Future<(String?, String?)> _getLatestVersion() async {
-    return (null, null);
   }
 }

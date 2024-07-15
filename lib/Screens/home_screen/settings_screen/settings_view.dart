@@ -4,10 +4,8 @@ import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Constants/app_strings.dart';
 import 'package:bombay_chowpati/Constants/get_storage.dart';
 import 'package:bombay_chowpati/Routes/app_pages.dart';
-import 'package:bombay_chowpati/Screens/home_screen/home_controller.dart';
 import 'package:bombay_chowpati/Screens/home_screen/settings_screen/settings_controller.dart';
 import 'package:bombay_chowpati/Utils/app_formatter.dart';
-import 'package:bombay_chowpati/Utils/in_app_update_dialog_widget.dart';
 import 'package:bombay_chowpati/Widgets/button_widget.dart';
 import 'package:bombay_chowpati/Widgets/confirmation_dialog_widget.dart';
 import 'package:bombay_chowpati/Widgets/custom_header_widget.dart';
@@ -39,42 +37,13 @@ class SettingsView extends GetView<SettingsController> {
                   titleIconSize: 7.w,
                 ),
                 Obx(() {
-                  return Row(
-                    children: [
-                      if (Get.find<HomeController>().isLatestVersionAvailable.isTrue) ...[
-                        IconButton(
-                          onPressed: () async {
-                            await showUpdateDialog(
-                              isUpdateLoading: controller.isUpdateLoading,
-                              downloadedProgress: controller.downloadedProgress,
-                              onUpdate: () async {},
-                            );
-                          },
-                          style: IconButton.styleFrom(
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            padding: EdgeInsets.zero,
-                            maximumSize: Size(6.w, 6.w),
-                            minimumSize: Size(6.w, 6.w),
-                          ),
-                          icon: Icon(
-                            Icons.arrow_circle_up_rounded,
-                            color: AppColors.DARK_GREEN_COLOR,
-                            size: 6.w,
-                          ),
-                        ),
-                        SizedBox(width: 2.w),
-                      ],
-                      Obx(() {
-                        return Text(
-                          AppConstance.appVersion.replaceAll('1.0.0', controller.appVersion.value),
-                          style: TextStyle(
-                            color: AppColors.PRIMARY_COLOR.withOpacity(0.55),
-                            fontWeight: FontWeight.w700,
-                            fontSize: context.isPortrait ? 16.sp : 12.sp,
-                          ),
-                        );
-                      }),
-                    ],
+                  return Text(
+                    AppConstance.appVersion.replaceAll('1.0.0', controller.appVersion.value),
+                    style: TextStyle(
+                      color: AppColors.PRIMARY_COLOR.withOpacity(0.55),
+                      fontWeight: FontWeight.w700,
+                      fontSize: context.isPortrait ? 16.sp : 12.sp,
+                    ),
                   );
                 }),
               ],

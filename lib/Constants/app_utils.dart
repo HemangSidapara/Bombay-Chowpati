@@ -29,7 +29,7 @@ class Utils {
   }
 
   /// Current app is latest or not
-  static bool isUpdateAvailable(String currentVersion, String newAPKVersion) {
+  static bool isUpdateAvailable({required String currentVersion, required String newAPKVersion}) {
     List<String> versionNumberList = currentVersion.split('.').toList();
     List<String> storeVersionNumberList = newAPKVersion.split('.').toList();
     for (int i = 0; i < versionNumberList.length; i++) {
