@@ -133,4 +133,5 @@ Map<String, String> guIN = <String, String>{
   AppStrings.refresh: "રિફ્રેશ",
   AppStrings.total: "કુલ",
   AppStrings.price: "કિંમત",
+  AppStrings.pleaseAddAtLeast1ItemOf5Liter: "કૃપા કરીને 5 લિટર સાઇઝની ઓછામાં ઓછી 1 આઇટમ ઉમેરો અથવા 750 ML સાઇઝની ઓછામાં ઓછી 7 આઇટમ ઉમેરો.",
 };

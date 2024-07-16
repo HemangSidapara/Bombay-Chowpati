@@ -132,32 +132,51 @@ class CartController extends GetxController {
   }
 
   Future<void> createOrderApiCall() async {
-    List<Map<String, String>> orderMeta = [];
+    int noOfFiveLiter = 0;
+    int noOfML = 0;
     for (var element in cartList) {
-      if (element.sizes != null) {
-        for (var e in element.sizes!) {
-          orderMeta.add({
-            ApiKeys.pid: element.productId ?? "",
-            ApiKeys.pMetaId: e.productDataId ?? "",
-            ApiKeys.quantity: e.quantity ?? "",
-            ApiKeys.amount: "".grandTotalBySize(cartList, e.quantity, e.size, e.mrp, e.price).split("₹ ").last,
-          });
+      element.sizes?.forEach((e) {
+        if (e.size == AppConstance.fiveLiter) {
+          noOfFiveLiter++;
         }
-      }
+        if (e.size == AppConstance.ml) {
+          noOfML += (e.quantity?.toInt() ?? 0);
+        }
+      });
     }
 
-    final response = await CartService.createOrderService(
-      addressId: selectedAddressId.value,
-      totalAmount: totalPayableAmount.value,
-      orderMeta: orderMeta,
-    );
+    if (noOfFiveLiter > 0 || noOfML > 6) {
+      List<Map<String, String>> orderMeta = [];
+      for (var element in cartList) {
+        if (element.sizes != null) {
+          for (var e in element.sizes!) {
+            orderMeta.add({
+              ApiKeys.pid: element.productId ?? "",
+              ApiKeys.pMetaId: e.productDataId ?? "",
+              ApiKeys.quantity: e.quantity ?? "",
+              ApiKeys.amount: "".grandTotalBySize(cartList, e.quantity, e.size, e.mrp, e.price).split("₹ ").last,
+            });
+          }
+        }
+      }
 
-    if (response.isSuccess) {
-      cartList.clear();
-      removeData(AppConstance.cartStorage);
-      Get.find<HomeController>().onBottomItemChange(index: 1);
-      Get.find<OrderHistoryController>().getOrdersApiCall();
-      Utils.handleMessage(message: response.message);
+      final response = await CartService.createOrderService(
+        addressId: selectedAddressId.value,
+        totalAmount: totalPayableAmount.value,
+        orderMeta: orderMeta,
+      );
+
+      if (response.isSuccess) {
+        cartList.clear();
+        removeData(AppConstance.cartStorage);
+        Get.find<HomeController>().onBottomItemChange(index: 1);
+        Get.find<OrderHistoryController>().getOrdersApiCall();
+        Utils.handleMessage(message: response.message);
+      }
+    } else {
+      if (noOfFiveLiter == 0 && noOfML < 7) {
+        Utils.handleMessage(message: AppStrings.pleaseAddAtLeast1ItemOf5Liter.tr, isError: true);
+      }
     }
   }
 

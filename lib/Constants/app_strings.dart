@@ -134,4 +134,5 @@ class AppStrings {
   static const String refresh = "Refresh";
   static const String total = "Total";
   static const String price = "Price";
+  static const String pleaseAddAtLeast1ItemOf5Liter = "Please add at-least 1 item of 5 Liter size or add at-least 7 items of 750 ML size.";
 }

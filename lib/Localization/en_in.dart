@@ -132,4 +132,5 @@ Map<String, String> enIN = <String, String>{
   AppStrings.refresh: "Refresh",
   AppStrings.total: "Total",
   AppStrings.price: "Price",
+  AppStrings.pleaseAddAtLeast1ItemOf5Liter: "Please add at-least 1 item of 5 Liter size or add at-least 7 items of 750 ML size",
 };
