@@ -19,7 +19,7 @@ class TermsAndConditionsView extends GetView<TermsAndConditionsController> {
   Widget build(BuildContext context) {
     controller.id = ModalRoute.of(context)?.settings.arguments?.toString().toInt() ?? AppConstance.settingsNavigatorKey.getNavigatorId!;
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 5.w),
+      padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 5.w).copyWith(top: 0),
       child: Column(
         children: [
           ///Header

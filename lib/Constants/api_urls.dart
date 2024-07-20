@@ -20,4 +20,7 @@ class ApiUrls {
   static const String getOrdersApi = '${_apiPath}getOrders.php';
   static const String cancelOrderApi = '${_apiPath}cancelOrder.php';
   static const String getPinCodesApi = '${_apiPath}getPinCodes.php';
+  static const String checkPhoneApi = '${_apiPath}checkPhone.php';
+  static const String resetPasswordApi = '${_apiPath}resetPassword.php';
+  static const String makeDefaultAddressApi = '${_apiPath}makeDefaultAddress.php';
 }

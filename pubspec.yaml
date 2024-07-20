@@ -2,7 +2,7 @@ name: bombay_chowpati
 description: "Order the products of Bombay Chowpati."
 publish_to: 'none'
 
-version: 1.0.2+3
+version: 1.0.3+4
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
@@ -26,6 +26,9 @@ dependencies:
   custom_refresh_indicator: ^3.1.2
   upgrader: ^10.3.0
   url_launcher: ^6.3.0
+  package_info_plus: ^8.0.0
+  firebase_core: ^3.2.0
+  firebase_auth: ^5.1.2
 
 dependency_overrides:
   fading_edge_scrollview: ^4.1.1

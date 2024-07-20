@@ -2,7 +2,6 @@ import 'package:bombay_chowpati/Constants/app_colors.dart';
 import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Constants/app_strings.dart';
 import 'package:bombay_chowpati/Constants/app_utils.dart';
-import 'package:bombay_chowpati/Routes/app_pages.dart';
 import 'package:bombay_chowpati/Screens/auth_screen/reset_password_screen/reset_password_controller.dart';
 import 'package:bombay_chowpati/Utils/app_formatter.dart';
 import 'package:bombay_chowpati/Widgets/button_widget.dart';
@@ -132,14 +131,11 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                         }),
                         SizedBox(height: 3.h),
 
+                        ///Reset
                         Obx(() {
                           return ButtonWidget(
-                            onPressed: () {
-                              Get.offNamedUntil(
-                                Routes.signInScreen,
-                                id: 0,
-                                (route) => route.settings.name == Routes.root,
-                              );
+                            onPressed: () async {
+                              await controller.resetPasswordApiCall();
                             },
                             isLoading: controller.isResetPasswordLoading.isTrue,
                             buttonTitle: AppStrings.reset.tr,

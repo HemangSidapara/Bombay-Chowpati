@@ -12,10 +12,10 @@ class WelcomeView extends GetView<WelcomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.WHITE_COLOR,
-        body: PageView.builder(
+    return Scaffold(
+      backgroundColor: AppColors.WHITE_COLOR,
+      body: SafeArea(
+        child: PageView.builder(
           controller: controller.pageController,
           itemCount: controller.welcomePageImageList.length,
           itemBuilder: (context, index) {

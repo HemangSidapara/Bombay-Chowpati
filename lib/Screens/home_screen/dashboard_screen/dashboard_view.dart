@@ -26,8 +26,6 @@ class DashboardView extends GetView<DashboardController> {
 
   @override
   Widget build(BuildContext context) {
-    print(controller.cartController.cartList.firstOrNull?.toJson());
-    print(controller.cartController.cartList.lastOrNull?.toJson());
     return GestureDetector(
       onTap: () => Utils.unfocus(),
       child: Obx(() {

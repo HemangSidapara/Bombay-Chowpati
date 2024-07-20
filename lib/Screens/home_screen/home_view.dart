@@ -26,40 +26,40 @@ class HomeView extends GetView<HomeController> {
           }
         }
       },
-      child: SafeArea(
-        child: Obx(() {
-          return Scaffold(
-            resizeToAvoidBottomInset: false,
-            backgroundColor: controller.bottomIndex.value == 3 ? AppColors.SETTING_BG_COLOR : AppColors.WHITE_COLOR,
-            bottomNavigationBar: DecoratedBox(
-              decoration: BoxDecoration(
-                color: AppColors.SECONDARY_COLOR,
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 0.5.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    for (int i = 0; i < controller.bottomItemWidgetList.length; i++)
-                      SizedBox(
-                        width: 100.w / controller.bottomItemWidgetList.length,
-                        child: AssetImages(
-                          index: i,
-                          iconName: controller.listOfImages[i],
-                        ),
+      child: Obx(() {
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: controller.bottomIndex.value == 3 ? AppColors.SETTING_BG_COLOR : AppColors.WHITE_COLOR,
+          bottomNavigationBar: DecoratedBox(
+            decoration: BoxDecoration(
+              color: AppColors.SECONDARY_COLOR,
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 0.5.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  for (int i = 0; i < controller.bottomItemWidgetList.length; i++)
+                    SizedBox(
+                      width: 100.w / controller.bottomItemWidgetList.length,
+                      child: AssetImages(
+                        index: i,
+                        iconName: controller.listOfImages[i],
                       ),
-                  ],
-                ),
+                    ),
+                ],
               ),
             ),
-            body: PageView(
+          ),
+          body: SafeArea(
+            child: PageView(
               controller: controller.pageController,
               physics: const NeverScrollableScrollPhysics(),
               children: controller.bottomItemWidgetList,
             ),
-          );
-        }),
-      ),
+          ),
+        );
+      }),
     );
   }
 

@@ -207,4 +207,58 @@ class AuthServices {
 
     return response;
   }
+
+  ///Check Phone Number
+  static Future<ResponseModel> checkPhoneNumberService({
+    required String phone,
+  }) async {
+    final response = await ApiBaseHelper.postHTTP(
+      ApiUrls.checkPhoneApi,
+      params: {
+        ApiKeys.phone: phone,
+      },
+      showProgress: false,
+      onError: (dioExceptions) {
+        Utils.handleMessage(message: dioExceptions.message, isError: true);
+      },
+      onSuccess: (res) async {
+        if (res.isSuccess) {
+          debugPrint("checkPhoneApi success :: ${res.message}");
+        } else {
+          debugPrint("checkPhoneApi error :: ${res.message}");
+          Utils.handleMessage(message: res.message, isError: true);
+        }
+      },
+    );
+
+    return response;
+  }
+
+  ///Reset password
+  static Future<ResponseModel> resetPasswordService({
+    required String phone,
+    required String password,
+  }) async {
+    final response = await ApiBaseHelper.postHTTP(
+      ApiUrls.resetPasswordApi,
+      params: {
+        ApiKeys.phone: phone,
+        ApiKeys.password: password,
+      },
+      showProgress: false,
+      onError: (dioExceptions) {
+        Utils.handleMessage(message: dioExceptions.message, isError: true);
+      },
+      onSuccess: (res) async {
+        if (res.isSuccess) {
+          debugPrint("resetPasswordApi success :: ${res.message}");
+        } else {
+          debugPrint("resetPasswordApi error :: ${res.message}");
+          Utils.handleMessage(message: res.message, isError: true);
+        }
+      },
+    );
+
+    return response;
+  }
 }

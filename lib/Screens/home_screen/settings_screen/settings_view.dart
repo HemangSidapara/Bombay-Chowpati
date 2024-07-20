@@ -22,7 +22,7 @@ class SettingsView extends GetView<SettingsController> {
     return PopScope(
       canPop: false,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 5.w),
+        padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 5.w).copyWith(top: 0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,

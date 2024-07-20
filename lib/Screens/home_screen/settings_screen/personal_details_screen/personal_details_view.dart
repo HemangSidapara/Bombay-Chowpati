@@ -18,7 +18,7 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
     return GestureDetector(
       onTap: () => Utils.unfocus(),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 5.w),
+        padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 5.w).copyWith(top: 0),
         child: Column(
           children: [
             ///Header

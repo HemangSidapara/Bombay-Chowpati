@@ -12,6 +12,6 @@ class AppConstance {
   static const String ml = "750 ML";
   static const String rupeeSign = "\u{20B9}";
   static Uri playStoreURI = Uri.parse("https://play.google.com/store/apps/details?id=com.order.bombaychowpati");
-  static Uri appStoreURI = Uri.parse("https://play.google.com/store/apps/details?id=com.order.bombaychowpati");
-  static const String iosBundleId = "com.order.bombaychowpati";
+  static Uri appStoreURI = Uri.parse("https://apps.apple.com/app/bombaychowpati/id6560114187");
+  static const String forgotPhoneNumber = "forgotPhoneNumber";
 }

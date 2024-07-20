@@ -17,7 +17,7 @@ class CartController extends GetxController {
   RxString totalPayableAmount = "".obs;
 
   RxBool isGetAddressLoading = false.obs;
-  RxBool isAddEditAddressLoading = false.obs;
+  RxBool isAddEditDefaultAddressLoading = false.obs;
   RxList<address_model.Data> addressList = RxList();
   RxString selectedAddressId = "".obs;
 
@@ -63,7 +63,7 @@ class CartController extends GetxController {
 
         addressList.clear();
         addressList.addAll(addressModel.data ?? []);
-        selectedAddressId(addressList.firstOrNull?.addressId ?? "");
+        selectedAddressId(addressList.firstWhereOrNull((e) => e.isDefault == true)?.addressId ?? "");
       }
     } finally {
       isGetAddressLoading(false);
@@ -76,7 +76,7 @@ class CartController extends GetxController {
     String? phone,
   }) async {
     try {
-      isAddEditAddressLoading(true);
+      isAddEditDefaultAddressLoading(true);
       final response = await CartService.addAddressService(
         address: address,
         pinCode: pinCode,
@@ -89,7 +89,24 @@ class CartController extends GetxController {
         Utils.handleMessage(message: response.message);
       }
     } finally {
-      isAddEditAddressLoading(false);
+      isAddEditDefaultAddressLoading(false);
+    }
+  }
+
+  Future<void> makeDefaultAddressApiCall({
+    required String addressId,
+  }) async {
+    try {
+      isAddEditDefaultAddressLoading(true);
+      final response = await CartService.makeDefaultAddressService(addressId: addressId);
+
+      if (response.isSuccess) {
+        await getAddressApiCall();
+        Get.back();
+        Utils.handleMessage(message: response.message);
+      }
+    } finally {
+      isAddEditDefaultAddressLoading(false);
     }
   }
 
@@ -100,7 +117,7 @@ class CartController extends GetxController {
     String? phone,
   }) async {
     try {
-      isAddEditAddressLoading(true);
+      isAddEditDefaultAddressLoading(true);
       final response = await CartService.editAddressService(
         addressId: addressId,
         address: address,
@@ -109,11 +126,11 @@ class CartController extends GetxController {
       );
 
       if (response.isSuccess) {
-        await getAddressApiCall();
         Utils.handleMessage(message: response.message);
+        getAddressApiCall();
       }
     } finally {
-      isAddEditAddressLoading(false);
+      isAddEditDefaultAddressLoading(false);
     }
   }
 

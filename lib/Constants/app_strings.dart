@@ -53,10 +53,12 @@ class AppStrings {
   static const String welcomePageSubtitleThree = 'Come and chase me';
   static const String forgotPassword = 'Forgot password?';
   static const String or = 'Or';
-  static const String enterYourEmailAddress = 'Enter your email address';
+  static const String enterYourPhoneNumber = 'Enter your phone number';
+  static const String pleaseEnterYourPhoneNumber = 'Please enter your phone number';
+  static const String invalidPhoneNumber = 'Invalid phone number';
   static const String pleaseEnterYourEmailAddress = 'Please enter your email address';
   static const String invalidEmailAddress = 'Invalid email address';
-  static const String weWillSendYouAMessageToSetOrResetYourNewPassword = 'We will send you a message to set or reset your new password';
+  static const String weWillSendYouAOTPToSetOrResetYourNewPassword = 'We will send you a OTP to set or reset your new password';
   static const String sendCode = 'Send code';
   static const String pleaseEnterCode = 'Please enter code';
   static const String invalidCode = 'Invalid code';
@@ -135,4 +137,5 @@ class AppStrings {
   static const String total = "Total";
   static const String price = "Price";
   static const String pleaseAddAtLeast1ItemOf5Liter = "Please add at-least 1 item of 5 Liter size or add at-least 7 items of 750 ML size.";
+  static const String somethingWentWrongPleaseReVerifyPhoneNumber = "Something went wrong, Please re-verify phone number.";
 }

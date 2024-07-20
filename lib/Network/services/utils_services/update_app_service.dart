@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Constants/app_utils.dart';
-import 'package:bombay_chowpati/Network/services/utils_services/get_package_info_service.dart';
 import 'package:bombay_chowpati/Utils/in_app_update_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:upgrader/upgrader.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,7 +14,7 @@ class UpdateAppService {
     required BuildContext context,
   }) async {
     String? storeVersion;
-    PackageInfoData? infoData = (await GetPackageInfoService.getInfo());
+    PackageInfo? infoData = (await PackageInfo.fromPlatform());
     String? currentVersion = infoData.version;
     debugPrint('currentVersion :: $currentVersion');
     if (Platform.isAndroid) {
@@ -35,7 +35,7 @@ class UpdateAppService {
       }
     } else if (Platform.isIOS) {
       ITunesSearchAPI iTunesSearchAPI = ITunesSearchAPI();
-      Map<dynamic, dynamic>? result = await iTunesSearchAPI.lookupByBundleId(AppConstance.iosBundleId, country: 'IN');
+      Map<dynamic, dynamic>? result = await iTunesSearchAPI.lookupByBundleId(infoData.packageName, country: 'IN');
       if (result != null) {
         storeVersion = iTunesSearchAPI.version(result);
         debugPrint('storeVersion :: $storeVersion');

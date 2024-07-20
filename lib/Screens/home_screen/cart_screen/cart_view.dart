@@ -169,7 +169,7 @@ class CartView extends GetView<CartController> {
                                 thickness: 0.3,
                               ),
 
-                              ///Payment details
+                              ///Payment details & Address
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 5.w),
                                 child: Column(
@@ -242,30 +242,38 @@ class CartView extends GetView<CartController> {
                                               ),
                                             ),
                                             SizedBox(width: 2.5.w),
-                                            if (controller.addressList.isNotEmpty)
-                                              Flexible(
-                                                child: TextWithTooltipWidget(
-                                                  child: Text(
-                                                    "${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.address ?? ""}, ${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.pinCode ?? ""}${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.phone != null && controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.phone?.isNotEmpty == true ? ", +91 ${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.phone ?? ""}" : ""}",
-                                                    overflow: TextOverflow.ellipsis,
-                                                    maxLines: 2,
-                                                    style: TextStyle(
-                                                      color: AppColors.BLACK_COLOR,
-                                                      fontWeight: FontWeight.w600,
-                                                      fontSize: 15.sp,
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            else
-                                              Text(
-                                                AppStrings.addressNotAddedYet.tr,
-                                                style: TextStyle(
-                                                  color: AppColors.TEXT_BLACK_COLOR,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 15.sp,
-                                                ),
+                                            Flexible(
+                                              child: GestureDetector(
+                                                onTap: () async {
+                                                  controller.getPinCodesApiCall();
+                                                  await showBottomSheetAddress(
+                                                    context: context,
+                                                    selectAddressId: controller.selectedAddressId.value,
+                                                  );
+                                                },
+                                                child: controller.addressList.isNotEmpty
+                                                    ? TextWithTooltipWidget(
+                                                        child: Text(
+                                                          "${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.address ?? ""}, ${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.pinCode ?? ""}${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.phone != null && controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.phone?.isNotEmpty == true ? ", +91 ${controller.addressList.firstWhereOrNull((element) => element.addressId == controller.selectedAddressId.value)?.phone ?? ""}" : ""}",
+                                                          overflow: TextOverflow.ellipsis,
+                                                          maxLines: 2,
+                                                          style: TextStyle(
+                                                            color: AppColors.BLACK_COLOR,
+                                                            fontWeight: FontWeight.w600,
+                                                            fontSize: 15.sp,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : Text(
+                                                        AppStrings.addressNotAddedYet.tr,
+                                                        style: TextStyle(
+                                                          color: AppColors.TEXT_BLACK_COLOR,
+                                                          fontWeight: FontWeight.w600,
+                                                          fontSize: 15.sp,
+                                                        ),
+                                                      ),
                                               ),
+                                            ),
                                           ],
                                         ),
                                       );
@@ -362,13 +370,13 @@ class CartView extends GetView<CartController> {
                   ],
                 ),
           body: Padding(
-            padding: EdgeInsets.symmetric(vertical: 2.h),
+            padding: EdgeInsets.only(bottom: 2.h),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
                 ///Header
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 7.w),
+                  padding: EdgeInsets.symmetric(horizontal: 5.w),
                   child: CustomHeaderWidget(
                     title: AppStrings.cart.tr,
                     titleIcon: AppAssets.cartAnim,
@@ -777,7 +785,7 @@ class CartView extends GetView<CartController> {
                         ///Back
                         Obx(() {
                           return IconButton(
-                            onPressed: controller.isAddEditAddressLoading.isTrue
+                            onPressed: controller.isAddEditDefaultAddressLoading.isTrue
                                 ? () {}
                                 : () {
                                     Utils.unfocus();
@@ -827,21 +835,22 @@ class CartView extends GetView<CartController> {
                                 });
                               }
                             } else {
-                              Get.back();
-                              controller.selectedAddressId(controller.addressList[selectedAddressIndex.value].addressId ?? "");
+                              await controller.makeDefaultAddressApiCall(addressId: controller.addressList[selectedAddressIndex.value].addressId ?? "");
                             }
                           },
                           child: Obx(() {
                             return AnimatedCrossFade(
-                              firstChild: Text(
-                                AppStrings.select.tr,
-                                style: TextStyle(
-                                  color: AppColors.DARK_GREEN_COLOR,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16.sp,
-                                ),
-                              ),
-                              secondChild: controller.isAddEditAddressLoading.isTrue
+                              firstChild: controller.isAddEditDefaultAddressLoading.isTrue
+                                  ? LoadingWidget(width: 8.w)
+                                  : Text(
+                                      AppStrings.select.tr,
+                                      style: TextStyle(
+                                        color: AppColors.DARK_GREEN_COLOR,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16.sp,
+                                      ),
+                                    ),
+                              secondChild: controller.isAddEditDefaultAddressLoading.isTrue
                                   ? LoadingWidget(width: 10.w)
                                   : Text(
                                       AppStrings.edit.tr,
@@ -1501,7 +1510,7 @@ class CartView extends GetView<CartController> {
                             );
                           }
                         },
-                        isLoading: controller.isAddEditAddressLoading.isTrue,
+                        isLoading: controller.isAddEditDefaultAddressLoading.isTrue,
                         fixedSize: Size(90.w, 6.h),
                         buttonTitle: AppStrings.add.tr,
                       );

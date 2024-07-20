@@ -30,7 +30,7 @@ class OrderHistoryView extends GetView<OrderHistoryController> {
         children: [
           ///Header
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 2.h).copyWith(bottom: 1.h),
+            padding: EdgeInsets.symmetric(horizontal: 5.w).copyWith(bottom: 1.h),
             child: CustomHeaderWidget(
               title: AppStrings.orderHistory.tr,
               titleIconWidget: LottieBuilder.asset(

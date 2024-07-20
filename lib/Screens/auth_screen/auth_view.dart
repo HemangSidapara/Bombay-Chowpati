@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bombay_chowpati/Constants/app_assets.dart';
 import 'package:bombay_chowpati/Constants/app_colors.dart';
 import 'package:bombay_chowpati/Constants/app_constance.dart';
@@ -33,94 +35,102 @@ class AuthView extends GetView<AuthController> {
             Get.back(closeOverlays: true);
           }
         },
-        child: SafeArea(
-          child: GestureDetector(
-            onTap: () => Utils.unfocus(),
-            child: Scaffold(
-              appBar: PreferredSize(
-                preferredSize: Size(double.maxFinite, 25.h),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.WHITE_COLOR,
-                    boxShadow: [
+        child: GestureDetector(
+          onTap: () => Utils.unfocus(),
+          child: Scaffold(
+            appBar: PreferredSize(
+              preferredSize: Size(double.maxFinite, 25.h),
+              child: Container(
+                padding: EdgeInsets.only(top: 5.h),
+                decoration: BoxDecoration(
+                  color: AppColors.WHITE_COLOR,
+                  boxShadow: [
+                    if (Platform.isAndroid)
                       BoxShadow(
                         color: Colors.black12.withOpacity(0.1),
                         blurRadius: 15,
                         spreadRadius: 10,
-                      )
-                    ],
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      ///Login Image
-                      Obx(() {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2.h),
-                          child: AnimatedCrossFade(
-                            crossFadeState: controller.tabIndex.value == 0 ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                            duration: const Duration(milliseconds: 300),
-                            firstChild: Image.asset(
-                              AppAssets.loginImage,
-                              height: 12.h,
-                            ),
-                            secondChild: Image.asset(
-                              AppAssets.createAccountIcon,
-                              height: 12.h,
-                            ),
-                          ),
-                        );
-                      }),
-                      const Spacer(),
-
-                      ///Tabs
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5.w),
-                        child: TabBar(
-                          controller: controller.tabController,
-                          dividerColor: AppColors.TRANSPARENT,
-                          tabAlignment: TabAlignment.fill,
-                          labelPadding: EdgeInsets.only(bottom: 1.h),
-                          indicator: UnderlineTabIndicator(
-                            borderSide: BorderSide(
-                              color: AppColors.DARK_GREEN_COLOR,
-                              width: 3,
-                            ),
-                            borderRadius: BorderRadius.circular(99),
-                          ),
-                          indicatorPadding: EdgeInsets.symmetric(horizontal: 8.w),
-                          indicatorSize: TabBarIndicatorSize.tab,
-                          onTap: (value) {
-                            Utils.unfocus();
-                          },
-                          tabs: [
-                            Text(
-                              AppStrings.login.tr,
-                              style: TextStyle(
-                                color: AppColors.BLACK_COLOR,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18.sp,
-                              ),
-                            ),
-                            Text(
-                              AppStrings.signUp,
-                              style: TextStyle(
-                                color: AppColors.BLACK_COLOR,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18.sp,
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
-                    ],
+                    if (Platform.isIOS)
+                      BoxShadow(
+                        color: Colors.black12.withOpacity(0.05),
+                        blurRadius: 30,
+                        spreadRadius: 8,
+                      ),
+                  ],
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
                   ),
                 ),
+                child: Column(
+                  children: [
+                    ///Login Image
+                    Obx(() {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(vertical: 2.h),
+                        child: AnimatedCrossFade(
+                          crossFadeState: controller.tabIndex.value == 0 ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                          duration: const Duration(milliseconds: 300),
+                          firstChild: Image.asset(
+                            AppAssets.loginImage,
+                            height: 12.h,
+                          ),
+                          secondChild: Image.asset(
+                            AppAssets.createAccountIcon,
+                            height: 12.h,
+                          ),
+                        ),
+                      );
+                    }),
+                    const Spacer(),
+
+                    ///Tabs
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.w),
+                      child: TabBar(
+                        controller: controller.tabController,
+                        dividerColor: AppColors.TRANSPARENT,
+                        tabAlignment: TabAlignment.fill,
+                        labelPadding: EdgeInsets.only(bottom: 1.h),
+                        indicator: UnderlineTabIndicator(
+                          borderSide: BorderSide(
+                            color: AppColors.DARK_GREEN_COLOR,
+                            width: 3,
+                          ),
+                          borderRadius: BorderRadius.circular(99),
+                        ),
+                        indicatorPadding: EdgeInsets.symmetric(horizontal: 8.w),
+                        indicatorSize: TabBarIndicatorSize.tab,
+                        onTap: (value) {
+                          Utils.unfocus();
+                        },
+                        tabs: [
+                          Text(
+                            AppStrings.login.tr,
+                            style: TextStyle(
+                              color: AppColors.BLACK_COLOR,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18.sp,
+                            ),
+                          ),
+                          Text(
+                            AppStrings.signUp,
+                            style: TextStyle(
+                              color: AppColors.BLACK_COLOR,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              body: Column(
+            ),
+            body: SafeArea(
+              child: Column(
                 children: [
                   Expanded(
                     child: TabBarView(

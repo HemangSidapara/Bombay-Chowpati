@@ -5,13 +5,19 @@ import 'package:bombay_chowpati/Constants/app_strings.dart';
 import 'package:bombay_chowpati/Constants/get_storage.dart';
 import 'package:bombay_chowpati/Localization/localization.dart';
 import 'package:bombay_chowpati/Routes/app_pages.dart';
+import 'package:bombay_chowpati/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   GetStorage.init();
   GetStorage.init('Welcome');
   runApp(const MyApp());

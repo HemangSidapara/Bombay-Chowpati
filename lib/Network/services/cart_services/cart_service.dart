@@ -58,6 +58,33 @@ class CartService {
     return response;
   }
 
+  ///Add address
+  static Future<ResponseModel> makeDefaultAddressService({
+    required String addressId,
+  }) async {
+    final params = {
+      ApiKeys.addressId: addressId,
+    };
+    final response = await ApiBaseHelper.postHTTP(
+      ApiUrls.makeDefaultAddressApi,
+      showProgress: false,
+      params: params,
+      onError: (dioExceptions) {
+        Utils.handleMessage(message: dioExceptions.message, isError: true);
+      },
+      onSuccess: (res) async {
+        if (res.isSuccess) {
+          debugPrint("makeDefaultAddressApi success :: ${res.message}");
+        } else {
+          debugPrint("makeDefaultAddressApi error :: ${res.message}");
+          Utils.handleMessage(message: res.message, isError: true);
+        }
+      },
+    );
+
+    return response;
+  }
+
   ///Edit address
   static Future<ResponseModel> editAddressService({
     required String addressId,

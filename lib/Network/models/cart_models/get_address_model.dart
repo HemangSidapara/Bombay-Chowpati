@@ -76,11 +76,13 @@ class Data {
     String? address,
     String? pinCode,
     String? phone,
+    bool? isDefault,
   }) {
     _addressId = addressId;
     _address = address;
     _pinCode = pinCode;
     _phone = phone;
+    _isDefault = isDefault;
   }
 
   Data.fromJson(dynamic json) {
@@ -88,24 +90,28 @@ class Data {
     _address = json['address'];
     _pinCode = json['pinCode'];
     _phone = json['phone'];
+    _isDefault = json['isDefault'];
   }
 
   String? _addressId;
   String? _address;
   String? _pinCode;
   String? _phone;
+  bool? _isDefault;
 
   Data copyWith({
     String? addressId,
     String? address,
     String? pinCode,
     String? phone,
+    bool? isDefault,
   }) =>
       Data(
         addressId: addressId ?? _addressId,
         address: address ?? _address,
         pinCode: pinCode ?? _pinCode,
         phone: phone ?? _phone,
+        isDefault: isDefault ?? _isDefault,
       );
 
   String? get addressId => _addressId;
@@ -116,12 +122,15 @@ class Data {
 
   String? get phone => _phone;
 
+  bool? get isDefault => _isDefault;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['addressId'] = _addressId;
     map['address'] = _address;
     map['pinCode'] = _pinCode;
     map['phone'] = _phone;
+    map['isDefault'] = _isDefault;
     return map;
   }
 }

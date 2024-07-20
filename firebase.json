@@ -1,0 +1,30 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "bombay-chowpati---delivery-app",
+          "appId": "1:1048201118496:android:2589f0ca62bb2c379ecd45",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "bombay-chowpati---delivery-app",
+          "appId": "1:1048201118496:ios:d80fd045a2af5a7e9ecd45",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "bombay-chowpati---delivery-app",
+          "configurations": {
+            "android": "1:1048201118496:android:2589f0ca62bb2c379ecd45",
+            "ios": "11:1048201118496:ios:d80fd045a2af5a7e9ecd45"
+          }
+        }
+      }
+    }
+  }
+}

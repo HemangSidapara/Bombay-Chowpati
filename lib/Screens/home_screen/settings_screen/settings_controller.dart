@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bombay_chowpati/Constants/app_constance.dart';
 import 'package:bombay_chowpati/Constants/app_utils.dart';
 import 'package:bombay_chowpati/Constants/get_storage.dart';
@@ -6,6 +8,7 @@ import 'package:bombay_chowpati/Network/services/utils_services/get_package_info
 import 'package:bombay_chowpati/Routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsController extends GetxController {
   RxString appVersion = ''.obs;
@@ -31,7 +34,11 @@ class SettingsController extends GetxController {
       isGujaratiLang.value = false;
       isHindiLang.value = false;
     }
-    appVersion.value = (await GetPackageInfoService.getInfo()).version;
+    if (Platform.isAndroid) {
+      appVersion.value = (await GetPackageInfoService.getInfo()).version;
+    } else if (Platform.isIOS) {
+      appVersion.value = (await PackageInfo.fromPlatform()).version;
+    }
   }
 
   @override
