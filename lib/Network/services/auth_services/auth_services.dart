@@ -223,10 +223,9 @@ class AuthServices {
       },
       onSuccess: (res) async {
         if (res.isSuccess) {
-          debugPrint("checkPhoneApi success :: ${res.message}");
+          debugPrint("checkPhoneApi isRegistered :: ${res.response?.data['isRegistered']}");
         } else {
-          debugPrint("checkPhoneApi error :: ${res.message}");
-          Utils.handleMessage(message: res.message, isError: true);
+          debugPrint("checkPhoneApi isRegistered :: ${res.response?.data['isRegistered']}");
         }
       },
     );

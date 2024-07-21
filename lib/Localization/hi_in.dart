@@ -137,4 +137,6 @@ Map<String, String> hiIN = <String, String>{
   AppStrings.price: "कीमत",
   AppStrings.pleaseAddAtLeast1ItemOf5Liter: "कृपया 5 लीटर माप का कम से कम 1 आइटम जोड़ें या 750 ML माप के कम से कम 7 आइटम जोड़ें।",
   AppStrings.somethingWentWrongPleaseReVerifyPhoneNumber: "कुछ गलत हो गया, कृपया फ़ोन नंबर पुनः सत्यापित करें।",
+  AppStrings.phoneNumberIsInvalid: "फ़ोन नंबर अमान्य है।",
+  AppStrings.otpVerifiedSuccessfully: "OTP सफलतापूर्वक सत्यापित हो गया।",
 };

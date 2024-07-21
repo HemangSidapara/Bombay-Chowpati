@@ -138,4 +138,6 @@ class AppStrings {
   static const String price = "Price";
   static const String pleaseAddAtLeast1ItemOf5Liter = "Please add at-least 1 item of 5 Liter size or add at-least 7 items of 750 ML size.";
   static const String somethingWentWrongPleaseReVerifyPhoneNumber = "Something went wrong, Please re-verify phone number.";
+  static const String phoneNumberIsInvalid = "Phone number is invalid.";
+  static const String otpVerifiedSuccessfully = "OTP verified successfully.";
 }

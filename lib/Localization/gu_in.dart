@@ -137,4 +137,6 @@ Map<String, String> guIN = <String, String>{
   AppStrings.price: "કિંમત",
   AppStrings.pleaseAddAtLeast1ItemOf5Liter: "કૃપા કરીને 5 લિટર સાઇઝની ઓછામાં ઓછી 1 આઇટમ ઉમેરો અથવા 750 ML સાઇઝની ઓછામાં ઓછી 7 આઇટમ ઉમેરો.",
   AppStrings.somethingWentWrongPleaseReVerifyPhoneNumber: "કંઈક ખોટું થયું, કૃપા કરીને ફોન નંબરની ફરી ચકાસણી કરો.",
+  AppStrings.phoneNumberIsInvalid: "ફોન નંબર અમાન્ય છે.",
+  AppStrings.otpVerifiedSuccessfully: "OTP સફળતાપૂર્વક ચકાસાયેલ.",
 };

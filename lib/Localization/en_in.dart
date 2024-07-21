@@ -136,4 +136,6 @@ Map<String, String> enIN = <String, String>{
   AppStrings.price: "Price",
   AppStrings.pleaseAddAtLeast1ItemOf5Liter: "Please add at-least 1 item of 5 Liter size or add at-least 7 items of 750 ML size",
   AppStrings.somethingWentWrongPleaseReVerifyPhoneNumber: "Something went wrong, Please re-verify phone number.",
+  AppStrings.phoneNumberIsInvalid: "Phone number is invalid.",
+  AppStrings.otpVerifiedSuccessfully: "OTP verified successfully.",
 };

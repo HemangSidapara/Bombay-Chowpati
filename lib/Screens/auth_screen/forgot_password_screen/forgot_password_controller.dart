@@ -57,10 +57,12 @@ class ForgotPasswordController extends GetxController {
       if (response.isSuccess) {
         if (response.response?.data['isRegistered'] == true) {
           await sendOTP();
+        } else {
+          Utils.handleMessage(message: AppStrings.phoneNumberIsInvalid.tr, isError: true);
         }
       } else {
         isSendCodeLoading(false);
-        Utils.handleMessage(message: AppStrings.invalidPhoneNumber.tr, isError: true);
+        Utils.handleMessage(message: AppStrings.phoneNumberIsInvalid.tr, isError: true);
       }
     }
   }
@@ -71,7 +73,11 @@ class ForgotPasswordController extends GetxController {
       phoneNumber: "+91 ${phoneNumberController.text.trim()}",
       forceResendingToken: resendOTPToken,
       verificationCompleted: (PhoneAuthCredential credential) {},
-      verificationFailed: (FirebaseAuthException e) {},
+      verificationFailed: (FirebaseAuthException e) {
+        isSendCodeLoading(false);
+        debugPrint('verificationFailed :: ${e.message}');
+        Utils.handleMessage(message: e.message, isError: true);
+      },
       codeSent: (String verificationId, int? resendToken) {
         Timer.periodic(const Duration(seconds: 1), (timer) {
           otpExpireTime.value = 30 - timer.tick;
@@ -102,6 +108,7 @@ class ForgotPasswordController extends GetxController {
       await forgotPasswordAuth.signInWithCredential(credential);
       setData(AppConstance.forgotPhoneNumber, phoneNumberController.text.trim());
       Get.offNamed(Routes.resetPasswordScreen, id: 0);
+      Utils.handleMessage(message: AppStrings.otpVerifiedSuccessfully.tr);
     } on FirebaseAuthException catch (e) {
       debugPrint("verifyOTP Failed :: ${e.message}");
       Utils.handleMessage(message: e.message, isError: true);
